@@ -1,0 +1,486 @@
+function Y=dashboard(kw, varargin);
+% dashboard - experiment control panel
+%   dashboard('launch') launches the Dasboard GUI for experiment control,
+%   and returns a handle to the GUI. The can only be a single Dashboard
+%   figure at a time. If a Dashboard GUI is already open, it receives
+%   focus.
+%
+%   h=dashboard() returns a handle to the current dasboard GUI, or [] if
+%   none is open.
+%
+%   See also Experiment.
+
+% search for BBBBBBB to insert new stim button
+
+if nargin<1, kw = 'launch'; end
+
+switch lower(kw),
+    case 'launch', % dashboard launch <1>
+        Y = local_launch(current(Experiment));
+        local_GUImode(Y, 'Ready');
+        if nargin>1, dashboard('launchstimmenu', 'Left', Y, varargin{1}); end
+    case 'launchstimmenu', % dashboard 'launchstimmenu' Left/Right <StimType> <figh> (callback of a stimulus button)
+        LR = varargin{1}; % left vs right click
+        if nargin>2, StimType=varargin{2}; else, StimType=''; end
+        if ~isequal('Left', LR), return; end; % ignore right-clicks
+        if nargin<4, figh = gcbf; % fig handle is either the callback figure, ...
+        else, figh = varargin{3}; % ... or passed explicitly
+        end
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        stimh = local_stimmenu(figh, StimType);
+        local_GUImode(figh, 'Ready');
+    case 'guimode', % dashboard('guimode', Mode, gmess, gmessmode)
+        [ok, figh]=existGUI('dashboard');
+        if ~ok, error('No dashboard rendered'); end
+        local_GUImode(figh, varargin{:});
+    case 'keypress',
+        local_keypress(gcbf, varargin{:});
+    case {'play', 'playrecord', 'stop'}, % dashboard('Play', 'Left')
+        LR = varargin{1};
+        if ~isequal('Left', LR), return; end; % ignore right-clicks
+        blank(getGUIdata(gcbf,'Messenger')); % empty messages
+        local_DA(gcbf, kw);
+    case {'newunit', 'newelectrode' 'insertnote'}, % dashboard('NewUnit', 'Left') etc
+        figh = gcbf;
+        GUImessage(figh, ' ');
+        LR = varargin{1};
+        if ~isequal('Left', LR), return; end; % ignore right-clicks
+        local_GUImode(figh, 'busy');
+        [Mess, MessMode] = feval(['local_' kw], figh);
+        local_GUImode(figh, 'ready', Mess, MessMode);
+    case {'newexp' 'finishexp' 'resumeexp' 'editexp'}, % dashboard('NewExp', 'Left') etc
+        figh = gcbf;
+        GUImessage(figh, ' ');
+        LR = varargin{1};
+        if ~isequal('Left', LR), return; end; % ignore right-clicks
+        local_GUImode(figh, 'busy');
+        [Mess, MessMode, doRefresh] = feval(['local_' kw], figh);
+        if doRefresh,
+            hstim = getGUIdata(figh, 'StimGUIhandle', nan);
+            IH = issinglehandle(hstim);
+            xx = {}; if IH, xx = {1}; end
+            GUIclosable(figh,1); % overrule nonclosable state. Cannot use local_GUImode because exp is ill defined at this stage
+            dashboard('close', figh);
+            figh = dashboard('launch', xx{:});
+            GUImessage(figh, Mess, MessMode);
+        else,
+            local_GUImode(figh, 'ready', Mess, MessMode);
+        end
+    case 'close',
+        if nargin<2, figh=gcbf; else, figh=varargin{1}; end
+        if ~GUIclosable(figh), return; end % ignore close request if not closable
+        % close stimulus GUI, if any
+        hstim = getGUIdata(figh,'StimGUIhandle');
+        if isGUI(hstim), GUIclose(hstim); end;
+        % save settings of recording panel
+        Exp = current(experiment);
+        recGUIpanel(Exp, 'savesettings', figh);
+        % close
+        GUIclose(figh);
+    otherwise,
+        error(['Unknown keyword ''' kw '''.']);
+end
+
+
+%=================================================================
+%=================================================================
+function figh=local_launch(Exp, launchStim);
+[EE, figh] = existGUI(mfilename);
+if EE, 
+    figure(figh); 
+    return;
+end
+% launch dashboard GUI
+CLR = 0.75*[1 1 1]+0.1*[0 0.3 0];
+P_stim = local_stimPanel(CLR); % stimulus selection
+P_rec = recGUIpanel(Exp,  'stimGUIpanel', 'backgroundcolor', CLR); % recording settings
+P_ax = local_actionPanel(CLR); % play/record/stop & messages
+P_exp = local_Exp(CLR); % panel with experiment info
+%======GUI itself===========
+DB=GUIpiece('Dashboard',[],[0 0],[10 4]);
+DB = add(DB,P_stim);
+DB = add(DB,P_rec, below(P_stim), [0 5]);
+DB = add(DB, P_exp, nextto(P_stim), [30 0]);
+DB = add(DB, P_ax, nextto(P_rec), [10 20]);
+DB=marginalize(DB,[40 20]);
+% open figure and draw GUI in it
+figh = newGUI(mfilename, 'Dashboard', {fhandle(mfilename), 'launch'}, 'color', CLR);
+draw(figh, DB); 
+% empty all edit fields & message field
+GUImessage(figh, ' ','neutral');
+% closereq & keypress fun
+set(figh,'keypressf',{@(Src,Ev)dashboard('keypress')});
+set(figh,'closereq',{@(Src,Ev)dashboard('close')});
+% store StimGUI handle in GUIdata (yet empty)
+setGUIdata(figh,'StimGUIhandle', []);
+% restore previous settings
+GUIfill(figh,0);
+% set recording settings to previous values of this experiment, if any
+recGUIpanel(Exp,'restoresettings', figh);
+
+%======
+function Exp = local_Exp(CLR);
+% panel for experiment status, new cell announcement, etc.
+[btcol] = [0.65 0.75 0.7];
+Exp = GUIpanel('Exp', 'Experiment', 'backgroundcolor', CLR);
+MessBox = messenger('ExpInfo', 'The problem is what you think it is  ?',5, ... % the '@' in the name indicates that ...
+    'fontsize', 10, 'fontweight', 'normal'); % for displaying the experiment status %, 'backgroundcolor', [0 0 0]%
+NewUnit = actionButton('NewUnit', 'Unit!', 'New Unit', 'Click to increase cell count and note depth.', ...
+    @(Src,Ev,LR)dashboard('NewUnit', LR), 'BackgroundColor', btcol([1 2 3]));
+NewUnit = accelerator(NewUnit,'&Action', 'N');
+NewElec = actionButton('NewElectrode', 'Electrode', 'XXXXXXXX', 'Click after replacing the electrode to increase electrode count.', ...
+    @(Src,Ev,LR)dashboard('NewElectrode', LR), 'BackgroundColor', btcol([1 3 2]));
+Note = actionButton('Note', 'Note', 'Note', 'Click to insert a note in the Experiment log file.', ...
+    @(Src,Ev,LR)dashboard('InsertNote', LR), 'BackgroundColor', btcol([2 1 3]));
+NewExp = actionButton('NewExp', 'New Exp.', 'XXXXXXX', 'Click to define new experiment. Current experiment will be "closed".', ...
+    @(Src,Ev,LR)dashboard('NewExp', LR), 'BackgroundColor', btcol([3 1 2]));
+FinishExp = actionButton('FinishExp', 'Finish Exp.', 'XXXXXXX', 'Click to define finish ("close") experiment.', ...
+    @(Src,Ev,LR)dashboard('FinishExp', LR), 'BackgroundColor', btcol([2 3 1]));
+ResumeExp = actionButton('ResumeExp', 'Resume', 'XXXXXXX', 'Click to resume ongoing experiment.', ...
+    @(Src,Ev,LR)dashboard('ResumeExp', LR), 'BackgroundColor', btcol([3 2 1]));
+EditExp = actionButton('EditExp', 'Edit', 'XXXXXXX', 'Click to change settings of current experiment.', ...
+    @(Src,Ev,LR)dashboard('EditExp', LR), 'BackgroundColor', btcol([1 1 1]));
+Exp = add(Exp, MessBox);
+Exp = add(Exp, NewUnit, below(MessBox), [0 16]);
+Exp = add(Exp, NewElec, nextto(NewUnit), [9 0]);
+Exp = add(Exp, Note, nextto(NewElec), [9 0]);
+Exp = add(Exp, NewExp, nextto(MessBox), [2 -5]);
+Exp = add(Exp, ResumeExp, 'below', [0 2]);
+Exp = add(Exp, EditExp, 'below', [0 2]);
+Exp = add(Exp, FinishExp, 'below', [0 2]);
+
+Exp = marginalize(Exp,[3 5]);
+
+%======
+function Act = local_calibPanel(CLR);
+% calib panel
+Calib = GUIpanel('Calib', 'Calibration', 'backgroundcolor', CLR);
+MessBox = messenger('CalibMessBox', 'measured RG10189_003.Earcalib   ',1, 'fontsize', 11, 'fontweight', 'normal'); 
+
+
+%======
+function Act = local_actionPanel(CLR);
+% Play/PlayRec/Stop panel
+Act = GUIpanel('Act', 'action', 'backgroundcolor', CLR);
+MessBox = messenger('@MessBox', 'The problem is what you think it is, don''t you? ',5, ... % the '@' in the name indicates that ...
+    'fontsize', 12, 'fontweight', 'bold'); % MessBox will be the Main Messenger of he GUI
+Play = actionButton('Play', 'PLAY', 'XXXXXXXX', 'Play stimulus without recording. Endless loop; hit Stop to end.', @(Src,Ev,LR)dashboard('Play', LR));
+PlayRec = actionButton('PlayRec', 'PLAY/REC', 'XXXXXXXX', 'Play stimulus and record response(s).', @(Src,Ev,LR)dashboard('PlayRecord', LR));
+Stop = actionButton('Stop', 'STOP', 'XXXXXXXX', 'Immediately stop ongoing D/A & recording.', @(Src,Ev,LR)dashboard('Stop', LR), ...
+    'enable', 'off', 'Interruptible', 'off');
+Play = accelerator(Play,'&Action', 'P');
+PlayRec = accelerator(PlayRec,'&Action', 'R');
+Stop = accelerator(Stop,'&Action', 'W');
+Act = add(Act,MessBox);
+Act = add(Act,Play, 'below', [0 -3]);
+Act = add(Act,PlayRec,'nextto', [10 0]);
+Act = add(Act,Stop,'nextto', [10 0]);
+Act = marginalize(Act,[3 5]);
+
+
+%======
+function S = local_stimPanel(CLR); 
+% panel for specifying stimulus & launching it
+S = GUIpanel('Stim', 'stimuli', 'backgroundcolor', CLR);
+%SN = paramquery('StimName',  'stimulus:', 'XXXXXXXXXXX', '', 'varname',  'Name of stimulus paradigm.', 32);
+% ===Stimulus buttons=====BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+% single tones tones: FS, etc
+S = add(S,local_StimButton('RF'), 'below',[10 10]);
+S = add(S,local_StimButton('RC'), 'below RF',[0 10]);
+S = add(S,local_StimButton('FS'), 'below RC',[0 10]);
+% Experimental
+S = add(S,local_StimButton('FM'), 'below FS',[0 10]);
+
+S = add(S,local_StimButton('MTF'), 'nextto RF',[20 0]);
+S = add(S,local_StimButton('DEP'), 'below MTF',[0 10]);
+S = add(S,local_StimButton('RCM'), 'below DEP',[0 10]);
+S = add(S,local_StimButton('RAM'), 'below RCM',[0 10]);
+
+S = add(S,local_StimButton('BBFC'), 'nextto MTF',[20 0]);
+S = add(S,local_StimButton('BBFM'), 'below BBFC',[0 10]);
+S = add(S,local_StimButton('BBFB'), 'below BBFM',[0 10]);
+
+S = add(S,local_StimButton('ITD'), 'nextto BBFC',[20 0]);
+S = add(S,local_StimButton('ILD'), 'below ITD',[0 10]);
+S = add(S,local_StimButton('MBL'), 'below ILD',[0 10]);
+
+% noise: NPHI, etc
+S = add(S,local_StimButton('NPHI'), 'nextto ITD',[20 0]);
+S = add(S,local_StimButton('MASK'), 'below NPHI',[0 10]);
+% tone complexes: SUP, etc
+S = add(S,local_StimButton('SUP'), 'below MASK',[0 10]);
+S = add(S,local_StimButton('ZW'), 'below SUP',[0 10]);
+
+S = marginalize(S,[20 50]);
+
+function B = local_StimButton(StimName)
+B = actionButton(StimName, StimName, 'XXXXX', ['launch ' StimName ' stimulus menu.'], ...
+    @(Src,Ev,LR)dashboard('launchstimmenu', LR, StimName), 'FontSize', 8, 'FontWeight', 'bold');
+
+%======
+function stimh = local_stimmenu(figh, StimType);
+% launch new stim menu
+stimh = getGUIdata(figh,'StimGUIhandle');
+hasExp = ~isvoid(current(experiment)); % true if experiment is going on
+if issinglehandle(stimh),
+    GUImessage(figh,{'Existing stimulus menu', ...
+        'must be closed before a new one',  'can be opened.'},'error');
+    return;
+elseif ~hasExp,
+    GUImessage(figh,{'Define or resume an experiment'...
+        'before launching a stimulus menu.'},'error');
+    return;
+else, % read stimname if not already specified and try to launch corresponding stim menu
+    if isempty(StimType), 
+        PP = GUIval(figh);
+        if isempty(PP), return; end
+        StimType = PP.StimName;
+    end
+    [stimh, Mess] = stimGUI(StimType);
+    if ~isempty(Mess), 
+        GUImessage(figh, Mess, 'error', 'StimName');
+    else, % all okay; store stimGUI handle
+        setGUIdata(figh, 'StimGUIhandle', stimh);
+        guigrab(figh,'>'); % store current settings
+        figure(stimh); % window focus on stimulus menu
+    end
+end
+
+%======
+function local_GUImode(figh, Mode, gmess, gmessmode);
+% set enable status of dashboard uicontrols
+if nargin<3, gmess = inf; end % indicates absence of message - '' would be bad choice.
+if nargin<4, gmessmode = 'neutral'; end
+[Mode, Mess] = keywordMatch(Mode,{'Busy' 'Ready' 'Play' 'PlayRecord' 'Replay' 'Stop'}, 'Mode argument');
+error(Mess);
+A = getGUIdata(figh, 'ActionButton');
+A_ExpStat = A('NewUnit', 'NewElectrode', 'Note', 'FinishExp', 'EditExp'); % buttons changing  the Experiment status
+Q = getGUIdata(figh, 'Query', paramquery()); if numel(Q) == 1 && isvoid(Q), Q = Q([]); end
+Exp = current(experiment);
+[dum RecSrc] = recordingsources(Exp);
+Qmeasure = Q(RecSrc{:}); % queries having to do w recordings
+hasExp = ~isvoid(Exp); % true if experiment is going on
+if isvoid(Exp), ExpStr = ' (no experiment)'; else, ExpStr = [' -- Experiment ' name(Exp) ' by ' experimenter(Exp)]; end
+set(figh, 'name', ['Dashboard' ExpStr]);
+
+hasStim = issingleHandle(getGUIdata(figh, 'StimGUIhandle'));
+switch Mode,
+    case {'Busy', 'Stop'}, % disable all buttons & prevent closing the figure
+        enable(A,0); enable(Q,0);
+        GUIclosable(figh,0); % not okay to close GUI
+        % color Check or Stop buttons
+        if isequal('Stop', Mode),
+            highlight(A('Stop'),[0.5 0.15 0]);
+        end
+    case 'Ready', % enable all buttons except Stop; okay to close GUI; recording queries depend on experiment status
+        enable(A,1);  enable(Q,1); enable(Qmeasure, hasExp);
+        %enable(A('StimSpec'), hasExp);
+        enable(A('Stop'),0);
+        % only enable Play if D/A is possible; only enable PlayRec when an experiment is ongoing
+        enable(A('Play'), canplayStim && hasStim);
+        enable(A('PlayRec'), canplayStim && hasStim && canrecord(Exp));
+        enable(A_ExpStat, hasExp); % Exp status may only be changed when an Exp has been defined
+        enable(A('NewExp', 'ResumeExp'), ~hasExp);
+        highlight(A,'default');
+        GUIclosable(figh,1); % okay to close GUI
+    case {'Play' 'PlayRecord' 'Replay'}, % disable all buttons except Stop
+        enable(A,0); enable(Q,0);
+        enable(A('Stop'),1);
+        GUIclosable(figh,0); % not okay to close GUI
+        % color Play or PlayRec buttons
+        if isequal('Play', Mode) || isequal('Replay', Mode),
+            highlight(A('Play'),[0 0.7 0]);
+        elseif isequal('PlayRecord', Mode),
+            highlight(A('PlayRec'),[0.85 0 0]);
+        end
+end
+% display GUI message, if any.
+if ~isempty(gmess) && ~isequal(inf, gmess),
+    GUImessage(figh,gmess,gmessmode);
+end
+% update the Experiment status info
+EM = GUImessenger(figh, 'ExpInfo');
+EXP = current(experiment);
+reportstatus(EXP, EM);
+figure(figh);
+drawnow;
+
+%======
+function local_DA(figh, kw);
+% D/A -related action: Play, PlayRecord or Stop.
+% = check stimulus params
+hstim = getGUIdata(figh, 'StimGUIhandle');
+if ~issingleHandle(hstim),
+    GUImessage(figh, {'No stimulus specified.' 'Use StimSpec button to open stimulus GUI.'}, 'error');
+    return;
+end
+switch kw,
+    case {'Play' 'PlayRecord'}, % prepare D/A
+        [dum, okay] = stimGUI(hstim,'check');
+        if ~okay, figure(hstim); return; end
+        local_GUImode(figh, 'Busy'); % will be changed to Play or Record inside PlayRecordStop call
+        % = get recording settings from dashboard
+        RecParam = GUIval(figh);
+        Exp = current(experiment); 
+        StimParam = getGUIdata(hstim, 'StimParam');
+        [RecordInstr, CircuitInstr] = recordingInstructions(Exp, StimParam, RecParam);
+        if isempty(RecordInstr) && isequal('PlayRecord', kw),
+            GUImessage(figh, {'No recording channels activated.' 'Cannot record nothing.'}, 'error');
+            local_GUImode(figh, 'Ready'); 
+            return;
+        end
+        LoadCircuits(CircuitInstr);
+        GUImessage(figh, 'Preparing D/A');
+        Rec = collectInStruct(RecordInstr, '-', CircuitInstr, '-', RecParam); % all recording info available
+        PlayRecordStop(kw, figh, hstim, Exp, Rec);
+    case 'Stop',
+        PlayRecordStop(kw, figh);
+end % switch/case
+
+%======
+function [Mess, MessMode] = local_NewUnit(figh);
+% increase cell count; prompt for pen depth
+EXP = current(experiment);
+St = status(EXP);
+prompt={'Cell number:','Pen Depth (\mum):'};
+name='Info on new unit';
+numlines=1;
+defaultanswer={num2str(St.iCell+1), num2str(St.PenDepth)};
+Opt = struct('WindowStyle', 'modal', 'Interpreter', 'Tex');
+answer=inputdlg(prompt,name,numlines,defaultanswer, Opt);
+if isempty(answer), Mess='Unit Specification cancelled.'; return; end % user cancelled
+iCell = abs(round(str2num(answer{1}))); 
+if ~issinglerealnumber(iCell,'posinteger'),
+    Mess = 'Invalid cell number.'; 
+    MessMode = 'error';
+    return;
+end
+% the cell index may have been used before; find previous recordings from this cell
+iprev = find([St.AllSaved.iCell]==iCell); % indices of prev rec
+if isempty(iprev), iOfRecCell=0;
+else, iOfRecCell = max(St.AllSaved(iprev).iRecOfCell);
+end
+PenDepth = str2num(answer{2});
+if isempty(PenDepth) || numel(PenDepth)>1, 
+    Mess = 'Invalid Pen. Depth.'; 
+    MessMode = 'error';
+    return;
+end;
+status(EXP, 'iCell', iCell, 'iRecOfCell', iOfRecCell, 'PenDepth', PenDepth);
+LogStr = {['-----------Unit ' num2str(iCell) ' (' num2str(PenDepth) ' um)---------']};
+addtolog(EXP, LogStr);
+Mess = 'Unit & PenDepth updated.';
+MessMode = 'neutral';
+
+function [Mess, MessMode] = local_NewElectrode(figh);
+% increase electrode count; reset pen depth
+EXP = current(experiment);
+St = status(EXP);
+prompt={'electrode number:'};
+name='Electrode count';
+numlines=1;
+defaultanswer={num2str(St.iPen+1)};
+Opt = struct('WindowStyle', 'modal', 'Interpreter', 'Tex');
+answer=inputdlg(prompt,name,numlines,defaultanswer, Opt);
+Mess = {}; MessMode = 'neutral';
+if isempty(answer), Mess=' '; return; end % user cancelled
+iPen = abs(round(str2num(answer{1}))); 
+if isempty(iPen) || isequal(0, iPen) || numel(iPen)>1, 
+    Mess{end+1} = 'Invalid electrode number.'; 
+else,
+    status(EXP, 'iPen', iPen, 'PenDepth', nan);
+    addtolog(EXP, ['==========Electrode # ' num2str(iPen) '==========']);
+end
+if isempty(Mess),
+    Mess = 'Electrode count updated.'; 
+    MessMode = 'neutral';
+else,
+    MessMode = 'error';
+end
+
+function [Mess, MessMode] = local_InsertNote(figh);
+% insert a note in Exp log file
+EXP = current(experiment);
+okay = insertnote(EXP);
+if okay, 
+    [Mess, MessMode] = deal('Note inserted', 'neutral');
+else,
+    [Mess, MessMode] = deal(' ', 'neutral');
+end
+
+function [Mess, MessMode, doRefresh] = local_NewExp(figh);
+% launch experiment GUI
+[Mess, MessMode, doRefresh] = deal(' ', 'neutral', false);
+[newEXP, wasEdited] = edit(experiment); % GUI for a new experiment
+if ~wasEdited,
+    Mess = 'Experiment definition cancelled.';
+else,    
+    Mess = ['New experiment defined: ''' name(newEXP) '''.'];
+    doRefresh = true; % need to refresh dashboard GUI
+end
+
+function [Mess, MessMode, doRefresh] = local_FinishExp(figh);
+% close exp 
+doRefresh = false;
+EXP = current(experiment);
+if isvoid(EXP),
+    Mess = 'Cannot finish non-existing experiment.';
+    MessMode = 'warning';
+else,
+    finish(EXP);
+    Mess = ['Finished experiment ''' name(EXP) '''.'];
+    MessMode = 'neutral';
+end
+
+function [Mess, MessMode, doRefresh] = local_ResumeExp(figh);
+% resume exp
+doRefresh = false;
+EXP = current(experiment);
+if ~isvoid(EXP),
+    Mess = [{'Resuming an experiment requires ' 'finishing the current one.'}];
+    MessMode = 'warning';
+    return;
+end
+if ~exist(experiment, lastcurrentname(experiment)),
+    Mess = {'Nothing to resume.'};
+    MessMode = 'warning';
+    return;
+end
+EXP = find(experiment, lastcurrentname(experiment));
+resume(EXP);
+Mess = ['Resumed experiment ''' name(EXP) '''.'];
+MessMode = 'neutral';
+doRefresh = true;
+
+function [Mess, MessMode, doRefresh] = local_EditExp(figh);
+% edit exp 
+doRefresh = false;
+EXP = current(experiment);
+MessMode = 'neutral';
+if isvoid(EXP),
+    Mess = ['Cannot edit a non-existing experiment.'];
+    MessMode = 'warning';
+    return;
+end
+GUImessage(figh, 'editing experiment ...')
+[EXP, wasEdited] = edit(EXP);
+if ~wasEdited,
+    Mess = 'Editing Experiment cancelled.';
+    return;
+end
+Mess = ['Edited experiment ''' name(EXP) '''.'];
+doRefresh = true;
+
+function local_keypress(figh, varargin);
+c = get(figh, 'CurrentCharacter');
+switch c,
+    case 'c',
+        commandwindow;
+end
+
+
+
+
+
+
+

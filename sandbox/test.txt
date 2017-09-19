@@ -1,0 +1,4 @@
+aaa	b5	ccc	ddd
+3	3	kjh
+1	3	sd	NaN
+4	56		

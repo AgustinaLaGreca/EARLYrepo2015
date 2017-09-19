@@ -1,0 +1,2233 @@
+WinZip(R) Command Line Support Add-On Version 1.0 (Build 3181)
+Copyright (c) WinZip Computing, Inc. 1991-2000 - All Rights Reserved
+
+  Adding develop/
+  Adding develop/Early_design.doc
+  Adding develop/todo.m
+  Adding sandbox/
+  Adding sandbox/flipflop.m
+  Adding sandbox/actxlicense.m
+  Adding sandbox/testguide.m
+  Adding sandbox/testguide_activex1
+  Adding sandbox/testguide.fig
+  Adding sandbox/temp.txt
+Warning: The following file is open by another program.  If that program
+Warning:   writes to the file while WinZip is zipping the file, the zipped
+Warning:   file may be corrupt: D:/EARLY/sandbox/temp.txt
+Warning:  the following file was not processed successfully:
+
+D:/EARLY/sandbox/temp.txt
+
+The original file size was 0 bytes but 628 bytes were available to WinZip while processing the file.
+  Adding setupInfo/
+  Adding setupInfo/Cel-only_DataRootDirs.PNXsetup
+  Adding setupInfo/Ee1285a-only_DataRootDirs.PNXsetup
+  Adding setupInfo/KULAK-only_DataRootDirs.PNXsetup
+  Adding setupInfo/KULAK-only_sys3setup.PNXsetup
+  Adding setupInfo/Cel-only_Backup.PNXsetup
+  Adding setupInfo/Cel-only_ComputerProps.PNXsetup
+  Adding sources/
+  Adding sources/kanevas/
+  Adding sources/kanevas/vs1/
+  Adding sources/kanevas/vs1/Main_Classes/
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/all_Main_classes.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/display.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/ExecuteMethodCall.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/find.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/fromchildren.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/get.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/getfromchildren.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/getpointer.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/is.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/iscomposite.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/isdecorator.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/isSubClass.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/ListSubClasses.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/parentClassList.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/recursiveSet.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/setpointer.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/SubclassDir.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/SubclassPrefix.m
+  Adding sources/kanevas/vs1/Main_Classes/@all_Main_classes/subsref.m
+  Adding sources/kanevas/vs1/Main_Classes/@invisible/
+  Adding sources/kanevas/vs1/Main_Classes/@invisible/display.m
+  Adding sources/kanevas/vs1/Main_Classes/@invisible/invisible.m
+  Adding sources/kanevas/vs1/Main_Classes/@listener/
+  Adding sources/kanevas/vs1/Main_Classes/@listener/listener.m
+  Adding sources/kanevas/vs1/Main_Classes/@listener/purge.m
+  Adding sources/kanevas/vs1/Main_Classes/@listener/subsref.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/dimCheck.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/disp.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/findnamed.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/getdim.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/getname.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/getunit.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/getvalue.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/isFixedSized.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/isvoid.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/parameter.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/private/
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/private/isFixedSized.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/readValue.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/reshape.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/setvalue.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/SubclassPrefix.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/typeCheck.m
+  Adding sources/kanevas/vs1/Main_Classes/@parameter/value2char.m
+  Adding sources/kanevas/vs1/Main_Classes/@playable/
+  Adding sources/kanevas/vs1/Main_Classes/@playable/isvoid.m
+  Adding sources/kanevas/vs1/Main_Classes/@playable/playable.m
+  Adding sources/kanevas/vs1/Main_Classes/@pointer/
+  Adding sources/kanevas/vs1/Main_Classes/@pointer/isvoid.m
+  Adding sources/kanevas/vs1/Main_Classes/@pointer/pointer.m
+  Adding sources/kanevas/vs1/Main_Classes/@pointer/Stored.m
+  Adding sources/kanevas/vs1/Main_Classes/@static/
+  Adding sources/kanevas/vs1/Main_Classes/@static/static.m
+  Adding sources/kanevas/vs1/Main_Classes/@static/subsref.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/addListener.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/compute.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/Controller.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/define.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getcontext.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getderivedparam.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getlisteners.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getplayable.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getstate.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getstimparam.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/getview.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/isvoid.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/setderivedparam.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/setplayable.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/setstate.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/setstimparam.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/setview.m
+  Adding sources/kanevas/vs1/Main_Classes/@stimulus/stimulus.m
+  Adding sources/kanevas/vs1/Main_Classes/@test/
+  Adding sources/kanevas/vs1/Main_Classes/@test/amethod.m
+  Adding sources/kanevas/vs1/Main_Classes/@test/static_knoenst.m
+  Adding sources/kanevas/vs1/Main_Classes/@test/subsref.m
+  Adding sources/kanevas/vs1/Main_Classes/@test/test.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/
+  Adding sources/kanevas/vs1/Main_Classes/@widget/disp.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/draw.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getallhandles.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getenablestate.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getextent.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/gethandles.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getparam.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getparamname.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getposition.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/getqueryhandle.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/gettooltip.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/isvoid.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/minpos.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/Read.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/setenablestate.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/sethandles.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/setposition.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/Show.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/static_EnableWordset.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/static_fontsize.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/static_textextent.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/SubclassPrefix.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/widget.m
+  Adding sources/kanevas/vs1/Main_Classes/@widget/Write.m
+  Adding sources/kanevas/vs1/Main_Classes/at_invisible/
+  Adding sources/kanevas/vs1/Main_Classes/at_invisible/contents.m
+  Adding sources/kanevas/vs1/Main_Classes/at_stimulus/
+  Adding sources/kanevas/vs1/Main_Classes/at_test/
+  Adding sources/kanevas/vs1/Main_Classes/at_test/contents.m
+  Adding sources/kanevas/vs1/Main_Classes/at_test/test_amethod.m
+  Adding sources/kanevas/vs1/Main_Classes/helpers/
+  Adding sources/kanevas/vs1/Main_Classes/isParameter.m
+  Adding sources/kanevas/vs1/Main_Classes/isPlayable.m
+  Adding sources/kanevas/vs1/Main_Classes/isStimulus.m
+  Adding sources/kanevas/vs1/Main_Classes/isWidget.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/char2value.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/childnames.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/getchildren.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/iscomposite.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/nchild.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/param_Composite.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/setchild.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Composite/value2char.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Fnum/
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Fnum/char2value.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Fnum/getconstraint.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Fnum/param_Fnum.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Fnum/typeCheck.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Fnum/value2char.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_UREAL/
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_UREAL/char2value.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_UREAL/param_UREAL.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_UREAL/typeCheck.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_UREAL/value2char.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Word/
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Word/char2value.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Word/getwordset.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Word/param_Word.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Word/typeCheck.m
+  Adding sources/kanevas/vs1/ParameterSubclasses/@param_Word/value2char.m
+  Adding sources/kanevas/vs1/Stim/
+  Adding sources/kanevas/vs1/Stim/LaunchStimGUI.m
+  Adding sources/kanevas/vs1/Stim/stimgui.m
+  Adding sources/kanevas/vs1/Stim/stimulus.m
+  Adding sources/kanevas/vs1/StimulusSubclasses/
+  Adding sources/kanevas/vs1/StimulusSubclasses/@stimulusFS/
+  Adding sources/kanevas/vs1/StimulusSubclasses/@stimulusFS/StimDefFS.m
+  Adding sources/kanevas/vs1/StimulusSubclasses/@stimulus_FS/
+  Adding sources/kanevas/vs1/StimulusSubclasses/@stimulus_FS/define.m
+  Adding sources/kanevas/vs1/StimulusSubclasses/@stimulus_FS/Stimulus_FS.m
+  Adding sources/kanevas/vs1/Tools/
+  Adding sources/kanevas/vs1/Tools/allzip.m
+  Adding sources/kanevas/vs1/Tools/BuildNewStim.m
+  Adding sources/kanevas/vs1/Tools/dirdiff.m
+  Adding sources/kanevas/vs1/Tools/ImplantMethod.m
+  Adding sources/kanevas/vs1/Tools/ProjectStateDir.m
+  Adding sources/kanevas/vs1/Tools/SoftState.m
+  Adding sources/kanevas/vs1/Tools/ZipWork.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/char2value.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/childnames.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/draw.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/getchildren.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/getextent.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/iscomposite.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/nchild.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/setchild.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/value2char.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Composite/Widget_Composite.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Edit/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Edit/draw.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Edit/Widget_Edit.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/draw.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/getdecoratee.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/gettitle.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/isdecorator.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/setdecoratee.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Frame/Widget_Frame.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Hidden/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Hidden/draw.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Hidden/Read.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Hidden/setenablestate.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Hidden/Widget_Hidden.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/draw.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/expandtext.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/getextent.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/Read.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/Show.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Reporter/Widget_Reporter.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Toggle/
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Toggle/draw.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Toggle/Show.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Toggle/toggle.m
+  Adding sources/kanevas/vs1/WidgetSubclasses/@Widget_Toggle/Widget_Toggle.m
+  Adding sources/MLsigDevelop/
+  Adding sources/MLsigDevelop/DevelopOnly/
+  Adding sources/MLsigDevelop/DevelopOnly/planning/
+  Adding sources/MLsigDevelop/DevelopOnly/planning/invoiceFeb2004.doc
+  Adding sources/MLsigDevelop/DevelopOnly/planning/Marcello Bug.doc
+  Adding sources/MLsigDevelop/DevelopOnly/planning/MLsigCorrespondence2003.txt
+  Adding sources/MLsigDevelop/DevelopOnly/planning/Notes for Marcel.rtf
+  Adding sources/MLsigDevelop/DevelopOnly/planning/Notes for Marcel_V2.0.rtf
+  Adding sources/MLsigDevelop/DevelopOnly/planning/oursiglibindex.xls
+  Adding sources/MLsigDevelop/DevelopOnly/planning/todo.m
+  Adding sources/MLsigDevelop/DevelopOnly/planning/U-todo.m
+  Adding sources/MLsigDevelop/DevelopOnly/resources/
+  Adding sources/MLsigDevelop/DevelopOnly/resources/doNotZip.txt
+  Adding sources/MLsigDevelop/DevelopOnly/resources/FringeN0Spi_SN.m
+  Adding sources/MLsigDevelop/DevelopOnly/resources/FRINML80.PAS
+  Adding sources/MLsigDevelop/DevelopOnly/resources/MASKRSI1.PAS
+  Adding sources/MLsigDevelop/DevelopOnly/resources/PFMATRIX.PRO
+  Adding sources/MLsigDevelop/DevelopOnly/resources/pointap5.pas.txt
+  Adding sources/MLsigDevelop/DevelopOnly/resources/siglibAdapt.m
+  Adding sources/MLsigDevelop/DevelopOnly/resources/YESNO.PAS
+  Adding sources/MLsigDevelop/MLsig/
+  Adding sources/MLsigDevelop/MLsig/doc/
+  Adding sources/MLsigDevelop/MLsig/doc/How to run experiments.doc
+  Adding sources/MLsigDevelop/MLsig/doc/Idiot's guide to MLsig.doc
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/createlist.TXT
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/helptexts-obsolete.doc
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/How to run experiments-VS07.doc
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/Idiot's guide to MLsig-VS07.doc
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/MHSIGIND.HLP
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/MHSIGIND.TXT
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/MHSIGLIB.HLP
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/MHSIGLIB.txt
+  Adding sources/MLsigDevelop/MLsig/doc/obsolete/New in version 08.doc
+  Adding sources/MLsigDevelop/MLsig/doc/Release Notes.doc
+  Adding sources/MLsigDevelop/MLsig/RP2/
+  Adding sources/MLsigDevelop/MLsig/RP2/DAnpts.rpd
+  Adding sources/MLsigDevelop/MLsig/RP2/TDTexamples/
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/AttenType.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/CalibSettings.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/compuname.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/contents.m
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/DataDir.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/DefaultFsam.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/HeadphoneDefinitions.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/maxFsam.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/RWposition.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/S232DIR.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/setAtten.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/SGSR.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/SingleSS1.MLsetup
+  Adding sources/MLsigDevelop/MLsig/SetupInfo/sys3devicelist_TIM.MLsetup
+  Adding sources/MLsigDevelop/MLsig/StartupDir/
+  Adding sources/MLsigDevelop/MLsig/StartupDir/getVersion.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/startup.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version01.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version02.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version04.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version04patch01.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version05.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version06.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version06patch01.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version06patch02.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version07.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version08.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version09.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version09patch01.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version09patch02.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version10.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version11.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/version12.m
+  Adding sources/MLsigDevelop/MLsig/StartupDir/xxx.ico
+  Adding sources/MLsigDevelop/MLsig/vs12/
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/anyStats.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/ATinit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/ATnextValue.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/ATPlot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/ATresult.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/ATstats.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/FBdisp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/FBinit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/FBnextValue.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/FBresult.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/FBstats.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/PBdisp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/PBinit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/PBnextValue.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/PBresult.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/PBstats.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/private/
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/private/Atrack.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/SIAMinit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/SIAMnext.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/SIAMplot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/SIAMresult.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/SIAMstats.m
+  Adding sources/MLsigDevelop/MLsig/vs12/2AFC/YesNoStats.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/@MLsig/
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/@MLsig/VisualCue.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/AttenType.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/DAsetup.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/IIDpointer.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/ManCalib.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/Phones.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/play.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/PLAY_FigScript.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/PLAY_MaxMagScript.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/PLAY_ParseScript.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/PointerStim.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/private/
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/private/CalibParams.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/private/ComputeAttenuation.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/private/DAscaleFactor.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/private/PrepareHardware4DA.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/private/setAtten.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/ResponseWindow.fig
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/ResponseWindow.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWclose.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWkeys.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWkeystroke.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWopen.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWpresent.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWresponse.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWshow.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/RWtext.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/seqplayPlot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/Stopwatch.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/sys3.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DA/sys3play.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/AskVariedParam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/ATprocess.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/ATpsychometric.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/compuname.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/DataDir.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/editTemplate.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/FindStimParams.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/getDatafile.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/GroupData.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/IsVariedParam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/jitterplot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/MergeStimParams.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/newDatafile.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/obsolete/
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/obsolete/InitSeries.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/rawdata.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/RunExp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/StimParamFileName.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/template.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/VariedParam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/viewdata.m
+  Adding sources/MLsigDevelop/MLsig/vs12/DataHandling/xpmGenerics.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/finish.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/getMLdefault.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/maxFsam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/maxNchan.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/mlhints.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/MLsigPath.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Init/setMLdefault.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/getJoy.c
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/getJoy.dll
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/getJoy.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/getJoy.opt
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/getJoy.pdb
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/getPointerPos.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/nojoy.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/test_getJoy.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/test_getJoy_Les.m
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/vc60.pdb
+  Adding sources/MLsigDevelop/MLsig/vs12/Joystick/xpmSwitchboard.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/FringeITD.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/FringeN0Spi.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/FringeN0Spi_SN.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/FringeN0Spi_SN_SIAM.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/ITDsweepBuffer.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/ITDsweepInterval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/JMLD.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/JMLD2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/JMLD3.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/JMLD3test.m
+  Adding sources/MLsigDevelop/MLsig/vs12/LesGrant/pointITD.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/horzcat.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/idem.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/idemeval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/minus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/mpower.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/mrdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/mtimes.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/plus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/power.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/rdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/times.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/uminus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/uplus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@idem/vertcat.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/colon.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/display.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/minus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/MLindex.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/mpower.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/mrdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/mtimes.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/Op.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/plus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/power.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/rdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/times.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/uminus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/UnOp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLindex/vareval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/AlignData.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/and.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/arith.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Cat.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/chanAssign.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/ChanSelect.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/ChanSum.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/ctranspose.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/disp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/display.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/duration.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/End.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/eq.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Fsample.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/ge.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/GetChanProp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/GetData.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/GetExtra.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/getNfull.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/getOnset.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/gt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/horzcat.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/intro.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/isempty.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/isequal.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/le.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/length.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/lt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/minus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/MLbinop.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/MLsig.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/MLunop.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/mpower.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/mrdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/mtimes.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/nchan.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/ne.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/NOT.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/nRep.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Nsamples.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/or.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/plot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/plus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/polyval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/power.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/private/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/private/GetChanProp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/private/SetChanProp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/PropAsgn.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/PropRef.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/QuickSetData.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/QuickSetXmin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/rdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Relop.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/repmat.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/selectXval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetChanProp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetData.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetExtra.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetFsample.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/setNfull.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetNrep.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetOnset.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/SetXmin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/size.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/specRange.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/subsasgn.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/subsref.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/syntax.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/times.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/transpose.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/uminus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/uplus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Value.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/vertcat.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Xaxis.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/xMax.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/xMin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/xplot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Xspacing.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/XtoSam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/Xunit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/XVALassign.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsig/XvalRef.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/colon.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/display.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/LastChan.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/minus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/MlsigIndex.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/mrdivide.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/mtimes.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/op.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/plus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/times.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/@MLsigIndex/Xmax.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Begin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/ChannelStruct.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/ChanSelect.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/chareval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/CompleteSpec.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/ConstantSig.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/contents.txt
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/freqAxis.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/gnoise.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/gnoise2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/gnoiseSpec.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/gnoiseSpec2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/MLtone.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/poisson.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/rtones.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Create/timeAxis.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/defaultFsam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/demos/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/demos/testdemo.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/DF.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Dur.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/DurToNsam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/evalMLindex.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/flip.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/isfullSpec.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/corrcoef.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/cov.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/cumprod.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/cumsum.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/cumtrapz.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/detrend.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/diff.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/fft.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/find.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/ifft.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/integral.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/irfft.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/max.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/mean.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/median.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/min.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/prod.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/psd.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/rfft.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/std.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/sum.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/trapz.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/@MLsig/var.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/contents.txt
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLdatafun/integral.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/abs.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/acos.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/acosh.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/acot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/acoth.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/acsc.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/acsch.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/angle.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/asec.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/asech.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/asin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/asinh.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/atan.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/atan2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/atanh.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/ceil.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/complex.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/conj.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/cos.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/cosh.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/cot.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/coth.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/cplxpair.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/csc.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/csch.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/exp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/fix.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/floor.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/imag.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/isreal.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/log.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/log10.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/log2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/mod.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/nextpow2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/pow2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/real.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/rem.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/round.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/sec.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/sech.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/sign.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/sin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/sinh.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/sqrt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/tan.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/tanh.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/@MLsig/unwrap.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLelfun/contents.txt
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/bartlett.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/blackman.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/boxcar.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/chebwin.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/CONV.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/envelope.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/FFTFILT.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/filter.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/freqz.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/garblePhase.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/hamming.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/hann.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/hanning.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/hilbert.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/instfreq.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/instphase.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/kaiser.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/resample.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/RunXcorr.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/triang.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/@MLsig/XCORR.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/contents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/contents.txt
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/delay.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/gate.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/heterodyne.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/implant.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLCREMEZ.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLFIR1.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLFIR2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLFIRCLS.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLFIRCLS1.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLFIRLS.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/MLREMEZ.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/private/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/private/FilterWrapper.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/RandCut.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/SAM.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/SinMod.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/MLsignal/windowing.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/nchan.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/Nsamples.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/CompileContents.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/CompileContents2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/FullHelpText.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/genMLelfun.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/GenMLindexOP.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/GenMLUnop.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/OneLineHelp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/SaveDoc.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/tools/testml.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/TrueNumval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/unwind.m
+  Adding sources/MLsigDevelop/MLsig/vs12/MLsigObject/vareval.m
+  Adding sources/MLsigDevelop/MLsig/vs12/SamplePrograms/
+  Adding sources/MLsigDevelop/MLsig/vs12/Sarah/
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/CleanAP2.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/dama2ML.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/DualSS1switching.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/ML2dama.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/obsolete/
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/PD1constants.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/PD1routing.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SS1switching.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/BoardLED.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/BoardLedOff.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/BoardLedOn.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/fixledcontrol.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/FixLEDdelay.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/InitBoardLeds.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/QplayLoad.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/QplayOrder.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/QplayPrep.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/ArtiCat.rco
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/ArtiCat.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/BasicTimingTest.rco
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/BasicTimingTest.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/CalibrateTiming.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/OnsetTest.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/RX6seqPlay.rco
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/SEQplay.rco
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/someTestCircuit.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/StampCheck.rco
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/StampCheck.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/TestSeqIndex.rco
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/testSeqIndex.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/TimsSEQplay.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/TIMStampCheck.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/UsingADCtoTestTiming.rpx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RPvds/WHatsThis.rcx
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6getStamps.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayGo.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayHalt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayInit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayList.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayStatus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayUpload.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6seqplayWaveform.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/RX6testTiming.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/SeqPlayGo.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/SeqPlayLoad.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/SeqPlayOrder.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/SeqPlayPrep.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/SeqPlayStop.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/SeqPlayTimeStamp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3COFdir.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3DacDelay.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3dev.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3deviceList.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3getpar.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3halt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3loadCOF.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3loadwaveforms.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3orderwaveforms.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3playwaveforms.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3read.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3run.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3seqplayGo.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3seqplayHalt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3seqplayList.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3seqplayPrep.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3seqplayStatus.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3setPA5.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3setpar.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3status.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3trig.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3write.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/sys3zero.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/testSeqIndex.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/SYS3/testTimeStamp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/TDTinit.m
+  Adding sources/MLsigDevelop/MLsig/vs12/TDT/TwoSS1s.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/
+  Adding sources/MLsigDevelop/MLsig/vs12/test/AMvsQFM.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/Bits/
+  Adding sources/MLsigDevelop/MLsig/vs12/test/CDT.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/CDTexamples.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/cul.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/Erevcor.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/exComp.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/guido.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/JitteredMLD.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/nb.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/obsolete/
+  Adding sources/MLsigDevelop/MLsig/vs12/test/obsolete/DrhoExample.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/obsolete/ITDnoiseBuffer.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/obsolete/MixFringes.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/perif.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/q16.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/randLatt.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/sam.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/Steve.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/testErev.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/testmethodX.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/testPointerstim.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/testPointerStuff.m
+  Adding sources/MLsigDevelop/MLsig/vs12/test/TOC.txt
+  Adding sources/MLsigDevelop/MLsig/vs12/test/wpoisson.m
+  Adding sources/MLsigDevelop/MLsig/vs12/workshop/
+  Adding sources/MLsigDevelop/MLsig/vs12/workshop/ira.m
+  Adding sources/MLsigDevelop/MLsig/vs12/workshop/SamDet.m
+  Adding sources/MLsigDevelop/MLsig/vs12/workshop/wavchop.m
+  Adding sources/MLsigDevelop/MLsig/vs12/workshop/wavchop2.m
+  Adding sources/OLD_ SGSR_utils/
+  Adding sources/OLD_ SGSR_utils/conversion/
+  Adding sources/OLD_ SGSR_utils/conversion/A2DB.M
+  Adding sources/OLD_ SGSR_utils/conversion/AbsTextPos.m
+  Adding sources/OLD_ SGSR_utils/conversion/ar2cell.m
+  Adding sources/OLD_ SGSR_utils/conversion/bitpres.m
+  Adding sources/OLD_ SGSR_utils/conversion/ByteRep.m
+  Adding sources/OLD_ SGSR_utils/conversion/cell2list.m
+  Adding sources/OLD_ SGSR_utils/conversion/channelChar.m
+  Adding sources/OLD_ SGSR_utils/conversion/channelCount.m
+  Adding sources/OLD_ SGSR_utils/conversion/channelName.m
+  Adding sources/OLD_ SGSR_utils/conversion/ChanOfStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/CollectInStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/columnize.m
+  Adding sources/OLD_ SGSR_utils/conversion/combineStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/CompareStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/DB2A.M
+  Adding sources/OLD_ SGSR_utils/conversion/DB2P.M
+  Adding sources/OLD_ SGSR_utils/conversion/dealStruct2cell.m
+  Adding sources/OLD_ SGSR_utils/conversion/DealStructCommandStr.m
+  Adding sources/OLD_ SGSR_utils/conversion/deciRound.m
+  Adding sources/OLD_ SGSR_utils/conversion/delayPhase.m
+  Adding sources/OLD_ SGSR_utils/conversion/DiffMatrix.m
+  Adding sources/OLD_ SGSR_utils/conversion/DrhoThreshold.M
+  Adding sources/OLD_ SGSR_utils/conversion/EqualizeSize.m
+  Adding sources/OLD_ SGSR_utils/conversion/ERB2Freq.M
+  Adding sources/OLD_ SGSR_utils/conversion/FirstIndexWithValue.m
+  Adding sources/OLD_ SGSR_utils/conversion/Freq2ERB.M
+  Adding sources/OLD_ SGSR_utils/conversion/getfieldCI.m
+  Adding sources/OLD_ SGSR_utils/conversion/getFieldOrdef.m
+  Adding sources/OLD_ SGSR_utils/conversion/greenwood.m
+  Adding sources/OLD_ SGSR_utils/conversion/hcatstruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/ID2iseq.m
+  Adding sources/OLD_ SGSR_utils/conversion/iseq2id.m
+  Adding sources/OLD_ SGSR_utils/conversion/lowFacApprox.m
+  Adding sources/OLD_ SGSR_utils/conversion/MultOfStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/nthElement.m
+  Adding sources/OLD_ SGSR_utils/conversion/NthElemOfStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/P2DB.M
+  Adding sources/OLD_ SGSR_utils/conversion/paramString.m
+  Adding sources/OLD_ SGSR_utils/conversion/ParseFileName.m
+  Adding sources/OLD_ SGSR_utils/conversion/polydiff.m
+  Adding sources/OLD_ SGSR_utils/conversion/RemoveEmptyCells.m
+  Adding sources/OLD_ SGSR_utils/conversion/Rho2Dprime.M
+  Adding sources/OLD_ SGSR_utils/conversion/rms.m
+  Adding sources/OLD_ SGSR_utils/conversion/rmsdb.m
+  Adding sources/OLD_ SGSR_utils/conversion/SeedCodeString.m
+  Adding sources/OLD_ SGSR_utils/conversion/SeedToStr.m
+  Adding sources/OLD_ SGSR_utils/conversion/SelectFromStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/selpos.m
+  Adding sources/OLD_ SGSR_utils/conversion/StrToSeed.m
+  Adding sources/OLD_ SGSR_utils/conversion/StructComp.m
+  Adding sources/OLD_ SGSR_utils/conversion/structOfStruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/vcatstruct.m
+  Adding sources/OLD_ SGSR_utils/conversion/VectorZip.m
+  Adding sources/OLD_ SGSR_utils/Kmail/
+  Adding sources/OLD_ SGSR_utils/Kmail/BroadcastMessage.m
+  Adding sources/OLD_ SGSR_utils/Kmail/CheckMessages.m
+  Adding sources/OLD_ SGSR_utils/Kmail/FlushBroadcasts.m
+  Adding sources/OLD_ SGSR_utils/Kmail/FlushMessages.m
+  Adding sources/OLD_ SGSR_utils/Kmail/GetAllMessages.m
+  Adding sources/OLD_ SGSR_utils/Kmail/GetBroadcasts.m
+  Adding sources/OLD_ SGSR_utils/Kmail/GetMessages.m
+  Adding sources/OLD_ SGSR_utils/Kmail/KMailServer.m
+  Adding sources/OLD_ SGSR_utils/Kmail/KMailStatus.m
+  Adding sources/OLD_ SGSR_utils/Kmail/Kmail_syntax.m
+  Adding sources/OLD_ SGSR_utils/Kmail/MessagePending.m
+  Adding sources/OLD_ SGSR_utils/Kmail/SendMessage.m
+  Adding sources/OLD_ SGSR_utils/misc/
+  Adding sources/OLD_ SGSR_utils/misc/AP2present.m
+  Adding sources/OLD_ SGSR_utils/misc/AreaWithinCurve.m
+  Adding sources/OLD_ SGSR_utils/misc/atBigscreen.m
+  Adding sources/OLD_ SGSR_utils/misc/atCel.m
+  Adding sources/OLD_ SGSR_utils/misc/atEe1285a.m
+  Adding sources/OLD_ SGSR_utils/misc/atKiwi.m
+  Adding sources/OLD_ SGSR_utils/misc/atOhr.m
+  Adding sources/OLD_ SGSR_utils/misc/atOor.m
+  Adding sources/OLD_ SGSR_utils/misc/atOto.m
+  Adding sources/OLD_ SGSR_utils/misc/atSikio.m
+  Adding sources/OLD_ SGSR_utils/misc/atSnail.m
+  Adding sources/OLD_ SGSR_utils/misc/bdataDir.m
+  Adding sources/OLD_ SGSR_utils/misc/betwixt.m
+  Adding sources/OLD_ SGSR_utils/misc/boltzmann.m
+  Adding sources/OLD_ SGSR_utils/misc/calibDir.m
+  Adding sources/OLD_ SGSR_utils/misc/CheckRealNumber.m
+  Adding sources/OLD_ SGSR_utils/misc/Clip.m
+  Adding sources/OLD_ SGSR_utils/misc/CompuName.m
+  Adding sources/OLD_ SGSR_utils/misc/ConstrMin.m
+  Adding sources/OLD_ SGSR_utils/misc/databrowseDir.m
+  Adding sources/OLD_ SGSR_utils/misc/dataDir.m
+  Adding sources/OLD_ SGSR_utils/misc/deNaN.m
+  Adding sources/OLD_ SGSR_utils/misc/dsiz.m
+  Adding sources/OLD_ SGSR_utils/misc/DY_QMtrans.m
+  Adding sources/OLD_ SGSR_utils/misc/EmptyCacheFile.m
+  Adding sources/OLD_ SGSR_utils/misc/EmptyStruct.m
+  Adding sources/OLD_ SGSR_utils/misc/equalYlim.m
+  Adding sources/OLD_ SGSR_utils/misc/ErrorOnNewRelease.m
+  Adding sources/OLD_ SGSR_utils/misc/EuroXP.m
+  Adding sources/OLD_ SGSR_utils/misc/EvalIfExist.m
+  Adding sources/OLD_ SGSR_utils/misc/exportDir.m
+  Adding sources/OLD_ SGSR_utils/misc/fracbin.m
+  Adding sources/OLD_ SGSR_utils/misc/FromCacheFile.m
+  Adding sources/OLD_ SGSR_utils/misc/getDistr.m
+  Adding sources/OLD_ SGSR_utils/misc/getFieldsFromSetupFile.m
+  Adding sources/OLD_ SGSR_utils/misc/harmApp.m
+  Adding sources/OLD_ SGSR_utils/misc/inLeuven.m
+  Adding sources/OLD_ SGSR_utils/misc/inRotterdam.m
+  Adding sources/OLD_ SGSR_utils/misc/insegment.m
+  Adding sources/OLD_ SGSR_utils/misc/inUtrecht.m
+  Adding sources/OLD_ SGSR_utils/misc/IzeroSPL.m
+  Adding sources/OLD_ SGSR_utils/misc/labbar.m
+  Adding sources/OLD_ SGSR_utils/misc/leastBoringColumn.m
+  Adding sources/OLD_ SGSR_utils/misc/Location.m
+  Adding sources/OLD_ SGSR_utils/misc/MaxLength.m
+  Adding sources/OLD_ SGSR_utils/misc/maxloc.m
+  Adding sources/OLD_ SGSR_utils/misc/minloc.m
+  Adding sources/OLD_ SGSR_utils/misc/mytic.m
+  Adding sources/OLD_ SGSR_utils/misc/mytoc.m
+  Adding sources/OLD_ SGSR_utils/misc/NDiff.m
+  Adding sources/OLD_ SGSR_utils/misc/NfiltInsetup.m
+  Adding sources/OLD_ SGSR_utils/misc/NrandNumbers.m
+  Adding sources/OLD_ SGSR_utils/misc/NrandomSeeds.m
+  Adding sources/OLD_ SGSR_utils/misc/nthCol.m
+  Adding sources/OLD_ SGSR_utils/misc/NthPlotArg.m
+  Adding sources/OLD_ SGSR_utils/misc/OnPatch.m
+  Adding sources/OLD_ SGSR_utils/misc/patchArea.m
+  Adding sources/OLD_ SGSR_utils/misc/patchdata.m
+  Adding sources/OLD_ SGSR_utils/misc/planck.m
+  Adding sources/OLD_ SGSR_utils/misc/ploco.m
+  Adding sources/OLD_ SGSR_utils/misc/ploma.m
+  Adding sources/OLD_ SGSR_utils/misc/plotcolors.m
+  Adding sources/OLD_ SGSR_utils/misc/plotPanel.m
+  Adding sources/OLD_ SGSR_utils/misc/pmask.m
+  Adding sources/OLD_ SGSR_utils/misc/pZeroSPL.m
+  Adding sources/OLD_ SGSR_utils/misc/qlegend.m
+  Adding sources/OLD_ SGSR_utils/misc/QMtrans.m
+  Adding sources/OLD_ SGSR_utils/misc/RandDotsWithinCurve.m
+  Adding sources/OLD_ SGSR_utils/misc/reladev.m
+  Adding sources/OLD_ SGSR_utils/misc/rhoAir.m
+  Adding sources/OLD_ SGSR_utils/misc/runav.m
+  Adding sources/OLD_ SGSR_utils/misc/saveFieldsInSetupFile.m
+  Adding sources/OLD_ SGSR_utils/misc/SetCompuName.m
+  Adding sources/OLD_ SGSR_utils/misc/SetRandState.m
+  Adding sources/OLD_ SGSR_utils/misc/setupDir.m
+  Adding sources/OLD_ SGSR_utils/misc/setupFile.m
+  Adding sources/OLD_ SGSR_utils/misc/SGSRversiondir.m
+  Adding sources/OLD_ SGSR_utils/misc/slight.m
+  Adding sources/OLD_ SGSR_utils/misc/sortAccord.m
+  Adding sources/OLD_ SGSR_utils/misc/sp.m
+  Adding sources/OLD_ SGSR_utils/misc/spin2vec.m
+  Adding sources/OLD_ SGSR_utils/misc/ssound.m
+  Adding sources/OLD_ SGSR_utils/misc/staplot.m
+  Adding sources/OLD_ SGSR_utils/misc/startupDir.m
+  Adding sources/OLD_ SGSR_utils/misc/student_t.m
+  Adding sources/OLD_ SGSR_utils/misc/SU2.m
+  Adding sources/OLD_ SGSR_utils/misc/subPlotDivide.m
+  Adding sources/OLD_ SGSR_utils/misc/substitute.m
+  Adding sources/OLD_ SGSR_utils/misc/Swap.m
+  Adding sources/OLD_ SGSR_utils/misc/TLine.m
+  Adding sources/OLD_ SGSR_utils/misc/ToCacheFile.m
+  Adding sources/OLD_ SGSR_utils/misc/trianstats.m
+  Adding sources/OLD_ SGSR_utils/misc/UIdefDir.m
+  Adding sources/OLD_ SGSR_utils/misc/uiload.m
+  Adding sources/OLD_ SGSR_utils/misc/updir.m
+  Adding sources/OLD_ SGSR_utils/misc/var2base.m
+  Adding sources/OLD_ SGSR_utils/misc/vec2spin.m
+  Adding sources/OLD_ SGSR_utils/misc/VnextPow2.m
+  Adding sources/OLD_ SGSR_utils/misc/warningState.m
+  Adding sources/OLD_ SGSR_utils/misc/WavlistDir.m
+  Adding sources/OLD_ SGSR_utils/misc/WithinCurve.m
+  Adding sources/OLD_ SGSR_utils/misc/wpolyfit.m
+  Adding sources/OLD_ SGSR_utils/misc/xlog125.m
+  Adding sources/OLD_ SGSR_utils/misc/ylimstretch.m
+  Adding sources/OLD_ SGSR_utils/misc/ylog125.m
+  Adding sources/OLD_ SGSR_utils/misc/zair.m
+  Adding sources/OLD_ SGSR_utils/strfun/
+  Adding sources/OLD_ SGSR_utils/strfun/AddToTextBlock.m
+  Adding sources/OLD_ SGSR_utils/strfun/CheckWriteFilename.m
+  Adding sources/OLD_ SGSR_utils/strfun/dealString.m
+  Adding sources/OLD_ SGSR_utils/strfun/decodekstr.m
+  Adding sources/OLD_ SGSR_utils/strfun/durStr.m
+  Adding sources/OLD_ SGSR_utils/strfun/FixLenStr.m
+  Adding sources/OLD_ SGSR_utils/strfun/FreqString.m
+  Adding sources/OLD_ SGSR_utils/strfun/FullFileName.m
+  Adding sources/OLD_ SGSR_utils/strfun/iskeyword.m
+  Adding sources/OLD_ SGSR_utils/strfun/isSamePath.m
+  Adding sources/OLD_ SGSR_utils/strfun/isValidFileName.m
+  Adding sources/OLD_ SGSR_utils/strfun/isvarname.m
+  Adding sources/OLD_ SGSR_utils/strfun/MatchWildcard.m
+  Adding sources/OLD_ SGSR_utils/strfun/nospace.m
+  Adding sources/OLD_ SGSR_utils/strfun/num2sstr.m
+  Adding sources/OLD_ SGSR_utils/strfun/num2strnchar.m
+  Adding sources/OLD_ SGSR_utils/strfun/periodstr.m
+  Adding sources/OLD_ SGSR_utils/strfun/readln.m
+  Adding sources/OLD_ SGSR_utils/strfun/RemoveFileExtension.m
+  Adding sources/OLD_ SGSR_utils/strfun/RemoveLastSlash.m
+  Adding sources/OLD_ SGSR_utils/strfun/StrCompactSpace.m
+  Adding sources/OLD_ SGSR_utils/strfun/StrEndsWith.m
+  Adding sources/OLD_ SGSR_utils/strfun/strfindcell.m
+  Adding sources/OLD_ SGSR_utils/strfun/StripError.m
+  Adding sources/OLD_ SGSR_utils/strfun/StrLeftLim.m
+  Adding sources/OLD_ SGSR_utils/strfun/StrMat2nstr.m
+  Adding sources/OLD_ SGSR_utils/strfun/strSubst.m
+  Adding sources/OLD_ SGSR_utils/strfun/textwrite.m
+  Adding sources/OLD_ SGSR_utils/strfun/trimspace.m
+  Adding sources/OLD_ SGSR_utils/strfun/Words2cell.m
+  Adding sources/OLD_ SGSR_utils/strfun/zeropaddedNumberStr.m
+  Adding sources/OLD_ SGSR_utils/tools/
+  Adding sources/OLD_ SGSR_utils/tools/aa.m
+  Adding sources/OLD_ SGSR_utils/tools/aEd.m
+  Adding sources/OLD_ SGSR_utils/tools/allPanels.m
+  Adding sources/OLD_ SGSR_utils/tools/backup.m
+  Adding sources/OLD_ SGSR_utils/tools/backupdir.m
+  Adding sources/OLD_ SGSR_utils/tools/B_is_Bigscreen.m
+  Adding sources/OLD_ SGSR_utils/tools/CAVtoPRB.m
+  Adding sources/OLD_ SGSR_utils/tools/CompressSGSRfile.m
+  Adding sources/OLD_ SGSR_utils/tools/dataBU.m
+  Adding sources/OLD_ SGSR_utils/tools/dd.m
+  Adding sources/OLD_ SGSR_utils/tools/DeleteAllFigures.m
+  Adding sources/OLD_ SGSR_utils/tools/devBU.m
+  Adding sources/OLD_ SGSR_utils/tools/dispAnything.m
+  Adding sources/OLD_ SGSR_utils/tools/dispStruct.m
+  Adding sources/OLD_ SGSR_utils/tools/docBU.m
+  Adding sources/OLD_ SGSR_utils/tools/dp.m
+  Adding sources/OLD_ SGSR_utils/tools/dplot.m
+  Adding sources/OLD_ SGSR_utils/tools/ET1calibInterval.m
+  Adding sources/OLD_ SGSR_utils/tools/F1.M
+  Adding sources/OLD_ SGSR_utils/tools/F2.M
+  Adding sources/OLD_ SGSR_utils/tools/F3.M
+  Adding sources/OLD_ SGSR_utils/tools/F4.M
+  Adding sources/OLD_ SGSR_utils/tools/F5.M
+  Adding sources/OLD_ SGSR_utils/tools/F6.M
+  Adding sources/OLD_ SGSR_utils/tools/F7.M
+  Adding sources/OLD_ SGSR_utils/tools/F8.M
+  Adding sources/OLD_ SGSR_utils/tools/F9.M
+  Adding sources/OLD_ SGSR_utils/tools/figsave.m
+  Adding sources/OLD_ SGSR_utils/tools/fileTree.m
+  Adding sources/OLD_ SGSR_utils/tools/getslope.m
+  Adding sources/OLD_ SGSR_utils/tools/ggcb.m
+  Adding sources/OLD_ SGSR_utils/tools/ggcopy.m
+  Adding sources/OLD_ SGSR_utils/tools/ggcpmenu.m
+  Adding sources/OLD_ SGSR_utils/tools/ggdel.M
+  Adding sources/OLD_ SGSR_utils/tools/gget.m
+  Adding sources/OLD_ SGSR_utils/tools/ggfit.m
+  Adding sources/OLD_ SGSR_utils/tools/gghasPrompt.m
+  Adding sources/OLD_ SGSR_utils/tools/gghasUnit.m
+  Adding sources/OLD_ SGSR_utils/tools/GGHOR.M
+  Adding sources/OLD_ SGSR_utils/tools/ggleft.m
+  Adding sources/OLD_ SGSR_utils/tools/ggmark.m
+  Adding sources/OLD_ SGSR_utils/tools/ggmove.m
+  Adding sources/OLD_ SGSR_utils/tools/ggpaste.m
+  Adding sources/OLD_ SGSR_utils/tools/ggpos.m
+  Adding sources/OLD_ SGSR_utils/tools/ggren.M
+  Adding sources/OLD_ SGSR_utils/tools/GGRETAG.M
+  Adding sources/OLD_ SGSR_utils/tools/ggset.m
+  Adding sources/OLD_ SGSR_utils/tools/ggstr.m
+  Adding sources/OLD_ SGSR_utils/tools/GGTAG.M
+  Adding sources/OLD_ SGSR_utils/tools/ggtags.m
+  Adding sources/OLD_ SGSR_utils/tools/ggtool.m
+  Adding sources/OLD_ SGSR_utils/tools/ggtoss.m
+  Adding sources/OLD_ SGSR_utils/tools/gl.m
+  Adding sources/OLD_ SGSR_utils/tools/grabPos.m
+  Adding sources/OLD_ SGSR_utils/tools/ll.m
+  Adding sources/OLD_ SGSR_utils/tools/lls.m
+  Adding sources/OLD_ SGSR_utils/tools/locBU.m
+  Adding sources/OLD_ SGSR_utils/tools/lsEd.m
+  Adding sources/OLD_ SGSR_utils/tools/MHBU.m
+  Adding sources/OLD_ SGSR_utils/tools/mlsigBU.m
+  Adding sources/OLD_ SGSR_utils/tools/mm.m
+  Adding sources/OLD_ SGSR_utils/tools/mo.m
+  Adding sources/OLD_ SGSR_utils/tools/mtype.m
+  Adding sources/OLD_ SGSR_utils/tools/mvEd.m
+  Adding sources/OLD_ SGSR_utils/tools/netcheck.m
+  Adding sources/OLD_ SGSR_utils/tools/NTPsync.m
+  Adding sources/OLD_ SGSR_utils/tools/nwEd.m
+  Adding sources/OLD_ SGSR_utils/tools/ohio.m
+  Adding sources/OLD_ SGSR_utils/tools/oo.m
+  Adding sources/OLD_ SGSR_utils/tools/pasteToFig.m
+  Adding sources/OLD_ SGSR_utils/tools/posistr.m
+  Adding sources/OLD_ SGSR_utils/tools/refreshPath.m
+  Adding sources/OLD_ SGSR_utils/tools/RGET.M
+  Adding sources/OLD_ SGSR_utils/tools/rsEd.m
+  Adding sources/OLD_ SGSR_utils/tools/SGSRdistr.m
+  Adding sources/OLD_ SGSR_utils/tools/SGSRversion.m
+  Adding sources/OLD_ SGSR_utils/tools/ss.m
+  Adding sources/OLD_ SGSR_utils/tools/StaComp.m
+  Adding sources/OLD_ SGSR_utils/tools/steal.m
+  Adding sources/OLD_ SGSR_utils/tools/synchData.m
+  Adding sources/OLD_ SGSR_utils/tools/syncSnail.m
+  Adding sources/OLD_ SGSR_utils/tools/sys3bu.m
+  Adding sources/OLD_ SGSR_utils/tools/S_is_Kiwi.m
+  Adding sources/OLD_ SGSR_utils/tools/tomov3.m
+  Adding sources/OLD_ SGSR_utils/tools/towards.m
+  Adding sources/OLD_ SGSR_utils/tools/tt.m
+  Adding sources/OLD_ SGSR_utils/tools/uisave.m
+  Adding sources/OLD_ SGSR_utils/tools/upload.m
+  Adding sources/OLD_ SGSR_utils/tools/xdplot.m
+  Adding sources/OLD_ SGSR_utils/tools/XPLOT.M
+  Adding sources/OLD_ SGSR_utils/tools/XSPLOT.M
+  Adding sources/OLD_ SGSR_utils/UI/
+  Adding sources/OLD_ SGSR_utils/UI/AddLineToFile.m
+  Adding sources/OLD_ SGSR_utils/UI/AddToUImessStack.m
+  Adding sources/OLD_ SGSR_utils/UI/allObjectsInFigure.m
+  Adding sources/OLD_ SGSR_utils/UI/beep.m
+  Adding sources/OLD_ SGSR_utils/UI/beeps.m
+  Adding sources/OLD_ SGSR_utils/UI/CleanUImessStack.m
+  Adding sources/OLD_ SGSR_utils/UI/CollectMenuDefaultValues.m
+  Adding sources/OLD_ SGSR_utils/UI/CollectMenuHandles.m
+  Adding sources/OLD_ SGSR_utils/UI/CopyOfMenuStatus.m
+  Adding sources/OLD_ SGSR_utils/UI/DeclareMenuDefaults.m
+  Adding sources/OLD_ SGSR_utils/UI/DefKeyPressFnc.m
+  Adding sources/OLD_ SGSR_utils/UI/DialogDefaults.m
+  Adding sources/OLD_ SGSR_utils/UI/DualButtonToggle.m
+  Adding sources/OLD_ SGSR_utils/UI/EnableModal.m
+  Adding sources/OLD_ SGSR_utils/UI/enableUIgroup.m
+  Adding sources/OLD_ SGSR_utils/UI/FallAsleep.m
+  Adding sources/OLD_ SGSR_utils/UI/fixedOpenFig.m
+  Adding sources/OLD_ SGSR_utils/UI/getstring.m
+  Adding sources/OLD_ SGSR_utils/UI/getUIhandle.m
+  Adding sources/OLD_ SGSR_utils/UI/getUIhandles.m
+  Adding sources/OLD_ SGSR_utils/UI/getUIprop.m
+  Adding sources/OLD_ SGSR_utils/UI/getWildCardTags.m
+  Adding sources/OLD_ SGSR_utils/UI/ggcmenu.m
+  Adding sources/OLD_ SGSR_utils/UI/hasUIprop.m
+  Adding sources/OLD_ SGSR_utils/UI/initwarnchoice1.m
+  Adding sources/OLD_ SGSR_utils/UI/jget.m
+  Adding sources/OLD_ SGSR_utils/UI/launchAndReturn.m
+  Adding sources/OLD_ SGSR_utils/UI/LineCutandPaste.m
+  Adding sources/OLD_ SGSR_utils/UI/MenuButtonMatch.m
+  Adding sources/OLD_ SGSR_utils/UI/MENUbuttonToggle.m
+  Adding sources/OLD_ SGSR_utils/UI/Menukeypressfunction.m
+  Adding sources/OLD_ SGSR_utils/UI/MenuStatusName.m
+  Adding sources/OLD_ SGSR_utils/UI/MENUyesNoSelect.m
+  Adding sources/OLD_ SGSR_utils/UI/MessageHandle.m
+  Adding sources/OLD_ SGSR_utils/UI/mypointershape.m
+  Adding sources/OLD_ SGSR_utils/UI/newDialog.m
+  Adding sources/OLD_ SGSR_utils/UI/NewUitoggle.m
+  Adding sources/OLD_ SGSR_utils/UI/NoCloseDLG.m
+  Adding sources/OLD_ SGSR_utils/UI/OpenDialog.m
+  Adding sources/OLD_ SGSR_utils/UI/OpenUImenu.m
+  Adding sources/OLD_ SGSR_utils/UI/parentFigureHandle.m
+  Adding sources/OLD_ SGSR_utils/UI/repaint.m
+  Adding sources/OLD_ SGSR_utils/UI/repaintWait.m
+  Adding sources/OLD_ SGSR_utils/UI/RepositionFig.m
+  Adding sources/OLD_ SGSR_utils/UI/RestoreMenuDefaults.m
+  Adding sources/OLD_ SGSR_utils/UI/SaveMenuDefaults.m
+  Adding sources/OLD_ SGSR_utils/UI/SetDirectories.m
+  Adding sources/OLD_ SGSR_utils/UI/setDirsMenu.fig
+  Adding sources/OLD_ SGSR_utils/UI/setstring.m
+  Adding sources/OLD_ SGSR_utils/UI/setUIprop.m
+  Adding sources/OLD_ SGSR_utils/UI/STIMMENUchannelSelect.m
+  Adding sources/OLD_ SGSR_utils/UI/textcolors.m
+  Adding sources/OLD_ SGSR_utils/UI/textRed.m
+  Adding sources/OLD_ SGSR_utils/UI/ToPrevFig.m
+  Adding sources/OLD_ SGSR_utils/UI/UIcounter.m
+  Adding sources/OLD_ SGSR_utils/UI/UidoubleFromStr.m
+  Adding sources/OLD_ SGSR_utils/UI/UIenable.m
+  Adding sources/OLD_ SGSR_utils/UI/UIerror.M
+  Adding sources/OLD_ SGSR_utils/UI/uigetfolder.m
+  Adding sources/OLD_ SGSR_utils/UI/uigetfolder_win32.dll
+  Adding sources/OLD_ SGSR_utils/UI/UIhandle.m
+  Adding sources/OLD_ SGSR_utils/UI/UIinfo.M
+  Adding sources/OLD_ SGSR_utils/UI/UIintFromToggle.m
+  Adding sources/OLD_ SGSR_utils/UI/UIMESS.M
+  Adding sources/OLD_ SGSR_utils/UI/uimv.m
+  Adding sources/OLD_ SGSR_utils/UI/UISTR.M
+  Adding sources/OLD_ SGSR_utils/UI/UitextColor.m
+  Adding sources/OLD_ SGSR_utils/UI/uitoggle.m
+  Adding sources/OLD_ SGSR_utils/UI/UItwoButtons.m
+  Adding sources/OLD_ SGSR_utils/UI/UIwarn.M
+  Adding sources/OLD_ SGSR_utils/UI/UpdateMenuDefaultValues.m
+  Adding sources/OLD_ SGSR_utils/UI/ViewDirectories.m
+  Adding sources/OLD_ SGSR_utils/UI/ViewDirsMenu.fig
+  Adding sources/OLD_ SGSR_utils/UI/ViewTextInNotePad.m
+  Adding sources/OLD_ SGSR_utils/UI/WakeUp.m
+  Adding sources/OLD_ SGSR_utils/UI/warnchoice1.fig
+  Adding sources/OLD_ SGSR_utils/UI/warnchoice1.m
+  Adding sources/OLD_ SGSR_utils/UI/warnchoice1push.m
+  Adding sources/Phoenix/
+  Adding sources/Phoenix/@floco/
+  Adding sources/Phoenix/@floco/AddExpr.m
+  Adding sources/Phoenix/@floco/AddNode.m
+  Adding sources/Phoenix/@floco/disp.m
+  Adding sources/Phoenix/@floco/display.m
+  Adding sources/Phoenix/@floco/finalize.m
+  Adding sources/Phoenix/@floco/floco.m
+  Adding sources/Phoenix/@floco/GoWithTheFlow.m
+  Adding sources/Phoenix/@parameter/
+  Adding sources/Phoenix/@parameter/defaultInterpreter.m
+  Adding sources/Phoenix/@parameter/disp.m
+  Adding sources/Phoenix/@parameter/display.m
+  Adding sources/Phoenix/@parameter/getValue.m
+  Adding sources/Phoenix/@parameter/isnumeric.m
+  Adding sources/Phoenix/@parameter/isvoid.m
+  Adding sources/Phoenix/@parameter/not.m
+  Adding sources/Phoenix/@parameter/parameter.m
+  Adding sources/Phoenix/@parameter/setValue.m
+  Adding sources/Phoenix/@parameter/subsasgn.m
+  Adding sources/Phoenix/@parameter/subsref.m
+  Adding sources/Phoenix/@parameter/xxxx.m
+  Adding sources/Phoenix/@paramset/
+  Adding sources/Phoenix/@paramset/AddActionButton.m
+  Adding sources/Phoenix/@paramset/AddInitCommand.m
+  Adding sources/Phoenix/@paramset/AddMenu.m
+  Adding sources/Phoenix/@paramset/AddMenuItem.m
+  Adding sources/Phoenix/@paramset/AddOUIitem.m
+  Adding sources/Phoenix/@paramset/AddParam.m
+  Adding sources/Phoenix/@paramset/DefineQuery.m
+  Adding sources/Phoenix/@paramset/DefineReporter.m
+  Adding sources/Phoenix/@paramset/disp.m
+  Adding sources/Phoenix/@paramset/display.m
+  Adding sources/Phoenix/@paramset/hasItem.m
+  Adding sources/Phoenix/@paramset/hasParam.m
+  Adding sources/Phoenix/@paramset/hasQuery.m
+  Adding sources/Phoenix/@paramset/hasReporter.m
+  Adding sources/Phoenix/@paramset/InitOUIGroup.m
+  Adding sources/Phoenix/@paramset/InitQueryGroup.m
+  Adding sources/Phoenix/@paramset/isvoid.m
+  Adding sources/Phoenix/@paramset/names.m
+  Adding sources/Phoenix/@paramset/ParamIfPresent.m
+  Adding sources/Phoenix/@paramset/ParamIndex.m
+  Adding sources/Phoenix/@paramset/paramlist.m
+  Adding sources/Phoenix/@paramset/paramset.m
+  Adding sources/Phoenix/@paramset/paramsFromStruct.m
+  Adding sources/Phoenix/@paramset/SeeSaw.m
+  Adding sources/Phoenix/@paramset/subsasgn.m
+  Adding sources/Phoenix/@paramset/subsref.m
+  Adding sources/Phoenix/@paramset/types.m
+  Adding sources/Phoenix/@paramset/xxxx.m
+  Adding sources/Phoenix/@query/
+  Adding sources/Phoenix/@query/disp.m
+  Adding sources/Phoenix/@query/display.m
+  Adding sources/Phoenix/@query/isvoid.m
+  Adding sources/Phoenix/@query/qdraw.m
+  Adding sources/Phoenix/@query/query.m
+  Adding sources/Phoenix/@query/Styles.m
+  Adding sources/Phoenix/@query/subsasgn.m
+  Adding sources/Phoenix/@query/subsref.m
+  Adding sources/Phoenix/@query/xxxx.m
+  Adding sources/Phoenix/@stimulus/
+  Adding sources/Phoenix/@stimulus/addChunk.m
+  Adding sources/Phoenix/@stimulus/combineDAshot.m
+  Adding sources/Phoenix/@stimulus/defineDAshot.m
+  Adding sources/Phoenix/@stimulus/defineWaveform.m
+  Adding sources/Phoenix/@stimulus/disp.m
+  Adding sources/Phoenix/@stimulus/display.m
+  Adding sources/Phoenix/@stimulus/isvoid.m
+  Adding sources/Phoenix/@stimulus/play.m
+  Adding sources/Phoenix/@stimulus/plot.m
+  Adding sources/Phoenix/@stimulus/sam2ram.m
+  Adding sources/Phoenix/@stimulus/stimulus.m
+  Adding sources/Phoenix/@stimulus/subsref.m
+  Adding sources/Phoenix/@stimulus/xxxx.m
+  Adding sources/Phoenix/Doc/
+  Adding sources/Phoenix/Doc/PhoenixSpecs.doc
+  Adding sources/Phoenix/EyeTrack/
+  Adding sources/Phoenix/EyeTrack/EyeDisplay.m
+  Adding sources/Phoenix/EyeTrack/fixTrain.m
+  Adding sources/Phoenix/EyeTrack/IscanDArange.m
+  Adding sources/Phoenix/Init/
+  Adding sources/Phoenix/Init/PhoenixRootdir.m
+  Adding sources/Phoenix/Init/setupDir.m
+  Adding sources/Phoenix/Init/startup.m
+  Adding sources/Phoenix/OUI/
+  Adding sources/Phoenix/OUI/DAchanNaming.m
+  Adding sources/Phoenix/OUI/initOUIstruct.m
+  Adding sources/Phoenix/OUI/OUIdata.m
+  Adding sources/Phoenix/OUI/OUIdefault.m
+  Adding sources/Phoenix/OUI/OUIdefaultsFilename.m
+  Adding sources/Phoenix/OUI/OUIdepvarInfo.m
+  Adding sources/Phoenix/OUI/OUIerror.m
+  Adding sources/Phoenix/OUI/OUIfill.m
+  Adding sources/Phoenix/OUI/OUIhandle.m
+  Adding sources/Phoenix/OUI/OUIitem.m
+  Adding sources/Phoenix/OUI/OUIitemContextMenuCallback.m
+  Adding sources/Phoenix/OUI/OUIpos.m
+  Adding sources/Phoenix/OUI/OUIreport.m
+  Adding sources/Phoenix/OUI/paramOUI.m
+  Adding sources/Phoenix/OUI/paramOUIcallback.m
+  Adding sources/Phoenix/OUI/ReadOUI.m
+  Adding sources/Phoenix/OUI/SwitchStateNaming.m
+  Adding sources/Phoenix/OUI/toggleCallback.m
+  Adding sources/Phoenix/OUI/VarMenuItem.m
+  Adding sources/Phoenix/SampleStimulusDef.m
+  Adding sources/Phoenix/SampleStimulusDefinition.m
+  Adding sources/Phoenix/setupInfo/
+  Adding sources/Phoenix/setupInfo/computerID.PNXsetup
+  Adding sources/Phoenix/setupInfo/sys3setup_KULAK.PNXsetup
+  Adding sources/Phoenix/stimPrepare/
+  Adding sources/Phoenix/stimPrepare/DAchanStats.m
+  Adding sources/Phoenix/stimPrepare/DAhalt.m
+  Adding sources/Phoenix/stimPrepare/DAwait.m
+  Adding sources/Phoenix/stimPrepare/Experiment.m
+  Adding sources/Phoenix/stimPrepare/GenericParamSubset.m
+  Adding sources/Phoenix/stimPrepare/InitDataset.m
+  Adding sources/Phoenix/stimPrepare/LevelAdjustment.m
+  Adding sources/Phoenix/stimPrepare/LevelReport.m
+  Adding sources/Phoenix/stimPrepare/OUIcheckDurations.m
+  Adding sources/Phoenix/stimPrepare/OUIcheckStimulusFreqs.m
+  Adding sources/Phoenix/stimPrepare/OUIfrequencySweep.m
+  Adding sources/Phoenix/stimPrepare/SimpleGate.m
+  Adding sources/Phoenix/stimPrepare/StimCheckerXXX.m
+  Adding sources/Phoenix/stimPrepare/StimDurReport.m
+  Adding sources/Phoenix/stimPrepare/stimOUI.m
+  Adding sources/Phoenix/stimPrepare/StimulusContext.m
+  Adding sources/Phoenix/stimPrepare/StimulusDashboard.m
+  Adding sources/Phoenix/stimPrepare/sys3/
+  Adding sources/Phoenix/stimPrepare/sys3/BoardLED.m
+  Adding sources/Phoenix/stimPrepare/sys3/BoardLedOff.m
+  Adding sources/Phoenix/stimPrepare/sys3/BoardLedOn.m
+  Adding sources/Phoenix/stimPrepare/sys3/fixledcontrol.m
+  Adding sources/Phoenix/stimPrepare/sys3/FixLEDdelay.m
+  Adding sources/Phoenix/stimPrepare/sys3/InitBoardLeds.m
+  Adding sources/Phoenix/stimPrepare/sys3/obsolete/
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/contents.m
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/debounce.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/debounce.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/Eyetrack.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/EyetrackBACKUP3.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/fixledcontrol.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/FIXtraining.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/LEDcontrol.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/LEDcontrol.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/muxtest.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_playtest.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_playtest.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_play_waveforms.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_play_waveforms.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_pulsegen.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_pulsegen.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_ramped_tone.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_ramped_tone.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_ramped_tone2.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_ramped_tone2.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_sequencedPlay.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_sequencedPlay.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_tonetest.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rp_tone_out.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rv_count_events.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rv_count_events.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rv_delaychk.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rv_delaychk.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rv_TimeStamp.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/rv_TimeStamp.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/slopetest.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/SPARE_PARTS.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/Untitled.rco
+  Adding sources/Phoenix/stimPrepare/sys3/RPvds/Untitled.rpx
+  Adding sources/Phoenix/stimPrepare/sys3/SeqPlayGo.m
+  Adding sources/Phoenix/stimPrepare/sys3/SeqPlayLoad.m
+  Adding sources/Phoenix/stimPrepare/sys3/SeqPlayOrder.m
+  Adding sources/Phoenix/stimPrepare/sys3/SeqPlayPrep.m
+  Adding sources/Phoenix/stimPrepare/sys3/SeqPlayStop.m
+  Adding sources/Phoenix/stimPrepare/sys3/SeqPlayTimeStamp.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3DacDelay.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3dev.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3getpar.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3halt.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3loadwaveforms.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3orderwaveforms.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3PA5.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3playwaveforms.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3read.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3run.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3setPA5.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3setpar.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3status.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3trig.m
+  Adding sources/Phoenix/stimPrepare/sys3/sys3write.m
+  Adding sources/Phoenix/stimPrepare/TDTsystem.m
+  Adding sources/Phoenix/stimPrepare/theStimuli/
+  Adding sources/Phoenix/stimPrepare/theStimuli/StimDefinitionFS.m
+  Adding sources/Phoenix/stimPrepare/ToneComplex.m
+  Adding sources/Phoenix/stimPrepare/ToneComplexCalib.m
+  Adding sources/Phoenix/stimPrepare/ToneComplexLevelChecking.m
+  Adding sources/Phoenix/stimPrepare/toneStorage.m
+  Adding sources/Phoenix/stimPrepare/TTLamplitude.m
+  Adding sources/Phoenix/Sys3/
+  Adding sources/Phoenix/Sys3/changelog.txt
+  Adding sources/Phoenix/Sys3/obsolete/
+  Adding sources/Phoenix/Sys3/RX6timing/
+  Adding sources/Phoenix/Sys3/RX6timing/rx6testtiming.m
+  Adding sources/Phoenix/Sys3/SeqPlay/
+  Adding sources/Phoenix/Sys3/SeqPlay/contents.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplaycheckcircuitid.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplaydiag.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplaygo.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplayhalt.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplayinfo.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplayinit.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplaylist.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplayplot.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplayreview.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplaystatus.m
+  Adding sources/Phoenix/Sys3/SeqPlay/seqplayupload.m
+  Adding sources/Phoenix/Sys3/SeqPlay/sing.m
+  Adding sources/Phoenix/Sys3/sys3 help/
+  Adding sources/Phoenix/Sys3/sys3 help/basicfunctions.htm
+  Adding sources/Phoenix/Sys3/sys3 help/icon1.gif
+  Adding sources/Phoenix/Sys3/sys3 help/icon2.gif
+  Adding sources/Phoenix/Sys3/sys3 help/index.html
+  Adding sources/Phoenix/Sys3/sys3 help/left.html
+  Adding sources/Phoenix/Sys3/sys3 help/overview.htm
+  Adding sources/Phoenix/Sys3/sys3 help/overview1.png
+  Adding sources/Phoenix/Sys3/sys3 help/playsequences.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6getstamps.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6playseqplaylist.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6seqplaygo.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6seqplayhalt.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6seqplayinit.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6seqplayplot.m
+  Adding sources/Phoenix/Sys3/sys3 help/rx6seqplaystatus.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6seqplayupload.htm
+  Adding sources/Phoenix/Sys3/sys3 help/rx6testtiming.htm
+  Adding sources/Phoenix/Sys3/sys3 help/setpa5.htm
+  Adding sources/Phoenix/Sys3/sys3 help/synchronisationandtiming.htm
+  Adding sources/Phoenix/Sys3/sys3 help/synchronisationandtiming1.png
+  Adding sources/Phoenix/Sys3/sys3 help/synchronisationandtiming2.png
+  Adding sources/Phoenix/Sys3/sys3 help/sys3cofdir.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3dev.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3devicelist.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3getpar.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3halt.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3loadcof.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3read.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3run.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3setpar.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3status.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3trig.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3write.htm
+  Adding sources/Phoenix/Sys3/sys3 help/sys3zero.htm
+  Adding sources/Phoenix/Sys3/sys3basics/
+  Adding sources/Phoenix/Sys3/sys3basics/sys3cofdir.m
+  Adding sources/Phoenix/Sys3/sys3basics/sys3dev.m
+  Adding sources/Phoenix/Sys3/sys3basics/sys3devicelist.m
+  Adding sources/Phoenix/Sys3/sys3basics/sys3help.m
+  Adding sources/Phoenix/Sys3/sys3basics/sys3loadcof.m
+  Adding sources/Phoenix/Sys3/sys3help/
+  Adding sources/Phoenix/Sys3/sys3help/basicfunctions.htm
+  Adding sources/Phoenix/Sys3/sys3help/debugfunctions.htm
+  Adding sources/Phoenix/Sys3/sys3help/icon1.gif
+  Adding sources/Phoenix/Sys3/sys3help/icon2.gif
+  Adding sources/Phoenix/Sys3/sys3help/index.html
+  Adding sources/Phoenix/Sys3/sys3help/left.html
+  Adding sources/Phoenix/Sys3/sys3help/overview.htm
+  Adding sources/Phoenix/Sys3/sys3help/overview1.png
+  Adding sources/Phoenix/Sys3/sys3help/playsequences.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6getstamps.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6playseqplaylist.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6seqplaygo.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6seqplayhalt.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6seqplayinit.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6seqplaystatus.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6seqplayupload.htm
+  Adding sources/Phoenix/Sys3/sys3help/rx6testtiming.htm
+  Adding sources/Phoenix/Sys3/sys3help/seqplaycheckcircuitid.htm
+  Adding sources/Phoenix/Sys3/sys3help/seqplaydiag.htm
+  Adding sources/Phoenix/Sys3/sys3help/seqplayinfo.htm
+  Adding sources/Phoenix/Sys3/sys3help/seqplayplot.htm
+  Adding sources/Phoenix/Sys3/sys3help/seqplayreview.htm
+  Adding sources/Phoenix/Sys3/sys3help/setpa5.htm
+  Adding sources/Phoenix/Sys3/sys3help/synchronisationandtiming.htm
+  Adding sources/Phoenix/Sys3/sys3help/synchronisationandtiming1.png
+  Adding sources/Phoenix/Sys3/sys3help/synchronisationandtiming2.png
+  Adding sources/Phoenix/Sys3/sys3help/sys3cofdir.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3devicelist.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3getpar.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3halt.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3help.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3loadcof.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3read.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3run.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3setpar.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3status.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3trig.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3write.htm
+  Adding sources/Phoenix/Sys3/sys3help/sys3zero.htm
+  Adding sources/Phoenix/theory/
+  Adding sources/Phoenix/theory/rwalk.m
+  Adding sources/SGSR_utils/
+  Adding sources/SGSR_utils/conversion/
+  Adding sources/SGSR_utils/conversion/A2DB.M
+  Adding sources/SGSR_utils/conversion/AbsTextPos.m
+  Adding sources/SGSR_utils/conversion/ar2cell.m
+  Adding sources/SGSR_utils/conversion/bitpres.m
+  Adding sources/SGSR_utils/conversion/ByteRep.m
+  Adding sources/SGSR_utils/conversion/cell2list.m
+  Adding sources/SGSR_utils/conversion/cellNumel.m
+  Adding sources/SGSR_utils/conversion/channelChar.m
+  Adding sources/SGSR_utils/conversion/channelCount.m
+  Adding sources/SGSR_utils/conversion/channelName.m
+  Adding sources/SGSR_utils/conversion/channelNum.m
+  Adding sources/SGSR_utils/conversion/ChanOfStruct.m
+  Adding sources/SGSR_utils/conversion/CollectInStruct.m
+  Adding sources/SGSR_utils/conversion/columnize.m
+  Adding sources/SGSR_utils/conversion/combineStruct.m
+  Adding sources/SGSR_utils/conversion/CompareStruct.m
+  Adding sources/SGSR_utils/conversion/DB2A.M
+  Adding sources/SGSR_utils/conversion/DB2P.M
+  Adding sources/SGSR_utils/conversion/dealStruct2cell.m
+  Adding sources/SGSR_utils/conversion/DealStructCommandStr.m
+  Adding sources/SGSR_utils/conversion/deciRound.m
+  Adding sources/SGSR_utils/conversion/delayPhase.m
+  Adding sources/SGSR_utils/conversion/DiffMatrix.m
+  Adding sources/SGSR_utils/conversion/DrhoThreshold.M
+  Adding sources/SGSR_utils/conversion/EqualizeSize.m
+  Adding sources/SGSR_utils/conversion/ERB2Freq.M
+  Adding sources/SGSR_utils/conversion/FirstIndexWithValue.m
+  Adding sources/SGSR_utils/conversion/Freq2ERB.M
+  Adding sources/SGSR_utils/conversion/getfieldCI.m
+  Adding sources/SGSR_utils/conversion/getFieldOrdef.m
+  Adding sources/SGSR_utils/conversion/greenwood.m
+  Adding sources/SGSR_utils/conversion/hcatstruct.m
+  Adding sources/SGSR_utils/conversion/ID2iseq.m
+  Adding sources/SGSR_utils/conversion/iseq2id.m
+  Adding sources/SGSR_utils/conversion/log2lut.m
+  Adding sources/SGSR_utils/conversion/lowFacApprox.m
+  Adding sources/SGSR_utils/conversion/MultOfStruct.m
+  Adding sources/SGSR_utils/conversion/nthElement.m
+  Adding sources/SGSR_utils/conversion/NthElemOfStruct.m
+  Adding sources/SGSR_utils/conversion/P2DB.M
+  Adding sources/SGSR_utils/conversion/paramString.m
+  Adding sources/SGSR_utils/conversion/ParseFileName.m
+  Adding sources/SGSR_utils/conversion/polydiff.m
+  Adding sources/SGSR_utils/conversion/RemoveEmptyCells.m
+  Adding sources/SGSR_utils/conversion/Rho2Dprime.M
+  Adding sources/SGSR_utils/conversion/rms.m
+  Adding sources/SGSR_utils/conversion/rmsdb.m
+  Adding sources/SGSR_utils/conversion/SeedCodeString.m
+  Adding sources/SGSR_utils/conversion/SeedToStr.m
+  Adding sources/SGSR_utils/conversion/SelectFromStruct.m
+  Adding sources/SGSR_utils/conversion/selpos.m
+  Adding sources/SGSR_utils/conversion/StrToSeed.m
+  Adding sources/SGSR_utils/conversion/StructComp.m
+  Adding sources/SGSR_utils/conversion/structOfStruct.m
+  Adding sources/SGSR_utils/conversion/vcatstruct.m
+  Adding sources/SGSR_utils/conversion/VectorZip.m
+  Adding sources/SGSR_utils/Kmail/
+  Adding sources/SGSR_utils/Kmail/BroadcastMessage.m
+  Adding sources/SGSR_utils/Kmail/CheckMessages.m
+  Adding sources/SGSR_utils/Kmail/FlushBroadcasts.m
+  Adding sources/SGSR_utils/Kmail/FlushMessages.m
+  Adding sources/SGSR_utils/Kmail/GetAllMessages.m
+  Adding sources/SGSR_utils/Kmail/GetBroadcasts.m
+  Adding sources/SGSR_utils/Kmail/GetMessages.m
+  Adding sources/SGSR_utils/Kmail/KMailServer.m
+  Adding sources/SGSR_utils/Kmail/KMailStatus.m
+  Adding sources/SGSR_utils/Kmail/Kmail_syntax.m
+  Adding sources/SGSR_utils/Kmail/MessagePending.m
+  Adding sources/SGSR_utils/Kmail/SendMessage.m
+  Adding sources/SGSR_utils/misc/
+  Adding sources/SGSR_utils/misc/AP2present.m
+  Adding sources/SGSR_utils/misc/AreaWithinCurve.m
+  Adding sources/SGSR_utils/misc/atBigscreen.m
+  Adding sources/SGSR_utils/misc/atCel.m
+  Adding sources/SGSR_utils/misc/atEe1285a.m
+  Adding sources/SGSR_utils/misc/atKiwi.m
+  Adding sources/SGSR_utils/misc/atOhr.m
+  Adding sources/SGSR_utils/misc/atOor.m
+  Adding sources/SGSR_utils/misc/atOto.m
+  Adding sources/SGSR_utils/misc/atSikio.m
+  Adding sources/SGSR_utils/misc/atSnail.m
+  Adding sources/SGSR_utils/misc/bdataDir.m
+  Adding sources/SGSR_utils/misc/betwixt.m
+  Adding sources/SGSR_utils/misc/boltzmann.m
+  Adding sources/SGSR_utils/misc/calibDir.m
+  Adding sources/SGSR_utils/misc/CheckRealNumber.m
+  Adding sources/SGSR_utils/misc/Clip.m
+  Adding sources/SGSR_utils/misc/CompuName.m
+  Adding sources/SGSR_utils/misc/ConstrMin.m
+  Adding sources/SGSR_utils/misc/databrowseDir.m
+  Adding sources/SGSR_utils/misc/dataDir.m
+  Adding sources/SGSR_utils/misc/deNaN.m
+  Adding sources/SGSR_utils/misc/dsiz.m
+  Adding sources/SGSR_utils/misc/DY_QMtrans.m
+  Adding sources/SGSR_utils/misc/EmptyCacheFile.m
+  Adding sources/SGSR_utils/misc/EmptyStruct.m
+  Adding sources/SGSR_utils/misc/equalYlim.m
+  Adding sources/SGSR_utils/misc/ErrorOnNewRelease.m
+  Adding sources/SGSR_utils/misc/EuroXP.m
+  Adding sources/SGSR_utils/misc/EvalIfExist.m
+  Adding sources/SGSR_utils/misc/exportDir.m
+  Adding sources/SGSR_utils/misc/fracbin.m
+  Adding sources/SGSR_utils/misc/FromCacheFile.m
+  Adding sources/SGSR_utils/misc/getDistr.m
+  Adding sources/SGSR_utils/misc/getFieldsFromSetupFile.m
+  Adding sources/SGSR_utils/misc/harmApp.m
+  Adding sources/SGSR_utils/misc/inLeuven.m
+  Adding sources/SGSR_utils/misc/inRotterdam.m
+  Adding sources/SGSR_utils/misc/insegment.m
+  Adding sources/SGSR_utils/misc/inUtrecht.m
+  Adding sources/SGSR_utils/misc/IzeroSPL.m
+  Adding sources/SGSR_utils/misc/labbar.m
+  Adding sources/SGSR_utils/misc/leastBoringColumn.m
+  Adding sources/SGSR_utils/misc/Location.m
+  Adding sources/SGSR_utils/misc/MaxLength.m
+  Adding sources/SGSR_utils/misc/maxloc.m
+  Adding sources/SGSR_utils/misc/minloc.m
+  Adding sources/SGSR_utils/misc/mytic.m
+  Adding sources/SGSR_utils/misc/mytoc.m
+  Adding sources/SGSR_utils/misc/NDiff.m
+  Adding sources/SGSR_utils/misc/NfiltInsetup.m
+  Adding sources/SGSR_utils/misc/NrandNumbers.m
+  Adding sources/SGSR_utils/misc/NrandomSeeds.m
+  Adding sources/SGSR_utils/misc/nthCol.m
+  Adding sources/SGSR_utils/misc/NthPlotArg.m
+  Adding sources/SGSR_utils/misc/OnPatch.m
+  Adding sources/SGSR_utils/misc/patchArea.m
+  Adding sources/SGSR_utils/misc/patchdata.m
+  Adding sources/SGSR_utils/misc/planck.m
+  Adding sources/SGSR_utils/misc/ploco.m
+  Adding sources/SGSR_utils/misc/ploma.m
+  Adding sources/SGSR_utils/misc/plotcolors.m
+  Adding sources/SGSR_utils/misc/plotPanel.m
+  Adding sources/SGSR_utils/misc/pmask.m
+  Adding sources/SGSR_utils/misc/pZeroSPL.m
+  Adding sources/SGSR_utils/misc/qlegend.m
+  Adding sources/SGSR_utils/misc/QMtrans.m
+  Adding sources/SGSR_utils/misc/RandDotsWithinCurve.m
+  Adding sources/SGSR_utils/misc/reladev.m
+  Adding sources/SGSR_utils/misc/rhoAir.m
+  Adding sources/SGSR_utils/misc/runav.m
+  Adding sources/SGSR_utils/misc/saveFieldsInSetupFile.m
+  Adding sources/SGSR_utils/misc/SetCompuName.m
+  Adding sources/SGSR_utils/misc/SetRandState.m
+  Adding sources/SGSR_utils/misc/setupDir.m
+  Adding sources/SGSR_utils/misc/setupFile.m
+  Adding sources/SGSR_utils/misc/SGSRversiondir.m
+  Adding sources/SGSR_utils/misc/slight.m
+  Adding sources/SGSR_utils/misc/sortAccord.m
+  Adding sources/SGSR_utils/misc/sp.m
+  Adding sources/SGSR_utils/misc/spin2vec.m
+  Adding sources/SGSR_utils/misc/ssound.m
+  Adding sources/SGSR_utils/misc/staplot.m
+  Adding sources/SGSR_utils/misc/startupDir.m
+  Adding sources/SGSR_utils/misc/student_t.m
+  Adding sources/SGSR_utils/misc/SU2.m
+  Adding sources/SGSR_utils/misc/subPlotDivide.m
+  Adding sources/SGSR_utils/misc/substitute.m
+  Adding sources/SGSR_utils/misc/Swap.m
+  Adding sources/SGSR_utils/misc/TLine.m
+  Adding sources/SGSR_utils/misc/ToCacheFile.m
+  Adding sources/SGSR_utils/misc/trianstats.m
+  Adding sources/SGSR_utils/misc/UIdefDir.m
+  Adding sources/SGSR_utils/misc/uiload.m
+  Adding sources/SGSR_utils/misc/updir.m
+  Adding sources/SGSR_utils/misc/var2base.m
+  Adding sources/SGSR_utils/misc/vec2spin.m
+  Adding sources/SGSR_utils/misc/VnextPow2.m
+  Adding sources/SGSR_utils/misc/warningState.m
+  Adding sources/SGSR_utils/misc/WavlistDir.m
+  Adding sources/SGSR_utils/misc/WithinCurve.m
+  Adding sources/SGSR_utils/misc/wpolyfit.m
+  Adding sources/SGSR_utils/misc/xlog125.m
+  Adding sources/SGSR_utils/misc/ylimstretch.m
+  Adding sources/SGSR_utils/misc/ylog125.m
+  Adding sources/SGSR_utils/misc/zair.m
+  Adding sources/SGSR_utils/strfun/
+  Adding sources/SGSR_utils/strfun/AddToTextBlock.m
+  Adding sources/SGSR_utils/strfun/CheckWriteFilename.m
+  Adding sources/SGSR_utils/strfun/dealString.m
+  Adding sources/SGSR_utils/strfun/decodekstr.m
+  Adding sources/SGSR_utils/strfun/durStr.m
+  Adding sources/SGSR_utils/strfun/FixLenStr.m
+  Adding sources/SGSR_utils/strfun/FreqString.m
+  Adding sources/SGSR_utils/strfun/FullFileName.m
+  Adding sources/SGSR_utils/strfun/iskeyword.m
+  Adding sources/SGSR_utils/strfun/isSamePath.m
+  Adding sources/SGSR_utils/strfun/isValidFileName.m
+  Adding sources/SGSR_utils/strfun/isvarname.m
+  Adding sources/SGSR_utils/strfun/MatchWildcard.m
+  Adding sources/SGSR_utils/strfun/nospace.m
+  Adding sources/SGSR_utils/strfun/num2sstr.m
+  Adding sources/SGSR_utils/strfun/num2strnchar.m
+  Adding sources/SGSR_utils/strfun/periodstr.m
+  Adding sources/SGSR_utils/strfun/readln.m
+  Adding sources/SGSR_utils/strfun/RemoveFileExtension.m
+  Adding sources/SGSR_utils/strfun/RemoveLastSlash.m
+  Adding sources/SGSR_utils/strfun/StrCompactSpace.m
+  Adding sources/SGSR_utils/strfun/StrEndsWith.m
+  Adding sources/SGSR_utils/strfun/strfindcell.m
+  Adding sources/SGSR_utils/strfun/StripError.m
+  Adding sources/SGSR_utils/strfun/StrLeftLim.m
+  Adding sources/SGSR_utils/strfun/StrMat2nstr.m
+  Adding sources/SGSR_utils/strfun/strSubst.m
+  Adding sources/SGSR_utils/strfun/textwrite.m
+  Adding sources/SGSR_utils/strfun/trimspace.m
+  Adding sources/SGSR_utils/strfun/Words2cell.m
+  Adding sources/SGSR_utils/strfun/zeropaddedNumberStr.m
+  Adding sources/SGSR_utils/tools/
+  Adding sources/SGSR_utils/tools/aa.m
+  Adding sources/SGSR_utils/tools/aEd.m
+  Adding sources/SGSR_utils/tools/allPanels.m
+  Adding sources/SGSR_utils/tools/backup.m
+  Adding sources/SGSR_utils/tools/backupdir.m
+  Adding sources/SGSR_utils/tools/B_is_Bigscreen.m
+  Adding sources/SGSR_utils/tools/CAVtoPRB.m
+  Adding sources/SGSR_utils/tools/CompressSGSRfile.m
+  Adding sources/SGSR_utils/tools/dataBU.m
+  Adding sources/SGSR_utils/tools/dd.m
+  Adding sources/SGSR_utils/tools/DeleteAllFigures.m
+  Adding sources/SGSR_utils/tools/devBU.m
+  Adding sources/SGSR_utils/tools/dispAnything.m
+  Adding sources/SGSR_utils/tools/dispStruct.m
+  Adding sources/SGSR_utils/tools/docBU.m
+  Adding sources/SGSR_utils/tools/dp.m
+  Adding sources/SGSR_utils/tools/dplot.m
+  Adding sources/SGSR_utils/tools/ET1calibInterval.m
+  Adding sources/SGSR_utils/tools/F1.M
+  Adding sources/SGSR_utils/tools/F2.M
+  Adding sources/SGSR_utils/tools/F3.M
+  Adding sources/SGSR_utils/tools/F4.M
+  Adding sources/SGSR_utils/tools/F5.M
+  Adding sources/SGSR_utils/tools/F6.M
+  Adding sources/SGSR_utils/tools/F7.M
+  Adding sources/SGSR_utils/tools/F8.M
+  Adding sources/SGSR_utils/tools/F9.M
+  Adding sources/SGSR_utils/tools/figsave.m
+  Adding sources/SGSR_utils/tools/fileTree.m
+  Adding sources/SGSR_utils/tools/getslope.m
+  Adding sources/SGSR_utils/tools/ggcb.m
+  Adding sources/SGSR_utils/tools/ggcopy.m
+  Adding sources/SGSR_utils/tools/ggcpmenu.m
+  Adding sources/SGSR_utils/tools/ggdel.M
+  Adding sources/SGSR_utils/tools/gget.m
+  Adding sources/SGSR_utils/tools/ggfit.m
+  Adding sources/SGSR_utils/tools/gghasPrompt.m
+  Adding sources/SGSR_utils/tools/gghasUnit.m
+  Adding sources/SGSR_utils/tools/GGHOR.M
+  Adding sources/SGSR_utils/tools/ggleft.m
+  Adding sources/SGSR_utils/tools/ggmark.m
+  Adding sources/SGSR_utils/tools/ggmove.m
+  Adding sources/SGSR_utils/tools/ggpaste.m
+  Adding sources/SGSR_utils/tools/ggpos.m
+  Adding sources/SGSR_utils/tools/ggren.M
+  Adding sources/SGSR_utils/tools/GGRETAG.M
+  Adding sources/SGSR_utils/tools/ggset.m
+  Adding sources/SGSR_utils/tools/ggstr.m
+  Adding sources/SGSR_utils/tools/GGTAG.M
+  Adding sources/SGSR_utils/tools/ggtags.m
+  Adding sources/SGSR_utils/tools/ggtool.m
+  Adding sources/SGSR_utils/tools/ggtoss.m
+  Adding sources/SGSR_utils/tools/gl.m
+  Adding sources/SGSR_utils/tools/grabPos.m
+  Adding sources/SGSR_utils/tools/ll.m
+  Adding sources/SGSR_utils/tools/lls.m
+  Adding sources/SGSR_utils/tools/locBU.m
+  Adding sources/SGSR_utils/tools/lsEd.m
+  Adding sources/SGSR_utils/tools/MHBU.m
+  Adding sources/SGSR_utils/tools/mlsigBU.m
+  Adding sources/SGSR_utils/tools/mm.m
+  Adding sources/SGSR_utils/tools/mo.m
+  Adding sources/SGSR_utils/tools/mtype.m
+  Adding sources/SGSR_utils/tools/mvEd.m
+  Adding sources/SGSR_utils/tools/netcheck.m
+  Adding sources/SGSR_utils/tools/NTPsync.m
+  Adding sources/SGSR_utils/tools/nwEd.m
+  Adding sources/SGSR_utils/tools/ohio.m
+  Adding sources/SGSR_utils/tools/oo.m
+  Adding sources/SGSR_utils/tools/pasteToFig.m
+  Adding sources/SGSR_utils/tools/posistr.m
+  Adding sources/SGSR_utils/tools/refreshPath.m
+  Adding sources/SGSR_utils/tools/RGET.M
+  Adding sources/SGSR_utils/tools/rsEd.m
+  Adding sources/SGSR_utils/tools/SGSRdistr.m
+  Adding sources/SGSR_utils/tools/SGSRversion.m
+  Adding sources/SGSR_utils/tools/ss.m
+  Adding sources/SGSR_utils/tools/StaComp.m
+  Adding sources/SGSR_utils/tools/steal.m
+  Adding sources/SGSR_utils/tools/synchData.m
+  Adding sources/SGSR_utils/tools/syncSnail.m
+  Adding sources/SGSR_utils/tools/sys3bu.m
+  Adding sources/SGSR_utils/tools/S_is_Kiwi.m
+  Adding sources/SGSR_utils/tools/tomov3.m
+  Adding sources/SGSR_utils/tools/towards.m
+  Adding sources/SGSR_utils/tools/tt.m
+  Adding sources/SGSR_utils/tools/uisave.m
+  Adding sources/SGSR_utils/tools/upload.m
+  Adding sources/SGSR_utils/tools/xdplot.m
+  Adding sources/SGSR_utils/tools/XPLOT.M
+  Adding sources/SGSR_utils/tools/XSPLOT.M
+  Adding sources/SGSR_utils/UI/
+  Adding sources/SGSR_utils/UI/AddLineToFile.m
+  Adding sources/SGSR_utils/UI/AddToUImessStack.m
+  Adding sources/SGSR_utils/UI/allObjectsInFigure.m
+  Adding sources/SGSR_utils/UI/beep.m
+  Adding sources/SGSR_utils/UI/beeps.m
+  Adding sources/SGSR_utils/UI/CleanUImessStack.m
+  Adding sources/SGSR_utils/UI/CollectMenuDefaultValues.m
+  Adding sources/SGSR_utils/UI/CollectMenuHandles.m
+  Adding sources/SGSR_utils/UI/CopyOfMenuStatus.m
+  Adding sources/SGSR_utils/UI/DeclareMenuDefaults.m
+  Adding sources/SGSR_utils/UI/DefKeyPressFnc.m
+  Adding sources/SGSR_utils/UI/DialogDefaults.m
+  Adding sources/SGSR_utils/UI/DualButtonToggle.m
+  Adding sources/SGSR_utils/UI/EnableModal.m
+  Adding sources/SGSR_utils/UI/enableUIgroup.m
+  Adding sources/SGSR_utils/UI/FallAsleep.m
+  Adding sources/SGSR_utils/UI/fixedOpenFig.m
+  Adding sources/SGSR_utils/UI/getstring.m
+  Adding sources/SGSR_utils/UI/getUIhandle.m
+  Adding sources/SGSR_utils/UI/getUIhandles.m
+  Adding sources/SGSR_utils/UI/getUIprop.m
+  Adding sources/SGSR_utils/UI/getWildCardTags.m
+  Adding sources/SGSR_utils/UI/ggcmenu.m
+  Adding sources/SGSR_utils/UI/hasUIprop.m
+  Adding sources/SGSR_utils/UI/initwarnchoice1.m
+  Adding sources/SGSR_utils/UI/jget.m
+  Adding sources/SGSR_utils/UI/launchAndReturn.m
+  Adding sources/SGSR_utils/UI/LineCutandPaste.m
+  Adding sources/SGSR_utils/UI/MenuButtonMatch.m
+  Adding sources/SGSR_utils/UI/MENUbuttonToggle.m
+  Adding sources/SGSR_utils/UI/Menukeypressfunction.m
+  Adding sources/SGSR_utils/UI/MenuStatusName.m
+  Adding sources/SGSR_utils/UI/MENUyesNoSelect.m
+  Adding sources/SGSR_utils/UI/MessageHandle.m
+  Adding sources/SGSR_utils/UI/mypointershape.m
+  Adding sources/SGSR_utils/UI/newDialog.m
+  Adding sources/SGSR_utils/UI/NewUitoggle.m
+  Adding sources/SGSR_utils/UI/NoCloseDLG.m
+  Adding sources/SGSR_utils/UI/OpenDialog.m
+  Adding sources/SGSR_utils/UI/OpenUImenu.m
+  Adding sources/SGSR_utils/UI/parentFigureHandle.m
+  Adding sources/SGSR_utils/UI/repaint.m
+  Adding sources/SGSR_utils/UI/repaintWait.m
+  Adding sources/SGSR_utils/UI/RepositionFig.m
+  Adding sources/SGSR_utils/UI/RestoreMenuDefaults.m
+  Adding sources/SGSR_utils/UI/SaveMenuDefaults.m
+  Adding sources/SGSR_utils/UI/SetDirectories.m
+  Adding sources/SGSR_utils/UI/setDirsMenu.fig
+  Adding sources/SGSR_utils/UI/setstring.m
+  Adding sources/SGSR_utils/UI/setUIprop.m
+  Adding sources/SGSR_utils/UI/STIMMENUchannelSelect.m
+  Adding sources/SGSR_utils/UI/textcolors.m
+  Adding sources/SGSR_utils/UI/textRed.m
+  Adding sources/SGSR_utils/UI/ToPrevFig.m
+  Adding sources/SGSR_utils/UI/UIcounter.m
+  Adding sources/SGSR_utils/UI/UidoubleFromStr.m
+  Adding sources/SGSR_utils/UI/UIenable.m
+  Adding sources/SGSR_utils/UI/UIerror.M
+  Adding sources/SGSR_utils/UI/uigetfolder.m
+  Adding sources/SGSR_utils/UI/uigetfolder_win32.dll
+  Adding sources/SGSR_utils/UI/UIhandle.m
+  Adding sources/SGSR_utils/UI/UIinfo.M
+  Adding sources/SGSR_utils/UI/UIintFromToggle.m
+  Adding sources/SGSR_utils/UI/UIMESS.M
+  Adding sources/SGSR_utils/UI/uimv.m
+  Adding sources/SGSR_utils/UI/UISTR.M
+  Adding sources/SGSR_utils/UI/UitextColor.m
+  Adding sources/SGSR_utils/UI/uitoggle.m
+  Adding sources/SGSR_utils/UI/UItwoButtons.m
+  Adding sources/SGSR_utils/UI/UIwarn.M
+  Adding sources/SGSR_utils/UI/UpdateMenuDefaultValues.m
+  Adding sources/SGSR_utils/UI/ViewDirectories.m
+  Adding sources/SGSR_utils/UI/ViewDirsMenu.fig
+  Adding sources/SGSR_utils/UI/ViewTextInNotePad.m
+  Adding sources/SGSR_utils/UI/WakeUp.m
+  Adding sources/SGSR_utils/UI/warnchoice1.fig
+  Adding sources/SGSR_utils/UI/warnchoice1.m
+  Adding sources/SGSR_utils/UI/warnchoice1push.m
+  Adding startupdir/
+  Adding startupdir/startup.m
+  Adding vs10/
+  Adding vs10/DataAnalysis/
+  Adding vs10/DataAnalysis/ZWOAE/
+  Adding vs10/DataAnalysis/ZWOAE/EvaDifMat.m
+  Adding vs10/DataAnalysis/ZWOAE/getZWOAEdata.m
+  Adding vs10/DataAnalysis/ZWOAE/ZWOAEphase.m
+  Adding vs10/DataAnalysis/ZWOAE/ZWOAEstruct.m
+  Adding vs10/DataAnalysis/ZWOAE/ZWOAEsummary.m
+  Adding vs10/init/
+  Adding vs10/init/EarlyPath.m
+  Adding vs10/obsolete/
+  Adding vs10/obsolete/rp2seqplay.rco
+  Adding vs10/obsolete/rp2seqplay.rpx
+  Adding vs10/obsolete/rx6seqplay.rco
+  Adding vs10/TDT/
+  Adding vs10/TDT/Leuven/
+  Adding vs10/TDT/Leuven/BoardLED.m
+  Adding vs10/TDT/rpvds/
+  Adding vs10/TDT/rpvds/BoardLedOff.m
+  Adding vs10/TDT/rpvds/BoardLedOn.m
+  Adding vs10/TDT/rpvds/fixledcontrol.m
+  Adding vs10/TDT/rpvds/FixLEDdelay.m
+  Adding vs10/TDT/rpvds/InitBoardLeds.m
+  Adding vs10/TDT/rpvds/rp2seqplay.rcx
+  Adding vs10/TDT/rpvds/test/
+  Adding vs10/TDT/rpvds/test/compidentify.rcx
+  Adding vs10/TDT/rpvds/test/demo.rcx
+  Adding vs10/TDT/rpvds/test/sourcefile.txt
+  Adding vs10/TDT/SeqPlayGo.m
+  Adding vs10/TDT/SeqPlayLoad.m
+  Adding vs10/TDT/SeqPlayOrder.m
+  Adding vs10/TDT/SeqPlayPrep.m
+  Adding vs10/TDT/SeqPlayStop.m
+  Adding vs10/TDT/SeqPlayTimeStamp.m
+  Adding vs10/TDT/sys3basics/
+  Adding vs10/TDT/sys3basics/contents.m
+  Adding vs10/TDT/sys3basics/private/
+  Adding vs10/TDT/sys3basics/private/private_CircuitInfo.m
+  Adding vs10/TDT/sys3basics/private/private_CircuitItems.m
+  Adding vs10/TDT/sys3basics/private/private_devicename.m
+  Adding vs10/TDT/sys3basics/RPvdSpath.m
+  Adding vs10/TDT/sys3basics/sys3CircuitInfo.m
+  Adding vs10/TDT/sys3basics/sys3defaultdev.m
+  Adding vs10/TDT/sys3basics/sys3dev.m
+  Adding vs10/TDT/sys3basics/sys3devicelist.m
+  Adding vs10/TDT/sys3basics/sys3Fsam.m
+  Adding vs10/TDT/sys3basics/sys3getpar.m
+  Adding vs10/TDT/sys3basics/sys3halt.m
+  Adding vs10/TDT/sys3basics/sys3loadCircuit.m
+  Adding vs10/TDT/sys3basics/sys3PA5.m
+  Adding vs10/TDT/sys3basics/sys3ParTag.m
+  Adding vs10/TDT/sys3basics/sys3read.m
+  Adding vs10/TDT/sys3basics/sys3reset.m
+  Adding vs10/TDT/sys3basics/sys3run.m
+  Adding vs10/TDT/sys3basics/sys3setpar.m
+  Adding vs10/TDT/sys3basics/sys3setup.m
+  Adding vs10/TDT/sys3basics/sys3status.m
+  Adding vs10/TDT/sys3basics/sys3trig.m
+  Adding vs10/TDT/sys3basics/sys3unloadedError.m
+  Adding vs10/TDT/sys3basics/sys3waitfor.m
+  Adding vs10/TDT/sys3basics/sys3write.m
+  Adding vs10/TDT/sys3basics/TDT2EARLY.m
+  Adding vs10/TDT/sys3basics/TDThelp.m
+  Adding vs10/TDT/sys3DacDelay.m
+  Adding vs10/TDT/sys3loadwaveforms.m
+  Adding vs10/TDT/sys3orderwaveforms.m
+  Adding vs10/TDT/sys3playwaveforms.m
+  Adding vs10/TDT/TDThelp.bat
+  Adding vs10/utils/
+  Adding vs10/utils/@cell/
+  Adding vs10/utils/@struct/
+  Adding vs10/utils/@struct/intersect.m
+  Adding vs10/utils/@struct/tree2hedge.m
+  Adding vs10/utils/@struct/union.m
+  Adding vs10/utils/conversion/
+  Adding vs10/utils/conversion/A2dB.m
+  Adding vs10/utils/conversion/CheckRealNumber.m
+  Adding vs10/utils/conversion/CollectInStruct.m
+  Adding vs10/utils/conversion/combineStruct.m
+  Adding vs10/utils/conversion/cunwrap.m
+  Adding vs10/utils/conversion/dB2A.m
+  Adding vs10/utils/conversion/dB2dBA.m
+  Adding vs10/utils/conversion/dB2P.m
+  Adding vs10/utils/conversion/delayPhase.m
+  Adding vs10/utils/conversion/denan.m
+  Adding vs10/utils/conversion/dimensionTest.m
+  Adding vs10/utils/conversion/DimFix.m
+  Adding vs10/utils/conversion/ERB2Freq.m
+  Adding vs10/utils/conversion/evalStructFields.m
+  Adding vs10/utils/conversion/FixObjectFormat.m
+  Adding vs10/utils/conversion/Freq2ERB.m
+  Adding vs10/utils/conversion/GenericCellFun.m
+  Adding vs10/utils/conversion/handleTest.m
+  Adding vs10/utils/conversion/horzPadCat.m
+  Adding vs10/utils/conversion/isemptynum.m
+  Adding vs10/utils/conversion/isFixedDimSpec.m
+  Adding vs10/utils/conversion/isScalar.m
+  Adding vs10/utils/conversion/isSingleHandle.m
+  Adding vs10/utils/conversion/isUIcontrol.m
+  Adding vs10/utils/conversion/LoopMean.m
+  Adding vs10/utils/conversion/MultiStruct.m
+  Adding vs10/utils/conversion/numericTest.m
+  Adding vs10/utils/conversion/P2dB.m
+  Adding vs10/utils/conversion/PackInStructStr.m
+  Adding vs10/utils/conversion/PtoZ.m
+  Adding vs10/utils/conversion/RMS.m
+  Adding vs10/utils/conversion/RMSdB.m
+  Adding vs10/utils/conversion/SeedCodeString.m
+  Adding vs10/utils/conversion/SeedToStr.m
+  Adding vs10/utils/conversion/str2doublemat.m
+  Adding vs10/utils/conversion/StrToSeed.m
+  Adding vs10/utils/conversion/structJoin.m
+  Adding vs10/utils/conversion/swap.m
+  Adding vs10/utils/conversion/uangle.m
+  Adding vs10/utils/conversion/Uniquify.m
+  Adding vs10/utils/conversion/UnitConvert.m
+  Adding vs10/utils/conversion/VectorZip.m
+  Adding vs10/utils/conversion/VoidStruct.m
+  Adding vs10/utils/conversion/ZtoP.m
+  Adding vs10/utils/GUI/
+  Adding vs10/utils/GUI/getUserdata.m
+  Adding vs10/utils/GUI/rmUserdata.m
+  Adding vs10/utils/GUI/setUserdata.m
+  Adding vs10/utils/GUI/Ymirror.m
+  Adding vs10/utils/misc/
+  Adding vs10/utils/misc/aa.m
+  Adding vs10/utils/misc/CompuName.m
+  Adding vs10/utils/misc/DiffMatrix.m
+  Adding vs10/utils/misc/dplot.m
+  Adding vs10/utils/misc/EarlyRootDir.m
+  Adding vs10/utils/misc/EmptyCacheFile.m
+  Adding vs10/utils/misc/FromCacheFile.m
+  Adding vs10/utils/misc/FromSetupFile.m
+  Adding vs10/utils/misc/FullFilename.m
+  Adding vs10/utils/misc/MinMax.m
+  Adding vs10/utils/misc/MyFlag.m
+  Adding vs10/utils/misc/NsamplesofChain.m
+  Adding vs10/utils/misc/RandomInt.m
+  Adding vs10/utils/misc/searchInPath.m
+  Adding vs10/utils/misc/SetCompuName.m
+  Adding vs10/utils/misc/SetRandState.m
+  Adding vs10/utils/misc/setupdir.m
+  Adding vs10/utils/misc/setupFilename.m
+  Adding vs10/utils/misc/SetupList.m
+  Adding vs10/utils/misc/slope.m
+  Adding vs10/utils/misc/ToCacheFile.m
+  Adding vs10/utils/misc/ToSetupFile.m
+  Adding vs10/utils/misc/versiondir.m
+  Adding vs10/utils/misc/xdplot.m
+  Adding vs10/utils/misc/xlog125.m
+  Adding vs10/utils/misc/xplot.m
+  Adding vs10/utils/misc/ylog125.m
+  Adding vs10/utils/misc/wpolyfit.m
+  Adding vs10/utils/misc/Where.m
+  Adding vs10/utils/strings_and_IO/
+  Adding vs10/utils/strings_and_IO/AlignStr.m
+  Adding vs10/utils/strings_and_IO/dealString.m
+  Adding vs10/utils/strings_and_IO/errorString.m
+  Adding vs10/utils/strings_and_IO/FixLenStr.m
+  Adding vs10/utils/strings_and_IO/indentStr.m
+  Adding vs10/utils/strings_and_IO/keywordMatch.m
+  Adding vs10/utils/strings_and_IO/nthstr.m
+  Adding vs10/utils/strings_and_IO/prettyprint.m
+  Adding vs10/utils/strings_and_IO/Str2errorStr.m
+  Adding vs10/utils/strings_and_IO/StrTruncate.m
+  Adding vs10/utils/strings_and_IO/textwrite.m
+  Adding vs10/utils/strings_and_IO/trimspace.m
+  Adding vs10/utils/strings_and_IO/Words2cell.m
+  Adding vs10/utils/StructTools/
+  Adding vs10/utils/StructTools/common/
+  Adding vs10/utils/StructTools/common/assessnrofanimals.m
+  Adding vs10/utils/StructTools/common/assessnrofcells.m
+  Adding vs10/utils/StructTools/common/cell2cellstr.m
+  Adding vs10/utils/StructTools/common/checkexpr.m
+  Adding vs10/utils/StructTools/common/construct.m
+  Adding vs10/utils/StructTools/common/destruct.m
+  Adding vs10/utils/StructTools/common/evalexpr.m
+  Adding vs10/utils/StructTools/common/evalexprOLD.m
+  Adding vs10/utils/StructTools/common/findgroups.m
+  Adding vs10/utils/StructTools/common/parseExpr.m
+  Adding vs10/utils/StructTools/common/parsemrksymb.m
+  Adding vs10/utils/StructTools/CreateCellStruct.m
+  Adding vs10/utils/StructTools/private/
+  Adding vs10/utils/StructTools/private/add2struct.m
+  Adding vs10/utils/StructTools/private/anovads.m
+  Adding vs10/utils/StructTools/private/AssignStruct.m
+  Adding vs10/utils/StructTools/private/barplus.m
+  Adding vs10/utils/StructTools/private/binsrchstruct.m
+  Adding vs10/utils/StructTools/private/CalcEffSPL.m
+  Adding vs10/utils/StructTools/private/cdiff.m
+  Adding vs10/utils/StructTools/private/cellstr2str.m
+  Adding vs10/utils/StructTools/private/char2num.m
+  Adding vs10/utils/StructTools/private/CheckBAConv.m
+  Adding vs10/utils/StructTools/private/CheckBinParam.m
+  Adding vs10/utils/StructTools/private/checkproplist.m
+  Adding vs10/utils/StructTools/private/cintersect.m
+  Adding vs10/utils/StructTools/private/cleanStr.m
+  Adding vs10/utils/StructTools/private/ColSym2RGB.m
+  Adding vs10/utils/StructTools/private/CombineSPLs.m
+  Adding vs10/utils/StructTools/private/Compare.m
+  Adding vs10/utils/StructTools/private/compfields.m
+  Adding vs10/utils/StructTools/private/comstruct.m
+  Adding vs10/utils/StructTools/private/construct.m
+  Adding vs10/utils/StructTools/private/createstruct.m
+  Adding vs10/utils/StructTools/private/cv2mx.m
+  Adding vs10/utils/StructTools/private/cv2str.m
+  Adding vs10/utils/StructTools/private/cyclehist.m
+  Adding vs10/utils/StructTools/private/descstruct.m
+  Adding vs10/utils/StructTools/private/destruct.m
+  Adding vs10/utils/StructTools/private/errorbarsemilogx.m
+  Adding vs10/utils/StructTools/private/fact2.m
+  Adding vs10/utils/StructTools/private/findregexp.m
+  Adding vs10/utils/StructTools/private/flipitd.m
+  Adding vs10/utils/StructTools/private/fliprho.m
+  Adding vs10/utils/StructTools/private/formatcell.m
+  Adding vs10/utils/StructTools/private/fulldeblank.m
+  Adding vs10/utils/StructTools/private/gaborfit.m
+  Adding vs10/utils/StructTools/private/gaborfunc.m
+  Adding vs10/utils/StructTools/private/getaccfrac.m
+  Adding vs10/utils/StructTools/private/getCF4Cell.m
+  Adding vs10/utils/StructTools/private/getdc.m
+  Adding vs10/utils/StructTools/private/getdirinfo.m
+  Adding vs10/utils/StructTools/private/getfields.m
+  Adding vs10/utils/StructTools/private/getFileDate.m
+  Adding vs10/utils/StructTools/private/getleave.m
+  Adding vs10/utils/StructTools/private/getmaxloc.m
+  Adding vs10/utils/StructTools/private/getnettime.m
+  Adding vs10/utils/StructTools/private/GetNoiseBW.m
+  Adding vs10/utils/StructTools/private/getpeakratio.m
+  Adding vs10/utils/StructTools/private/getpeaks.m
+  Adding vs10/utils/StructTools/private/GetPlot.m
+  Adding vs10/utils/StructTools/private/getrangen.m
+  Adding vs10/utils/StructTools/private/getrate.m
+  Adding vs10/utils/StructTools/private/getSeqNr4dsID.m
+  Adding vs10/utils/StructTools/private/getSeqNrs4Cell.m
+  Adding vs10/utils/StructTools/private/GetSPL.m
+  Adding vs10/utils/StructTools/private/getstimsamples.m
+  Adding vs10/utils/StructTools/private/getTHRSeq.m
+  Adding vs10/utils/StructTools/private/greenwood.m
+  Adding vs10/utils/StructTools/private/isbetween.m
+  Adding vs10/utils/StructTools/private/iscolor.m
+  Adding vs10/utils/StructTools/private/isdbfield.m
+  Adding vs10/utils/StructTools/private/isinrange.m
+  Adding vs10/utils/StructTools/private/isMDF.m
+  Adding vs10/utils/StructTools/private/ispp.m
+  Adding vs10/utils/StructTools/private/javac.m
+  Adding vs10/utils/StructTools/private/linregfit.m
+  Adding vs10/utils/StructTools/private/log2table.m
+  Adding vs10/utils/StructTools/private/lowerfields.m
+  Adding vs10/utils/StructTools/private/MakeIdx.m
+  Adding vs10/utils/StructTools/private/ManageMDF.m
+  Adding vs10/utils/StructTools/private/MDF2LUT.m
+  Adding vs10/utils/StructTools/private/mergeds.m
+  Adding vs10/utils/StructTools/private/mmrepeat.p
+  Adding vs10/utils/StructTools/private/normcdf.m
+  Adding vs10/utils/StructTools/private/normpdf.m
+  Adding vs10/utils/StructTools/private/packstruct.m
+  Adding vs10/utils/StructTools/private/parseExpr.m
+  Adding vs10/utils/StructTools/private/parseStr.m
+  Adding vs10/utils/StructTools/private/plotcintersect.m
+  Adding vs10/utils/StructTools/private/polarplus.m
+  Adding vs10/utils/StructTools/private/ppder.m
+  Adding vs10/utils/StructTools/private/pproots.m
+  Adding vs10/utils/StructTools/private/printinfo.m
+  Adding vs10/utils/StructTools/private/PutPlot.m
+  Adding vs10/utils/StructTools/private/randds.m
+  Adding vs10/utils/StructTools/private/randpoisson.m
+  Adding vs10/utils/StructTools/private/rasplot.m
+  Adding vs10/utils/StructTools/private/readproplist.m
+  Adding vs10/utils/StructTools/private/rearrangeOrder.m
+  Adding vs10/utils/StructTools/private/revcorr.m
+  Adding vs10/utils/StructTools/private/RGB2ColSym.m
+  Adding vs10/utils/StructTools/private/rnfield.m
+  Adding vs10/utils/StructTools/private/rofields.m
+  Adding vs10/utils/StructTools/private/SBCmodel.m
+  Adding vs10/utils/StructTools/private/signcorr.m
+  Adding vs10/utils/StructTools/private/signlinreg.cdf
+  Adding vs10/utils/StructTools/private/signlinreg.cdf.mat
+  Adding vs10/utils/StructTools/private/signlinreg.m
+  Adding vs10/utils/StructTools/private/sortstruct.m
+  Adding vs10/utils/StructTools/private/spectana.m
+  Adding vs10/utils/StructTools/private/spectanaOLD.m
+  Adding vs10/utils/StructTools/private/sptcorrsh.m
+  Adding vs10/utils/StructTools/private/sptdist.c
+  Adding vs10/utils/StructTools/private/sptdist.dll
+  Adding vs10/utils/StructTools/private/SptDist.m
+  Adding vs10/utils/StructTools/private/struct2proplist.m
+  Adding vs10/utils/StructTools/private/structcat.m
+  Adding vs10/utils/StructTools/private/structfilter.m
+  Adding vs10/utils/StructTools/private/structplot.m
+  Adding vs10/utils/StructTools/private/structsort.m
+  Adding vs10/utils/StructTools/private/structtemplate.m
+  Adding vs10/utils/StructTools/private/structview.m
+  Adding vs10/utils/StructTools/private/SubPlotPlus.m
+  Adding vs10/utils/StructTools/private/unpackstruct.m
+  Adding vs10/utils/StructTools/private/unraveldsID.m
+  Adding vs10/utils/StructTools/private/vecsqueeze.m
+  Adding vs10/utils/StructTools/private/zipproject.m
+  Adding vs10/utils/StructTools/structaggregate.m
+  Adding vs10/utils/StructTools/structdemo.m
+  Adding vs10/utils/StructTools/structdisp.m
+  Adding vs10/utils/StructTools/structfield.m
+  Adding vs10/utils/StructTools/structfieldnames.m
+  Adding vs10/utils/StructTools/structfilter.m
+  Adding vs10/utils/StructTools/structmerge.m
+  Adding vs10/utils/StructTools/structplot.m
+  Adding vs10/utils/StructTools/structreduce.m
+  Adding vs10/utils/StructTools/structrename.m
+  Adding vs10/utils/StructTools/structsort.m
+  Adding vs10/utils/StructTools/structtemplate.m
+  Adding vs10/utils/StructTools/STRUCTTOOLS.doc
+  Adding vs10/utils/StructTools/structupdate.m
+  Adding vs10/utils/StructTools/structview.m
+  Adding vs10/utils/StructTools/utilities/
+  Adding vs10/utils/StructTools/utilities/findelement.m
+  Adding vs10/utils/StructTools/utilities/findpattern.m
+  Adding vs10/utils/StructTools/utilities/getcolumn.m
+  Adding vs10/utils/StructTools/xls2struct.m
+  Adding vs10/utils/tools/
+  Adding vs10/utils/tools/dd.m
+  Adding vs10/utils/tools/dispStruct.m
+  Adding vs10/utils/tools/dp.m
+  Adding vs10/utils/tools/dsize.m
+  Adding vs10/utils/tools/f1.m
+  Adding vs10/utils/tools/f2.m
+  Adding vs10/utils/tools/f3.m
+  Adding vs10/utils/tools/f4.m
+  Adding vs10/utils/tools/f5.m
+  Adding vs10/utils/tools/f6.m
+  Adding vs10/utils/tools/f7.m
+  Adding vs10/utils/tools/f8.m
+  Adding vs10/utils/tools/f9.m
+  Adding vs10/utils/tools/ff.m
+  Adding vs10/utils/tools/gl.m
+  Adding vs10/utils/tools/grabPos.m
+  Adding vs10/utils/tools/mo.m
+  Adding vs10/utils/tools/mof.m
+  Adding vs10/utils/tools/Public.m
+  Adding vs10/utils/tools/rdir.m
+  Adding vs10/utils/tools/RunFun.m
+  Adding vs10/utils/tools/upload.m
+  Adding vs10/utils/tools/ZipWork.m
+creating Zip file D:\backups\ZipOut\Utrecht{Cel}EARLY_04-Nov-2007_16=35=16.zip
