@@ -21,6 +21,7 @@ if nargin<1, % create call
     
 else, % callback
     figh = parentfigh(src); % GUI figure handle
+    figh = figh.Number;
     if isequal('empty', ID), 
         % ==========empty all edit fields=========
         Q=getGUIdata(figh, 'Query');

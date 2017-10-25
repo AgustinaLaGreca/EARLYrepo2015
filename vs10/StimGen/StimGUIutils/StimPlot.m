@@ -105,6 +105,7 @@ UP = marginalize(UP, [10 250]);
 function local_refresh(Src, varargin);
 % refresh plot
 figh = parentfigh(Src);
+figh = figh.Number;
 GV = GUIval(figh);
 if isempty(GV), return; end
 % get stimulus from GUI & plot it
@@ -329,6 +330,7 @@ else
 end
 function local_recompute(Src,Ev,LR);
 figh = parentfigh(Src); % stimplot figure
+figh = figh.Number;
 S = getGUIdata(figh, 'Stim');
 hstim = S.handle.GUIfig; % stimulus GUI
 if ~isGUI(S.handle.GUIfig),

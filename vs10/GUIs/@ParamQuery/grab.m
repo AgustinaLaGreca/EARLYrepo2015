@@ -30,10 +30,10 @@ end
 % only return non-empty UnitStr of unit is controled by a toggle, i.e.,
 % when Q.Unit is a cell array of strings.
 if iscellstr(Q.Unit), 
-    T = get(Q.uiHandles.Unit, 'userdata'); % toggle object
-    if enableState(T), % only return String if toggle is enabled
+%     enableState = get(Q.uiHandles.Unit,'enable'); % toggle object
+%     if strcmp(enableState,'on') %|| strcmp(enableState,'inactive')% only return String if toggle is enabled
         UnitStr = get(Q.uiHandles.Unit, 'string');
-    end
+%     end
 end
 
 

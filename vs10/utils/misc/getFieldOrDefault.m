@@ -8,7 +8,7 @@ function [fv, s] = getFieldOrDefault(s,fn,def);
 %
 %     See also GETFIELD.
 
-error(nargchk(3,3,nargin));
+narginchk(3,3);
 if isstruct(s) && isfield(s,fn),
     fv = s.(fn);
 elseif isobject(s),

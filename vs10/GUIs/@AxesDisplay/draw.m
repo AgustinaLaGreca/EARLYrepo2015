@@ -16,6 +16,7 @@ hax = axes('parent', hp, 'units', 'pixels', 'outerposition', [X Y Q.Extent], ...
 % add Action info (including handles!) to userdata of GUI figure
 Q.uiHandles.Axes = hax;
 figh = parentfigh(hp);
+figh = figh.Number;
 AD = getGUIdata(figh, 'AxesDisplay', []);
 AD = [AD Q];
 setGUIdata(figh, 'AxesDisplay', AD);

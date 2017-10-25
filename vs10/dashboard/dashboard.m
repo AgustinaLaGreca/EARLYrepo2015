@@ -42,9 +42,13 @@ switch lower(kw),
         LR = varargin{1}; % left vs right click
         if nargin>2, StimType=varargin{2}; else, StimType=''; end
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        if nargin<4, figh = gcbf; % fig handle is either the callback figure, ...
-        else, figh = varargin{3}; % ... or passed explicitly
-        end
+        if nargin<4
+            figh = gcbf;
+            % fig handle is either the callback figure, ...
+        else
+            figh = varargin{3};
+        end;% ... or passed explicitly
+        
         if ~isa(figh,'double')
             figh = figh.Number;
         end;
@@ -59,7 +63,7 @@ switch lower(kw),
             %by abel: remove bug, crash when empty handle if user closes
             %dialog
             %<---
-            if ishandle(stimh)
+            if isSingleHandle(stimh)
                 figure(stimh);
             end
             %--->
@@ -72,7 +76,8 @@ switch lower(kw),
         if ~ok, error('No dashboard rendered'); end
         local_GUImode(figh, varargin{:});
     case 'keypress',
-        local_keypress(gcbf.Number, varargin{:});
+        figh = gcbf.Number;
+        local_keypress(figh, varargin{:});
     case {'play', 'playrecord', 'stop'}, % dashboard('Play', 'Left')
         LR = varargin{1};
         if ~isequal('Left', LR), return; end; % ignore right-clicks
@@ -175,7 +180,6 @@ switch lower(kw),
         end
         
         Y = local_launch(Exp);
-        Y = Y.Number;
         local_GUImode(Y, 'Ready');
         if nargin>1, dashboard('launchstimmenu', 'Left', Y, varargin{1}); end
     case 'backup'
@@ -209,7 +213,7 @@ figh = newGUI(mfilename, 'Dashboard', {fhandle(mfilename), 'launch'}, 'color', C
 DB=GUIpiece('Dashboard',[],[0 0],[10 4]);
 DB = add(DB,P_rec);
 DB = add(DB,P_exp, nextto(P_rec), [20 3]);
-DB = add(DB, P_stim, below(P_rec), [10 3]);
+DB = add(DB, P_stim, below(P_rec), [10 25]);
 DB = add(DB, P_ax, below(P_stim), [30 0]);
 DB = add(DB, M_cal); % calibration pulldown menu
 % Temp Fix for GUI non-active until cause is found
@@ -366,7 +370,7 @@ global open_figures
 stimh = getGUIdata(figh,'StimGUIhandle');
 
 hasExp = ~isvoid(current(experiment)); % true if experiment is going on
-if ishandle(stimh),
+if isSingleHandle(stimh),
     GUIclose(stimh);
     % Close all figures opened by a stimuli (for example THR figure)
     if ~isempty(open_figures)
@@ -429,10 +433,8 @@ hasExp = ~isvoid(Exp); % true if experiment is going on
 if isvoid(Exp), ExpStr = ' (no experiment)'; else, ExpStr = [' -- Experiment ' name(Exp) ' by ' experimenter(Exp)]; end
 set(figh, 'name', ['Dashboard' ExpStr]);
 
-hasStim = ishandle(getGUIdata(figh, 'StimGUIhandle'));
-if isempty(hasStim)
-    hasStim = 0;
-end;
+hasStim = isSingleHandle(getGUIdata(figh, 'StimGUIhandle'));
+
 switch Mode,
     case {'Busy', 'Stop'}, % disable all buttons & prevent closing the figure
         enable(A,0); enable(Q,0);
@@ -442,7 +444,9 @@ switch Mode,
             highlight(A('Stop'),[0.5 0.15 0]);
         end
     case 'Ready', % enable all buttons except Stop; okay to close GUI; recording queries depend on experiment status
-        enable(A,1);  enable(Q,1); enable(Qmeasure, hasExp);
+        enable(A,1);  
+        enable(Q,1);
+        enable(Qmeasure, hasExp);
         %enable(A('StimSpec'), hasExp);
         enable(A('Stop'),0);
         % only enable Play if D/A is possible; only enable PlayRec when an experiment is ongoing

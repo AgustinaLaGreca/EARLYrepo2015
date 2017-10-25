@@ -32,15 +32,10 @@ switch MouseButton,
         if isempty(imatch), imatch = t.Nstr; end;
         inew = 1+rem(imatch,t.Nstr); % rotate
 %         T.Str0 = T.StrArray{inew};
-        settoggledata(T,t.StrArray{inew});
+        T = settoggledata(T,t.StrArray{inew});
         T=enable(T,1);
     case 'Right', % right-click" "enable/disable" button 
         T=enable(T,'swap');
 end
 % T has changed; re-render it
 show(T);
-
-
-
-
-

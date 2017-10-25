@@ -17,7 +17,8 @@ if any(DX<=0),
 end
     
 % 
-Xfloor = [-inf Xfloor(:).' inf];
+% Xfloor = [-inf Xfloor(:).' inf];
+Xfloor = Xfloor(:).' ;
 N = numel(Xfloor);
 % first round to nearest element of Xfloor, using indices
     

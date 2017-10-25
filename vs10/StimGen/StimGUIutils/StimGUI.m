@@ -18,6 +18,9 @@ function [figh, Mess]=StimGUI(StimName, EXP, varargin);
 % callbacks
 if isempty(StimName) || isSingleHandle(StimName), % action call, e.g., okay = StimGUI(figh, 'Check')
     figh = StimName; if isempty(figh), figh=gcbf; end; % default is parent fig of clicked button; may be overruled by explicit arg
+    if ~isa(figh,'double')
+        figh = figh.Number;
+    end;
     kw = lower(EXP); % keyword
     if nargin>2 && isequal('Right', varargin{1}), return; end; % ignore right-click
     Mess = feval(['local_' kw], figh, varargin{:});
@@ -175,6 +178,7 @@ D = marginalize(D,[0 5]);
 function local_dataviewers(Src, nameQ_Viewer); 
 % Select (multiple) dataviewers for online analysis.
 figh = parentfigh(Src);
+figh = figh.Number;
 GUImessage(figh, ' ');
 Q = getGUIdata(figh, 'Query');
 [Viewer, dum, Mess, hViewerEdit] = read(Q(nameQ_Viewer));
@@ -217,6 +221,7 @@ function  local_edit(Src, nameQ_Pfile, nameQ_Viewer);
 % Dataviewer and DataviewerParamfile queries and the identity of the
 % stimulus GUI.
 figh = parentfigh(Src);
+figh = figh.Number;
 GUImessage(figh, ' ');
 Q = getGUIdata(figh, 'Query');
 Viewer = read(Q(nameQ_Viewer));

@@ -15,6 +15,7 @@ if nargin<1, % create call
     P=additem(P,'&Plot waveforms', {callme 'plot'}, 'accelerator', 'L');
 else, % callback
     figh = parentfigh(src); % GUI figure handle
+    figh = figh.Number;
     if isequal('plot', ID), 
         % ==========prompt user for param file & save=========
         StimPlot(figh);

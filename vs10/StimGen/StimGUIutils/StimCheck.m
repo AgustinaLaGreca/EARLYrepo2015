@@ -18,7 +18,7 @@ function okay = StimCheck(figh, varargin);
 %    See also GenericStimParams.
 
 % reset all messengers
-if nargin < 2
+if nargin < 2  || ~isSingleHandle(figh)
     parent_figh = [];
     kw = '';
 elseif nargin >= 2
