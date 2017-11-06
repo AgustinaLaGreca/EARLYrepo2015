@@ -6,7 +6,10 @@ function GS = GUIsettings(FN);
 %    GUIsettings('Foo') only returns the Foo category of the settings.
 
 % only fill "by hand" when there is no persistent
-persistent PGS; if isempty(PGS), PGS=local_spell_out; end
+persistent PGS; 
+if isempty(PGS),
+    PGS=local_spell_out; 
+end
 
 if nargin<1, FN=''; end
 

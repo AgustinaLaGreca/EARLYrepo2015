@@ -62,7 +62,7 @@ if (nargin == 1) & ischar(ArgIn) & strcmpi(ArgIn, 'factory')
 end
 if isa(ArgIn, 'dataset')
     ds = FillDataset(ArgIn); 
-    Spt = ds.spt; %Make sure that dataset contains spiketime data ...
+    Spt = spiketimes(ds); %Make sure that dataset contains spiketime data ...
 elseif iscell(ArgIn) & all(cellfun('isclass', ArgIn, 'double'))
     ds = dataset; Spt = ArgIn;    
 else
