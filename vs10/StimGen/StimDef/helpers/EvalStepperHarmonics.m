@@ -1,4 +1,5 @@
-function [X, Mess]=EvalStepper(X0, Xstep, X1, StepMode, Adjust, MinMax, maxNcond);
+function [X, Mess]=EvalStepperHarmonics(CF,X0, Xstep, X1, StepMode, Adjust, MinMax, maxNcond);
+
 % EvalStepper - compute stepped values from start, end, step.
 %   [X, Mess]=EvalStepper(X0, Xstep, X1, StepMode, Adjust, Xminmax, maxNcond)
 %   computes column array X containing values varying from X0 to X1, while
@@ -75,6 +76,7 @@ for ii=1:Nchan,
     x = linspace(min(x0,x1),max(x0,x1),nstep+1).';
     if x0>x1, x = flipud(x); end
     X = [X x];
+    X = CF./X;
 end
 if isequal('Octave', StepMode), % convert back from octave scale to linear
     X = 2.^X;

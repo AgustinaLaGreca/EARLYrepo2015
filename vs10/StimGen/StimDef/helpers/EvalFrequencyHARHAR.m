@@ -26,10 +26,10 @@ if isempty(P), % obtain info from GUI. Non-preferred method; see help text.
     EXP = getGUIdata(figh,'Experiment');
     Q = getGUIdata(figh,'Query');
     StartNHN = read(Q([Prefix 'StartNHN']));
-    [StepFreq, StepFreqUnit] = read(Q([Prefix 'StepNHN']));
-    EndFreq = read(Q([Prefix 'EndNHN']));
-    AdjustFreq = read(Q([Prefix 'AdjustFreq']));
-    P = CollectInStruct(StartFreq, StepFreq, StepFreqUnit, EndFreq, AdjustFreq);
+    [StepNHN , StepNHN Unit] = read(Q([Prefix 'StepNHN']));
+    EndNHN  = read(Q([Prefix 'EndNHN']));
+    AdjustNHN = read(Q([Prefix 'AdjustNHN ']));
+    P = CollectInStruct(StartNHN , StepNHN , StepNHNUnit, EndNHN , AdjustNHN );
 else,
     P = dePrefix(P, Prefix);
     EXP = P.Experiment;
@@ -58,7 +58,7 @@ if somethingwrong, return; end
 StepMode = 'Linear';
 P.StepFreqUnit = 'Hz';
 
-[Freq, Mess]=EvalStepper((P.CF/P.StartNHN), (P.CF/P.StepNHN), (P.CF/P.EndNHN), StepMode, ...
+[Freq, Mess]=EvalStepperHarmonics(P.CF,P.StartNHN, P.StepNHN, P.EndNHN, StepMode, ...
     P.AdjustFreq, [EXP.minStimFreq EXP.maxStimFreq], EXP.maxNcond);
 if isequal('nofit', Mess),
     Mess = {'Stepsize does not exactly fit Frequency bounds', ...
@@ -70,7 +70,7 @@ elseif isequal('cripple', Mess)
 elseif isequal('toomany', Mess)
     Mess = {['Too many (>' num2str(EXP.maxNcond) ') frequency steps.'] 'Increase stepsize or decrease range'};
 end
-GUImessage(figh,Mess, 'error',{[Prefix 'StartFreq'] [Prefix 'StepFreq'] [Prefix 'EndFreq'] });
+GUImessage(figh,Mess, 'error',{[Prefix 'StartNHN'] [Prefix 'StepNHN'] [Prefix 'EndNHN'] });
 
 
 

@@ -31,7 +31,8 @@ else,
     T = 0;
     phaseRad = 2*pi*Ph0;
     for icmp=1:Nc,
-        cmp = Amp(icmp)*cos(phaseRad(icmp) + 2*pi*Freq(icmp)*Time);
+%         cmp = Amp(icmp)*cos(phaseRad(icmp) + 2*pi*Freq(icmp)*Time);
+        cmp = Amp(icmp)*sin(Ph0(icmp) + 2*pi*Freq(icmp)*Time);
         T = T + cmp;
     end
 end

@@ -136,7 +136,8 @@ end
 [Nx, Ny, Nrep] = size(iCond);
 switch Order,
     case 'Forward', % okay
-    case 'Reverse', iCond = flipdim(iCond,2);
+    case 'Reverse',
+        iCond = flip(iCond,1);
     case 'Random',  iCond= iCond(randperm(Nx),:,:);
     case 'Scrambled', 
         if isequal(2, sdX);

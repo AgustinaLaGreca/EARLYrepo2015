@@ -73,8 +73,8 @@ DAchan= strrep(DAchan, '=Ipsi', '');
 DAchan= strrep(DAchan, '=Contra', '');
 [DAchan, Mess] = keywordMatch(DAchan,{'Left' 'Right'}, 'DAchan');
 error(Mess);
-ichan = strmatch(DAchan, {'Left' 'Right'});
-ichanAvailable = strmatch(EXP.AudioChannelsUsed, {'Left' 'Right' 'Both'});
+ichan = strcmp(DAchan, {'Left' 'Right'});
+ichanAvailable = strcmp(EXP.AudioChannelsUsed, {'Left' 'Right' 'Both'});
 if isequal(3,ichanAvailable), ichanAvailable=[1 2]; end;
 if ~ismember(ichan, ichanAvailable),
     error(['Audio channel ''' DAchan ''' not used in Experiment ''' name(EXP) '''.']);
