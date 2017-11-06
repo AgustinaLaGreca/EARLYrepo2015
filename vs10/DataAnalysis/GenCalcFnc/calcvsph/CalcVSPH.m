@@ -68,7 +68,7 @@ if (nargin == 1) && ischar(ArgIn) && strcmpi(ArgIn, 'factory')
 end
 if isa(ArgIn, 'dataset') %Make sure that dataset contains spiketime data ...
     ds = FillDataset(ArgIn);
-    Spt = spiketimes(ds);
+    Spt = ds.spt;
 elseif iscell(ArgIn) && all(cellfun('isclass', ArgIn, 'double'))
     ds = dataset;
     Spt = ArgIn;    
@@ -83,7 +83,7 @@ Param = CalcVSPH_ExpandParam(ArgIn, Param);
 %Extract values of independent variable and sort requested subsequences in ascending order
 %according to those values ...
 if isa(ArgIn, 'dataset')
-    IndepVal = ds.Stim.Presentation.X.PlotVal;
+    IndepVal = ExtractIndepVal(ds, Param.isubseqs);
 else
     IndepVal = Param.isubseqs;
 end

@@ -62,32 +62,18 @@ end
 % The BeatFreq and BeatModFreq are calculated as the difference of the last column
 % minus the first column. If the orginal frequency is NaN then the beatfrequency is
 % also NaN. For monaural datasets the beatfrequencies are all zero or NaN.
-
-S.NChan       = NChan; 
-if strcmpi(ds.StimType,'NRHO') 
+if strcmpi(ds.StimType,'NRHO')
+  S.NChan       = NChan;  
   S.ModFreq     = NaN*ones(NSub, NChan);
   S.BeatFreq    = NaN*ones(NSub,NChan);
   S.BeatModFreq = NaN*ones(NSub,NChan);
   S.CarFreq = NaN*ones(NSub,NChan);
-elseif isfield(ds.Stim, 'Fcar') && isfield(ds.Stim, 'ModFreq')
+else 
 S = getfields(ds.Stim, {'Fcar', 'ModFreq'});
+S.NChan       = NChan;
 S.CarFreq     = ds.Stim.Fcar(1:NSub,1:NChan);
 S.ModFreq     = ds.Stim.Fmod(1:NSub,1:NChan);
-elseif isfield(ds.Stim, 'Fcar')
-S.ModFreq     = NaN*ones(NSub, NChan);
-S.BeatFreq    = NaN*ones(NSub,NChan);
-S.BeatModFreq = NaN*ones(NSub,NChan);
-S.CarFreq     = ds.Stim.Fcar(1:NSub,1:NChan);
-elseif isfield(ds.Stim, 'ModFreq')
-S.CarFreq     = NaN*ones(NSub,NChan);
-S.ModFreq     = ds.Stim.Fmod(1:NSub,1:NChan);
-elseif  isfield(ds.Stim, 'Fcar') && isfield(ds.Stim, 'Fmod')
-    S.CarFreq     = ds.Stim.Fcar(1:NSub,1:NChan);
-S.ModFreq     = ds.Stim.Fmod(1:NSub,1:NChan);
-elseif isfield(ds.Stim, 'Fmod')
-    S.CarFreq     = NaN*ones(NSub,NChan);
-S.ModFreq     = ds.Stim.Fmod(1:NSub,1:NChan);
-end 
+end
 
 if (ds.ID.Experiment.Audio.DAchannelsUsed == 'Both') & (~strcmpi(ds.StimType,'NRHO'))
     S.BeatFreq    = abs(S.CarFreq(:,1)-S.CarFreq(:,2));

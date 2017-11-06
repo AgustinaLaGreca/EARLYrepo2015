@@ -33,10 +33,10 @@ for n = 1:NSubSeqs
     NSpk(n) = length(SpkTr);
 	if (Param.binfreq(n) == 0)
 		%By Abel: Z is now an optional output of VectorStrength()
-		[R(n), RaySign(n)] = deal(NaN, 1);
+		[R(n), RaySign(n), Z(n)] = deal(NaN, 1);
 	else
 		%By Abel: Z is now an optional output of VectorStrength()
-		[R(n), RaySign(n)] = VectorStrength(SpkTr, Param.binfreq(n));
+		[R(n), RaySign(n), Z(n)] = VectorStrength(SpkTr, Param.binfreq(n));
 	end
 	%Phase Ph(n) in RAD
 	[R(n), Ph(n)] = deal(abs(R(n)), angle(R(n)));

@@ -21,7 +21,7 @@ outPanel = addPlot(Panel('nodraw'), histPlotObject(binCenters, rate), 'noredraw'
 outPanel = set(outPanel, 'ticksDir', 'out', 'noredraw');
 
 %% set labels
-iSubSeqs = 1:ds.Stim.Presentation.Ncond; 
+iSubSeqs = 1:ds.nrec; 
 xLabel = syncXLabel(ds, iSubSeqs);
 yLabel = 'Phase (cycles)';
 title = 'Vector Strength Phase';

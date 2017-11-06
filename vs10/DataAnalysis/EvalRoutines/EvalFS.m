@@ -106,12 +106,27 @@ end
 DisSub = [];
 fprintf('Calculating Correlogram and Cyclehistogram for : ');
 
-
-[spt1,count1] = spiketimes(ds1);
-%Remove all cells that contain no spikes
-remove = find(~count1);
-[spt2,count2] = spiketimes(ds2);
-remove = [remove find(~count2)]; 
+spt1 = spiketimes(ds1);
+inter = round(CalcParam.coranwin./ds1.ISI);
+if inter(1)==0
+    inter(1)=1;
+end
+remove = [];
+for i=inter(1):inter(2)
+    for j=1:size(spt1,1)
+        if isempty(spt1{j,i});
+            remove = [remove j];
+        end
+    end
+end
+spt2 = spiketimes(ds2);
+for i=1:inter
+    for j=1:size(spt2,1)
+        if isempty(spt2{j,i});
+            remove = [remove j];
+        end
+    end
+end
 remove = unique(remove);
 StimFreq(remove) = [];
 ComSub(:,remove) = [];
