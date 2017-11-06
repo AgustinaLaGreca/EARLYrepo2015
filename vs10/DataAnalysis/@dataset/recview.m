@@ -49,9 +49,6 @@ hb = uicontrol(figh, 'style', 'pushbutton', 'units', 'normalized', ...
 
 function local_init(DS, Chan, icond, irep);
 figh = figure;
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 set(figh, 'units', 'normalized', 'position', [0.0156 0.0459 0.8461 0.5]);
 ha = axes('Position', [0.0156 0.5 0.8461 0.35], 'fontsize', 10);
 ha2 = axes('Position', [0.0156 0.1 0.8461 0.35], 'fontsize', 10);
@@ -95,9 +92,6 @@ end
 function local_plot(Src, Ev, firsttime);
 if nargin<3,firsttime=0; end
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 H = getGUIdata(figh, 'EditHandles');
 X = local_read(H);
 ds = getGUIdata(figh, 'dataset');
@@ -176,9 +170,6 @@ end
 
 function local_peakstats(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 H = getGUIdata(figh, 'EditHandles');
 X = local_read(H);
 ds = getGUIdata(figh, 'dataset');
@@ -191,9 +182,6 @@ peakstats(dt, D, 0.5, 100);
 
 function local_plot_stim(ds,firsttime,Src)
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 ha = getGUIdata(figh, 'hStimAxes');
 axes(ha);
 cla;
@@ -223,9 +211,6 @@ ylim('auto');
 
 function local_plot_average(ds,firsttime,Src)
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 H = getGUIdata(figh, 'EditHandles');
 X = local_read(H);
 ds = getGUIdata(figh, 'dataset');
@@ -305,9 +290,6 @@ end
 function local_Export(Src, Ev, firsttime);
 if nargin<3,firsttime=0; end
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 H = getGUIdata(figh, 'EditHandles');
 X = local_read(H);
 ds = getGUIdata(figh, 'dataset');

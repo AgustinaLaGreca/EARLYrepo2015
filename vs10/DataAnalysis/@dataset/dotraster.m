@@ -27,10 +27,7 @@ end
 % open a new figure or use existing one?
 if nargin<2 || isempty(figh),
     open_new = isempty(get(0,'CurrentFigure'));
-    figh=gcf;
-    if ~isa(figh,'double')
-    figh = figh.Number;
-    end;
+    figh=gcf; 
 else,
     open_new = isSingleHandle(figh);
 end

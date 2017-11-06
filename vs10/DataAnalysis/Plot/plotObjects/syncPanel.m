@@ -13,7 +13,7 @@ function outPanel = syncPanel(ds, vectorStrength, raycrit, logX, logY, johnson)
     end
     
     %% Generate the XY plot
-    linesX = vectorStrength.curve.indepval;
+    linesX = vectorStrength.curve.indepval';
     linesY = vectorStrength.curve.r;
     
     if isequal(johnson, 'yes')
@@ -51,7 +51,7 @@ function outPanel = syncPanel(ds, vectorStrength, raycrit, logX, logY, johnson)
     outPanel = addPlot(Panel('nodraw'), plotOut, 'noredraw');
     
     %% set Labels
-    iSubSeqs = 1:ds.nrec;
+    iSubSeqs = 1:ds.Stim.Presentation.Ncond;
     xLabel = syncXLabel(ds, iSubSeqs);
     if isequal(johnson, 'yes')
         yLabel = 'R (Johnson)';
@@ -75,20 +75,6 @@ function outPanel = syncPanel(ds, vectorStrength, raycrit, logX, logY, johnson)
     %% add text
     UnitStr = '';
     subSeqTxt = sprintf('\\itSubSeqs:\\rm %s', range2Str(iSubSeqs));
-    if strcmpi(ds.FileFormat, 'EDF') && (ds.indepnr == 2)
-        if ~isnan(ConstIndepNr)
-            if (ConstIndepNr == 1) %First independent variable is held constant
-                UnitStr = ds.yunit;
-                subSeqTxt = ...
-                    [sprintf('\\itSubSeqs:\\rm %s', range2Str(iSubSeqs)), ...
-                    {sprintf('IndepVal(X): %s', indepVal2Str(ConstVal, ds.xunit))}];
-            else
-                UnitStr = ds.xunit;
-                subSeqTxt = [sprintf('\\itSubSeqs:\\rm %s', range2Str(iSubSeqs)), ...
-                    {sprintf('IndepVal(Y): %s', indepVal2Str(ConstVal, ds.yunit))}];
-            end
-        end
-    end
     subSeqTextBox = textBoxObject(subSeqTxt, 'Position', 'NorthWest', ...
         'LineStyle', 'none', 'BackgroundColor', 'none');
     outPanel = addTextBox(outPanel, subSeqTextBox, 'noredraw');

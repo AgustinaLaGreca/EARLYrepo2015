@@ -56,7 +56,7 @@ if (nargin < 1)
     error('Wrong number of input arguments.');
 end
 if isa(ArgIn, 'dataset')
-    NRec = ArgIn.nrec;
+    NRec = ArgIn.Stim.Presentation.Ncond;
 elseif iscell(ArgIn) && all(all(cellfun('isclass', ArgIn, 'double')))
     NRec = size(ArgIn, 1);
 else
@@ -90,7 +90,7 @@ else %Binning frequency supplied as character string ...
         BinFreq = [];
     elseif strcmpi(BinFreq, 'auto')
         S = GetFreq(ds);
-        if (S.NChan == 2) %Binaural dataset ...
+        if strcmp(ds.Stim.DAC,'Both') %Binaural dataset ...
             if ~all(isnan(S.BeatModFreq(1:NRec)))
                 BinFreq = S.BeatModFreq(iSubSeqs);
             elseif ~all(isnan(S.BeatFreq(1:NRec)))
@@ -102,7 +102,7 @@ else %Binning frequency supplied as character string ...
                 if ~isempty(ColIdx)
                     BinFreq = S.ModFreq(iSubSeqs, ColIdx);
                 else
-                    ColIdx = find(all(~isnan(S.BeatFreq(1:NRec, :)), 2));
+                    ColIdx = find(all(~isnan(S.BeatFreq(:, 1:NRec))));
                     if ~isempty(ColIdx)
                         BinFreq = S.BeatFreq(iSubSeqs, ColIdx); 
                     else

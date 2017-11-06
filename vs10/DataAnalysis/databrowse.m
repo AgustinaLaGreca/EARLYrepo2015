@@ -39,26 +39,18 @@ RecList = uicontrol(figh ,'style', 'listbox', 'position', [10 20 Xmax-130 Ymax-1
 Yup = Ymax-50; % Y pos of upper row of buttons
 ChanButton = uicontrol(figh, PushButton, 'position', [Xmax-100 Yup 60 30], ...
     'tooltipstring', 'AD channel specification of analog data. Click to toggle.');
-ChanButton = double(ChanButton);
 betoggle(ChanButton, {'AD-1', 'AD-2'  'AD-3'});
 TypeLogButton = uicontrol(figh, PushButton, 'position', [80 Yup 100 30], ...
     'Callback', @local_typelog, 'string', 'typelog', 'tooltipstring', 'Display experiment log.');
-TypeLogButton = double(TypeLogButton);
 ParamViewButton = uicontrol(figh, PushButton, 'position', [200 Yup 100 30], ...
     'Callback', @local_paramview, 'string', 'paramview', 'tooltipstring', 'View stimulus parameters of recording (Ctrl-P).');
-ParamViewButton = double(ParamViewButton);
 UpdateButton = uicontrol(figh, PushButton, 'position', [320 Yup 100 30], ...
     'Callback', @local_update, 'string', 'update', 'tooltipstring', 'Update listing of recordings (Ctrl-U).');
-UpdateButton = double(UpdateButton);
 DYb = 40; % = right column of analysis buttons
 DotRasterButton = AnaButton(figh, Ymax-3*DYb, 'dotraster', @local_dotraster);
-DotRasterButton = double(DotRasterButton);
 PowerSpecButton = AnaButton(figh, Ymax-4*DYb, 'power spectrum', @local_powerspec);
-PowerSpecButton = double(PowerSpecButton);
 ReflectanceButton = AnaButton(figh, Ymax-5*DYb, 'reflectance', @local_reflectance);
-ReflectanceButton = double(ReflectanceButton);
 ViewRecButton = AnaButton(figh, Ymax-6*DYb, 'view recording', @local_viewrec);
-ViewRecButton = double(ViewRecButton);
 DYb = 55; Ygap = 310;
 
 %====CUSTOM BUTTONS=====
@@ -113,9 +105,6 @@ setGUIdata(figh, 'datagetter', getds(name(Exp))); % quick dataset retriever
 function [figh, varargout] = local_handle(h, varargin);
 % get named handle starting from any handle in GUI
 figh = parentfigh(h); % GUI fig handle
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 H = getGUIdata(figh, 'handles');
 for ii=1:numel(varargin),
     varargout{ii} = H.(varargin{ii});
@@ -271,31 +260,22 @@ if has1 && has2, % consult button
 elseif has1, ichan = 1;
 elseif has2, ichan = 2;
 else
-    error('No analog data in this dataset.');
+    %errordlg('No analog data in this dataset.');
     ichan = nan;
 end
 
 function local_typelog(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 Exp = getGUIdata(figh, 'Experiment');
 typelog(Exp);
 
 function local_paramview(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 ds = local_curds(figh);
 paramview(ds);
 
 function local_displaylist(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [figh, hreclist] = local_handle(figh, 'RecList');
 Str = get(hreclist, 'String');
 more off;
@@ -306,81 +286,51 @@ disp(Str);
 % EVENTS
 function local_dotraster(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 dotraster(ds);
 
 function local_cyclehisto(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 cyclehisto(ds,figure);
 
 function local_rateplot(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 rateplot(ds);
 
 function local_resparea(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 resparea(ds);
 
 function local_maskcorr(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 maskcorr(ds);
 
 function local_PSTH(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 PSTH(ds);
 
 function local_FOISI(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 FOISI(ds);
 
 function local_AOISI(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 AOISI(ds);
 
 function local_coeffvar(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 coeffvar(ds);
 
 function local_revcor(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 revcor(ds);
 
@@ -395,9 +345,6 @@ end
 
 function local_anamean(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 IDstr = IDstring(ds, 'full');
 icond = local_icond(ds.Ncond);
@@ -423,18 +370,12 @@ title([IDstr '  AD-'  num2str(ichan) ' (' dataType(anachan(ds,ichan)) ')'],...
 
 function local_rmsplot(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 figure;
 RMSplot(ds, ichan);
 
 function local_supspec(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 icond = local_icond(ds.Ncond);
 if isempty(icond), return; end
@@ -442,26 +383,17 @@ supspec(ds, ichan, icond);
 
 function local_magn_phi(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 figure; Magn_Phase_Plot(ds, ichan);
 
 function local_apple(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 set(figure,'units', 'normalized', 'position', [0.333 0.433 0.479 0.469])
 apple(ds, ichan);
 
 function local_powerspec(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 icond = local_icond(ds.Ncond);
 if isempty(icond), return; end
@@ -469,9 +401,6 @@ figure; powerspec(ds, ichan, icond);
 
 function local_reflectance(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 if ~isfield('PC_COM1',ds.Data), 
     errordlg('No PC_COM1 connected for this Experiment.');
@@ -481,9 +410,6 @@ end
 
 function local_viewrec(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 icond = local_icond(ds.Ncond);
 if isempty(icond), return; end
@@ -491,9 +417,6 @@ recview(ds, ichan, icond);
 
 function local_IOfun(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 ifreq = inputdlg('iFreq: '); 
 if isempty(ifreq), return; end
@@ -502,9 +425,6 @@ figure; IOfun(ds, ichan, ifreq);
 
 function local_threshold_curve(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 [ds, ichan] = local_curds(figh);
 threshold_curve(ds);
 
@@ -514,7 +434,6 @@ function local_listboxmove(Src, Ev)
     'CustomAna_1_Button', 'CustomAna_2_Button', ...
     'CustomAna_3_Button', 'CustomAna_4_Button', ...
     'CustomAna_5_Button');
-
 irec = get(hlb, 'value');
 StimTypes = getGUIdata(figh, 'StimTypes');
 set(h1, 'String', '  ... ', 'callback', @nope);
@@ -525,7 +444,7 @@ set(h5, 'String', '  ... ', 'callback', @nope);
 switch upper(StimTypes{irec}),
     % Try to maintain as much uniformity amongst stimulus types as
     % possible.
-    case {'RC','FS','TCKL','WAV','CAP'}
+    case {'RC','FS','TCKL','WAV'}
         set(h1, 'String', '1 PSTH', 'callback', @local_PSTH);
         set(h2, 'String', '2 cyclehisto', 'callback', @local_cyclehisto);
         set(h3, 'String', '3 ISI histo', 'callback', @local_FOISI);
@@ -567,44 +486,26 @@ end % switch/case
 
 function local_custom_1(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_1_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_2(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_2_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_3(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_3_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_4(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_4_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_5(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_5_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_6(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_6_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_keypress(Src, Ev);

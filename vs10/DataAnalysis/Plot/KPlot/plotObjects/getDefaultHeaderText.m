@@ -42,18 +42,11 @@ firstCol = sprintf([' FileName \n FileFormat \n SeqID (iSeq) \n StimType ' ...
     filename, fileformat, seqid, stimtype, rectime);
 
 %% second column
-% if strcmpi(ds.FileFormat, 'EDF') && (ds.indepnr == 2)
-%     labels = {' Channels \n', ' NSubSeqs/NReps \n', ' IndepVar \n', ...
-%         ' IndepRange | %s \n %s \n %s \n %s '};
-%     values = {Channel2Str(ds), sprintf('%d/%d x %d', ds.nrec, ds.nsub, ds.nrep), ...
-%         [ds.xname '/' ds.yname], indepVar2Str(ds.EDFIndepVar(1)), ...
-%         indepVar2Str(ds.EDFIndepVar(2))};
-% else
+
     labels = {' Channels \n', ' NSubSeqs/NReps \n', ' IndepVar \n', ...
         ' IndepRange \n', ' SPL | %s \n %s \n %s \n %s \n %s '};
     values = {sprintf('%d/%d x %d', ds.Stim.Presentation.Ncond, ds.Stim.Presentation.Ncond,ds.Stim.Presentation.Nrep), ...
         ds.Stim.Presentation.X.ParName, indepVar2Str(ds.Stim.Presentation.X), spl2Str(ds)};
-% end
 
 secondCol = sprintf([labels{:}], values{:});
 

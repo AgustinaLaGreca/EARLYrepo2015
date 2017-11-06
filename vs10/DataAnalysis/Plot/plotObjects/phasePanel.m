@@ -16,7 +16,7 @@ if ~isa(ds, 'dataset')
 end
 
 %First plot line
-linesX = phase.curve.indepval;
+linesX = phase.curve.indepval';
 linesY = phase.curve.ph;
 
 %The plot values of the line as markers
@@ -57,7 +57,7 @@ outPanel = addPlot(Panel('logX', logX, 'nodraw'), plotOut, ...
 outPanel = set(outPanel, 'ticksDir', 'out', 'noredraw');
 
 %% set labels
-iSubSeqs = 1:ds.nrec; 
+iSubSeqs = 1:ds.Stim.Presentation.Ncond; 
 xLabel = syncXLabel(ds, iSubSeqs);
 yLabel = 'Phase (cycles)';
 title = 'Vector Strength Phase';

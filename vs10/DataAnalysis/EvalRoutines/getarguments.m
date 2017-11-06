@@ -139,8 +139,8 @@ function [param,structFields] = wrapStructInCell_(param)
 structFields = {};
 for n=1:length(param)
 	if isstruct(param{n})
-		param{n} = {param{n}};
-		structFields{end +1} = param{n-1};
+        param{n} = { param{n}};
+		structFields{end+1} = param{n-1};
 	end
 end
 end

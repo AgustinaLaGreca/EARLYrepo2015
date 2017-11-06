@@ -1,0 +1,17 @@
+function textwrite(fid, TXT);
+% textwrite - write text matrix to open textfile; deblank each line of text
+
+Nline = size(TXT,1);
+for iline=1:Nline,
+   lin = deblank(TXT(iline,:)); % 02.Oct.17 Hsin-Wei
+   %fprintf(fid, '%s\n', lin);
+   %% following added by Hsin-Wei on 2.Oct.17
+   fileID = fopen(fid,'a'); % 
+   try
+       fprintf(fileID,'%s\n', lin);
+   catch err
+       lin = cell2words(lin);
+       fprintf(fileID, '%s\n', lin);
+   end
+   fclose(fileID);
+end

@@ -14,7 +14,7 @@ function iReps = ExpandiReps(ArgIn, iSubSeqs, iReps)
 
 %B. Van de Sande 25-03-2004
 
-if isa(ArgIn, 'dataset'), NRep = ArgIn.nrep; else NRep = size(ArgIn, 2); end
+if isa(ArgIn, 'dataset'), NRep = ArgIn.Stim.Nrep; else NRep = size(ArgIn, 2); end
 
 if ischar(iReps) & strcmpi(iReps, 'all'), iReps = repmat({1:NRep}, 1, length(iSubSeqs));
 elseif isnumeric(iReps) & any(size(iReps) == 1) & all(ismember(iReps, 1:NRep)), 
