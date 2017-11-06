@@ -31,6 +31,9 @@ if nargin<2 || isempty(figh),
     if ~isa(figh,'double')
     figh = figh.Number;
     end;
+    if ~isa(figh,'double')
+    figh = figh.Number;
+    end;
 else,
     open_new = isSingleHandle(figh);
 end
