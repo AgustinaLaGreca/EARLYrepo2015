@@ -141,7 +141,7 @@ else,
         xlog125;
     end
     try,
-        LegStr = cellify(getGUIdata(gcf,'LegendStr', {}));
+        LegStr = cellify(getGUIdata(double(gcf),'LegendStr', {}));
         LegStr = [LegStr [num2str(max(D.Stim.SPL)) ' dB SPL']];
 %         setGUIdata(gcf,'LegendStr', LegStr);
         legend(LegStr, 'location', 'southwest');

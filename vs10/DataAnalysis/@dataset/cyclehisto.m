@@ -149,7 +149,7 @@ else fcycle = fcycle(:); end;
         % axes(h);  
 
         [N,Ph] = hist(spt,linspace(0,1,P.Nbin+1));
-        bar(h, Ph, N, 'style','histc');  
+        bar(h, Ph, N, 'histc');  
         xlim(h, [0 1])    
         title(h, sprintf(fmt, Xval(icond)));
         VSstr = ['r = ' num2str(VS) ', phi = ' num2str(phi)];

@@ -20,11 +20,11 @@ if length(XL)<2, XL(2)=inf; end
 xlim(XL);
 if max(XL)/min(XL)>5,
     TLab = Words2cell(num2str(TL(:)'));
-    set(gca,'xtick',TL, 'xticklab',TLab, 'XMinorTick', 'off');
+    set(gca,'Xtick',TL, 'XTickLabel',TLab, 'XMinorTick', 'off');
 else,
     TL = (10^floor(-1+log10(min(XL))))*(1:50);
     TLab = Words2cell(num2str(TL));
-    set(gca,'xtick',TL, 'xticklab',TLab, 'XMinorTick', 'off');
+    set(gca,'Xtick',TL, 'XTickLabel',TLab, 'XMinorTick', 'off');
 end
 %TL = TL(find((TL>=XL(1))&(TL<=XL(2))));
 figure(gcf);

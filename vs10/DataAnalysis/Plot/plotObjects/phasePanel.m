@@ -66,7 +66,7 @@ outPanel = set(outPanel, 'title', title, 'xlabel', xLabel, 'ylabel', yLabel, ...
     'noredraw');
 
 %% set limits
-outPanel = autoLimits(outPanel, 0, 0.05, 'noredraw');
+outPanel = autoLimits(outPanel, 0, 0.15, 'noredraw');
 
 %% add text
 dataTxt = {sprintf('Slope: %f', phase.curve.slope), ...
