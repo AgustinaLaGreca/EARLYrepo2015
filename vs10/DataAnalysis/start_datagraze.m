@@ -11,7 +11,7 @@ function [] = start_datagraze()
                 exp_name = current(experiment);
                 exp_name = exp_name.ID.Name;
                 proc.StartInfo.Arguments =  [' -nosplash ' ...
-                    '-sd c:\Early\vs10\dataAnalysis -r datagraze(''' exp_name ''')'];
+                    '-sd c:\EARLYrepo2015\vs10\dataAnalysis -r datagraze(''' exp_name ''')'];
                 proc.Start();
                 datagraze.active = 1;
             end

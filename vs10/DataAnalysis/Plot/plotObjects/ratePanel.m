@@ -109,7 +109,7 @@ for n=1:length(panelFields)
 end
 
 %Set axis limits
-outPanel = autoLimits(outPanel, param.xmargin, param.xmargin, 'noredraw');
+outPanel = autoLimits(outPanel, param.xmargin, param.ymargin, 'noredraw');
 
 %% Panel additions
 % Dotted line at maximum
