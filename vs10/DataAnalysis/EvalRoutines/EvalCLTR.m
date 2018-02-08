@@ -170,27 +170,34 @@ S.Vs.sdt            = NaN;
 %subsequence corresponding to the Indepval showing this Max R-value.
 idx = S.Vs.raysign <= Param.maxrayleigh;		%logical index for values within criterion
 [S.Vs.rmax]      = max(S.Vs.r(idx));			%their max value
-i = find(S.Vs.r == S.Vs.rmax);					%index of the max value within the original set
-
+if ~isempty(S.Vs.rmax)
+    i = find(S.Vs.r == S.Vs.rmax);					%index of the max value within the original set
+    %by Abel bugfix: When CFS data, clicktrain freq is varied while SPL is
+    %fixed. Spl has only 2 values which are idential.
+    %S.Vs.SPLmax         = S.Param.spl(i);
+    if ( length(unique(S.Param.spl)) == 1 )
+        %SPL is not indepvar unless only 1 subsequence was measured
+        S.Vs.SPLmax = S.Param.spl(1);
+    else
+        S.Vs.SPLmax = S.Param.spl(i);
+    end
+    
+    S.Vs.phmax          = S.Vs.ph(i);
+    S.Vs.nspkmax        = S.Vs.nspk(i);
+    S.Vs.raycrit		= Param.maxrayleigh;
+else
+        S.Vs.phmax          = NaN;
+    S.Vs.nspkmax        = NaN;
+    S.Vs.raycrit		= NaN;
+    
+end
 %Calculate Z-values 
 N = cat(1, S.Vs.nspk);
 R = cat(1, S.Vs.r);
 S.Vs.Z    = N .* (R .^2);
 
 
-%by Abel bugfix: When CFS data, clicktrain freq is varied while SPL is
-%fixed. Spl has only 2 values which are idential.
-%S.Vs.SPLmax         = S.Param.spl(i);
-if ( length(unique(S.Param.spl)) == 1 )
-    %SPL is not indepvar unless only 1 subsequence was measured
-    S.Vs.SPLmax = S.Param.spl(1);
-else
-    S.Vs.SPLmax = S.Param.spl(i);
-end
 
-S.Vs.phmax          = S.Vs.ph(i);
-S.Vs.nspkmax        = S.Vs.nspk(i);
-S.Vs.raycrit		= Param.maxrayleigh;
 
 if ~isempty(Thr)
     S.Thr           = rmfield(Thr, 'str');
@@ -522,10 +529,17 @@ YTicks = linspace(-0.4, +0.4, NRep+1);
 for n = 1:NRep,
     NSpk = length(Spt{1, n});
     if (NSpk > 0)
-        X  = [X, VectorZip(Spt{1, n}, Spt{1, n}, NaN (1, NSpk))];
-        Y1 = repmat(YTicks(n), 1, NSpk);
-        Y2 = repmat(YTicks(n+1), 1, NSpk);
-        Y  = [Y, VectorZip(Y1, Y2, repmat(NaN, 1, NSpk))];
+        if NSpk == 1,
+             X  = [X, VectorZip(Spt{1, n}, Spt{1, n}, NaN (1, NSpk))'];
+             Y1 = repmat(YTicks(n), 1, NSpk);
+             Y2 = repmat(YTicks(n+1), 1, NSpk);
+             Y  = [Y, VectorZip(Y1, Y2, repmat(NaN, 1, NSpk))'];
+        else,
+             X  = [X, VectorZip(Spt{1, n}, Spt{1, n}, NaN (1, NSpk))];
+             Y1 = repmat(YTicks(n), 1, NSpk);
+             Y2 = repmat(YTicks(n+1), 1, NSpk);
+             Y  = [Y, VectorZip(Y1, Y2, repmat(NaN, 1, NSpk))];
+        end
     end
 end
 YTicks = YTicks(2:end) - 0.5*diff(YTicks([1 2]));
