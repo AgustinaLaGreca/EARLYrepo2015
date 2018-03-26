@@ -1,4 +1,4 @@
-function [] = check_all_asserts(hObject,handles);
+function [] = check_all_asserts(hObject,handles)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 

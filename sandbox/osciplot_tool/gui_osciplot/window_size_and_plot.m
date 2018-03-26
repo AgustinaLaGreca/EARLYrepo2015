@@ -1,4 +1,4 @@
-function [] = window_size_and_plot(hObject,handles);
+function [] = window_size_and_plot(hObject,handles)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -46,8 +46,10 @@ end
             frame_ind = ((preplot_peak_locs(i)-floor((window_sizes)/2)):1:...
                          (preplot_peak_locs(i)+floor((window_sizes-1)/2)));
             subplot(nb_of_plots,1,i)
-            plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind),...
-                        '-*','MarkerIndices',floor((window_sizes)/2)+1,'MarkerEdgeColor','r')
+            % from 2016b
+%             plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind),...
+%                         '-*','MarkerIndices',floor((window_sizes)/2)+1,'MarkerEdgeColor','r')
+            plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind)) %before 2016b
             axis tight
         
             end

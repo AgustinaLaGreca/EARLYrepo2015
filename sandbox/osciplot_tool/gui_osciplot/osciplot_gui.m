@@ -4,7 +4,7 @@ function varargout = osciplot_gui(varargin)
 %      singleton*.
 %
 %       osciplot_gui expects this input:
-%       ('experiment',unknown,channel,condition,[repetitions]).
+%       ('experiment',recording number,channel,condition,[repetitions]).
 %       e.g. osciplot_gui('G17512',16,1,1,[1:10])
 %
 %       Make shure the dataset of the experiment is complete; a stimulus
@@ -45,19 +45,19 @@ function osciplot_gui_OpeningFcn(hObject, eventdata, handles, varargin)
 %            command line (see VARARGIN)
 
 % experiment = 'G17512';
-% unknown = 6;
+% recording number = 6;
 % channel = 1;
 % cond = 1;
 % repetition = 1;
 
 experiment = varargin{1};
-unknown = varargin{2};
+recording_number = varargin{2};
 channel = varargin{3};
 cond = varargin{4};
 repetition = varargin{5};
 
 
-handles.ds=read(dataset,experiment,unknown);
+handles.ds=read(dataset,experiment,recording_number);
 handles.trace_original = [];
 for ii = 1:length(repetition)
     handles.trace_original =  [handles.trace_original anadata(handles.ds,channel,cond,repetition(ii))'];
@@ -76,8 +76,10 @@ handles.nb_of_samples = length(handles.trace_original);
 % initial plot
 axes(handles.axes1)
 plot(handles.t,handles.trace)
+axis tight
 axes(handles.axes2)
 plot(handles.t,handles.stim)
+axis tight
 
 % Choose default command line output for osciplot_gui
 handles.output = hObject;

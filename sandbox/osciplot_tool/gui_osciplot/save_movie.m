@@ -1,4 +1,4 @@
-function [] = save_movie(hObject,handles);
+function [] = save_movie(hObject,handles)
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
 

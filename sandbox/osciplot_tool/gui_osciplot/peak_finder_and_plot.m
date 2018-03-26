@@ -1,4 +1,4 @@
-function [peak_locs] = peak_finder_and_plot(hObject,handles);
+function [peak_locs] = peak_finder_and_plot(hObject,handles)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -21,10 +21,16 @@ end
     [~,peak_locs] = findpeaks(handles.trace,'MinPeakHeight',handles.peak.threshold);
 
     % Plot the data
-    plot(handles.t,handles.trace,'-*','MarkerIndices',peak_locs,'MarkerEdgeColor','r');hold on
+    
+%   plot(handles.t,handles.trace,'-*','MarkerIndices',peak_locs,'MarkerEdgeColor','r');hold on %from2016b
+
+    % alternative for before 2016b
+    MarkerIndices = peak_locs;  
+    plot(handles.t,handles.trace, 'b-');   hold on               %plot everything with appropriate line color and no marker
+    plot(handles.t(MarkerIndices), handles.trace(MarkerIndices), 'r*');  %plot selectively with appropriate color and marker but no line
+    axis tight
     hline = refline(0,handles.peak.threshold); 
     hline.Color = 'g';hold off
-%     axis tight
     xlabel('time [t]')
 
 

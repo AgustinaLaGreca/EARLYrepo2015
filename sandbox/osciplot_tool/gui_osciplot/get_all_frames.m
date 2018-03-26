@@ -28,6 +28,17 @@ if handles.window_step_size.samples > handles.nb_of_samples/2
     return
 end
 
+% For optimal performace, the window step size should be smaller than 2/3 of the
+% window size
+
+if handles.window_step_size.samples > handles.window_size.samples*2/3
+    msgbox(strcat('For optimal visual performace, the step size should be smaller than 2/3  of the the window size (=',num2str(handles.window_size.samples*2/3/handles.Fs),'s), please change your input.'));
+    
+    video_frames = [];audio_frames_stim=[];audio_frames_trace=[];
+    return
+end
+
+
 % The minimal display time should be positive or zero
 if handles.minimal_display_time.samples < 0
     msgbox(strcat('The minimal display time should be positive or zero, please change your input.'));
@@ -69,13 +80,13 @@ alpha = 0.80; % Fading parameter
 figure()
 k = 1; % iteration parameter for the savings of the frames in each step
 current_peaknr = 1;
-if isempty(peak_locs) % when no peak is selected by the peakfinder
+if isempty(peak_locs) % when no peak is selected by the peakfinder (peakfinder_and_plot.m)
     current_peak_ind = 0;
 else
     current_peak_ind = peak_locs(current_peaknr); 
 end
 
-for ii = 1:window_step_size:nb_samples-window_size
+for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     
 
     frame_trace = trace(ii:ii+window_size-1);
@@ -107,7 +118,6 @@ for ii = 1:window_step_size:nb_samples-window_size
         frame_trace = trace(new_frame_ind);   
     end
     
-
     
     M(:,k) = frame_trace; % Save the frames for the fading
     N(:,k) = frame_stim; % not really used yet
@@ -117,22 +127,29 @@ for ii = 1:window_step_size:nb_samples-window_size
         subplot(211)
         for ll = 1:k-1
         plot(M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
+        axis tight
+        ylim([min_trace max_trace]); %Fix y-limits
         end
     else 
+        %% 
         subplot(211)
         for ll = k-nb_frames_fading:k-1
         plot(M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
+        axis tight
+        ylim([min_trace max_trace]); %Fix y-limits
         end 
     
     % Current display
     plot(M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
-    ylim([min_trace max_trace]);
+    axis tight
+    ylim([min_trace max_trace]); %Fix y-limits
     hold off;
     end
     
     subplot(212)
     plot(frame_stim); %stim
-    ylim([min_stim max_stim]);
+    axis tight
+    ylim([min_stim max_stim]); %Fix y-limits
     
     % Save complete frame for video
     FV(k) = getframe(gcf);
