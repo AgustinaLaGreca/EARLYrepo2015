@@ -28,29 +28,39 @@ switch lower(kw),
         Y = local_check(figh);
     case {'go', 'stop'}, % GUI(dum, 'Go', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_DA(gcbf, kw);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_DA(figh, kw);
     case {'plot'}, % GUI(dum, 'Plot', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_plot(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_plot(figh);
     case {'save'}, % GUI(dum, 'Save', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_save(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_save(figh);
     case {'edit'}, % GUI(dum, 'Edit', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_edit(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_edit(figh);
     case {'load'}, % GUI(dum, 'Load', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_load(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_load(figh);
     case {'plot'}, % GUI(dum, 'Plot', ...)
         [ok, figh]=existGUI(GUIname);
         if ~ok, error(['No ' mfilename ' GUI rendered']); end
@@ -61,6 +71,7 @@ switch lower(kw),
         local_help(varargin{:});
     case 'close',
         if nargin<3, figh=gcbf; else, figh=varargin{1}; end
+        figh =figh.Number;
         if ~GUIclosable(figh), return; end % ignore close request if not closable
         % close
         GUIclose(figh);

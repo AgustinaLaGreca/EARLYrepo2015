@@ -20,5 +20,6 @@ end
 [actx, Dev] = sys3dev(Dev);
 % getTagVal used to return useless singles; convert to double to make sure
 X = double(invoke(actx, 'GetTagVal', Tag)); 
+
   
   

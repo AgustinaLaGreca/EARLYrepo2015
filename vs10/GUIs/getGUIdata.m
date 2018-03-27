@@ -71,7 +71,7 @@ end
     
 if ~FNfound, 
     if provideDefault, Y = Def;
-    else, error(['Field ''' FN ''' not found in userdata.'])
+    else error(['Field ''' FN ''' not found in userdata.'])
     end
 end
 

@@ -10,6 +10,8 @@ function ah=plot(EC, varargin);
 %   See also Transfer/Plot.
 
 figh = gcf;
+figh.IntegerHandle = 'on';
+figh = figh.Number;
 set(findobj(figh,'type', 'line'), 'linewidth',1);
 
 if ~isa(EC, 'earcalib'), % plot(ah, T, ...) syntax. Rearrange input args
@@ -27,8 +29,10 @@ else, % plot(T, ...) syntax. Provide own axes handles.
     set(figh,'units', 'normalized', 'position', [0.324 0.198 0.653 0.716]);
     ah = [subplot(2,2,1) subplot(2,2,3) subplot(2,2,2) subplot(2,2,4)];
 end
+ah = double(ah);
 set(ah,'visib','off'); % plotting will make them reappear
 Trf1 =EC.Transfer(1); Trf2 =EC.Transfer(2);
+
 icol1 = 1+getGUIdata(figh,'ColorIndex_1',0);
 LegStr = [getGUIdata(figh,'LegStr',{}) [upper(name(EC.Experiment)) ' calib # ' num2str(EC.iCalib)]];
 setGUIdata(figh,'LegStr',cellify(LegStr));
@@ -55,7 +59,4 @@ if ~isvoid(Trf2),
     legend(ah(3), LegStr, 'location', 'southwest');
 end
 if nargout<1, clear ah; end
-
-
-
 

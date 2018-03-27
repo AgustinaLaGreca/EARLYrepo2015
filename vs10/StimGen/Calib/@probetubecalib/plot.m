@@ -11,6 +11,7 @@ function ah=plot(P, varargin);
 setWBdelay(P.Probe, getWBdelay(P.Cavity));
 % create subpolots
 ah = [subplot(2,2,1),subplot(2,2,3),subplot(2,2,2),subplot(2,2,4)];
+ah = double(ah);
 figh = gcf;
 set(figh,'units', 'normalized', 'position', [0.324 0.286 0.666 0.628]);
 % plot Probe & Cavity together after synching their delay

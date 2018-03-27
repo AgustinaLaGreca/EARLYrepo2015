@@ -40,32 +40,39 @@ switch lower(kw),
     case {'reset'}, % reset button
         LR = varargin{1};
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        Pi = getGUIdata(gcbf, 'initPTC');
-        setGUIdata(gcbf, 'currentPTC', Pi);
-        local_plot(gcbf);
+        figh = gcbf;
+        figh = figh.Number;
+        Pi = getGUIdata(figh, 'initPTC');
+        setGUIdata(figh, 'currentPTC', Pi);
+        local_plot(figh);
     case {'submit'}, % submit button
         local_cmd(gcbf); 
     case {'ok'}, % OK button
         LR = varargin{1};
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        setGUIdata(gcbf, 'wasEdited', true); % notify that editing has been done
-        GUIreaper(gcbf, 'reap'); % signal closing the figure; see 'launch' for data handling
+        figh = gcbf;
+        figh = figh.Number;
+        setGUIdata(figh, 'wasEdited', true); % notify that editing has been done
+        GUIreaper(figh, 'reap'); % signal closing the figure; see 'launch' for data handling
     case {'cancel'}, % Cancel button
         LR = varargin{1};
         if ~isequal('Left', LR), return; end; % ignore right-clicks
         % replace current data by original data
-        Pi = getGUIdata(gcbf, 'initPTC');
-        setGUIdata(gcbf, 'currentPTC', Pi);
-        GUIreaper(gcbf, 'reap'); % signal closing the figure; see 'launch' for data handling
+        figh = gcbf;
+        figh = figh.Number;
+        Pi = getGUIdata(figh, 'initPTC');
+        setGUIdata(figh, 'currentPTC', Pi);
+        GUIreaper(figh, 'reap'); % signal closing the figure; see 'launch' for data handling
     case {'help'}, % editdum, 'Help', ...)
         local_help(varargin{:});
     case 'close', % same as cancel
         if nargin<3, figh=gcbf; else, figh=varargin{1}; end 
+        figh = figh.Number;
         % close
         % replace current data by original data
-        Pi = getGUIdata(gcbf, 'initPTC');
-        setGUIdata(gcbf, 'currentPTC', Pi);
-        GUIreaper(gcbf, 'reap'); % signal closing the figure; see 'launch' for data handling
+        Pi = getGUIdata(figh, 'initPTC');
+        setGUIdata(figh, 'currentPTC', Pi);
+        GUIreaper(figh, 'reap'); % signal closing the figure; see 'launch' for data handling
     otherwise,
         error(['Unknown keyword ''' kw '''.']);
 end

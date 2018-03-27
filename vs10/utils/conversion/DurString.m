@@ -7,6 +7,7 @@ function Str = DurString(D);
 
 D = D*1e-3; % ms -> s
 Nmin = floor(D/60);
+% Nmin = fix(D/60);
 Nsec = ceil(D-Nmin*60);
 Str = [num2str(Nmin) ':' dec2base(Nsec,10,2)];
 

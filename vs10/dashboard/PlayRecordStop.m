@@ -112,6 +112,7 @@ end
 %=================================
 function local_replay(Mode, hdashboard, hstim, Exp, Recording);
 persistent StopIt
+
 if isempty(StopIt), StopIt=0; end
 
 if isequal('Stop', Mode),

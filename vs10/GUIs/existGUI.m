@@ -14,13 +14,20 @@ set(0,'showhiddenhand', 'on');
 hf = findobj(0,'type', 'figure');
 set(0,'showhiddenhand', shh);
 
+% Name
+% getGUIdata(hf(2).Number,'GUIname')
+
 eg = 0; h = [];
 for ii=1:numel(hf),
-    hn(ii) = hf(ii).Number;
-    eg = isGUI(hn(ii)) && isequal(Name,getGUIdata(hn(ii),'GUIname'));
-    if eg,
-        h = hn(ii);
-        break;
+    if isempty(hf(ii).Number)
+    
+    else    
+        hn(ii) = hf(ii).Number;
+        eg = isGUI(hn(ii)) && isequal(Name,getGUIdata(hn(ii),'GUIname'));
+        if eg,
+            h = hn(ii);
+            break;
+        end
     end
 end
 

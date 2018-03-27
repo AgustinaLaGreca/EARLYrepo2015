@@ -22,7 +22,8 @@ Xfloor = Xfloor(:).' ;
 N = numel(Xfloor);
 % first round to nearest element of Xfloor, using indices
     
-inear = interp1(Xfloor, 1:N, X, 'nearest',NaN);
+% inear = interp1(Xfloor, 1:N, X, 'nearest',NaN);
+inear = interp1(Xfloor, 1:N, X, 'previous','extrap'); %EVE: otherwise error when X-value is higher than table
 
 inear(inear==N) = N-1; % even X=inf should be rounded down to max(Xfloor)
 iup = (Xfloor(inear)>X); % indices of upward-rounded X

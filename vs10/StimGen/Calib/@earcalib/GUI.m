@@ -24,7 +24,7 @@ switch lower(kw),
         end
         figh = local_launch(dum);
         local_GUImode(figh, 'Ready');
-        figh = figh.Number;
+%         figh = figh.Number;
         GUIreaper(figh, 'wait'); % wait for a trigger to reap ...
         Y = getGUIdata(figh, 'qqqqq',[]); % ... grab the data ...
         local_delete(figh); % ... delete the figure & dependables
@@ -47,29 +47,39 @@ switch lower(kw),
         Y = local_check(figh);
     case {'go', 'stop'}, % GUI(dum, 'Go', 'Left', ichan)
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_DA(gcbf, kw, varargin{2:end});
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_DA(figh, kw, varargin{2:end});
     case {'plot'}, % GUI(dum, 'Plot', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_plot(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_plot(figh);
     case {'save'}, % GUI(dum, 'Save', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_save(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_save(figh);
     case {'edit'}, % GUI(dum, 'Edit', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_edit(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_edit(figh);
     case {'load'}, % GUI(dum, 'Load', 'Left')
         LR = varargin{1};
+        figh = gcbf;
+        figh = figh.Number;
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        blank(getGUIdata(gcbf,'Messenger')); % empty messages
-        local_load(gcbf);
+        blank(getGUIdata(figh,'Messenger')); % empty messages
+        local_load(figh);
     case {'plot'}, % GUI(dum, 'Plot', ...)
         [ok, figh]=existGUI(GUIname);
         if ~ok, error(['No ' mfilename ' GUI rendered']); end
@@ -409,7 +419,8 @@ if ~isvoid(Trf2),
     Trf2=description(Trf2, 'D/A --> eardrum');
     Trf2 = setWBdelay(Trf2,'wflat');
 end;
-EC.Transfer(1) = Trf1; EC.Transfer(2) = Trf2;
+EC.Transfer = [Trf1 Trf2];
+% EC.Transfer(1) = Trf1; EC.Transfer(2) = Trf2;
 
 %======
 function local_save(figh);

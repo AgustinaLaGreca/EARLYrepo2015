@@ -19,6 +19,7 @@ if ~istypedhandle(figh,'figure'), error('Handle does not belong to a figure.'); 
 [flag, Mess] = keywordMatch(lower(flag), {'create' 'wait' 'reap'},'flag');
 error(Mess);
 
+getGUIdata(figh, 'reaper',[]);
 switch flag
     case 'create',
         hr = getGUIdata(figh, 'reaper',[]);

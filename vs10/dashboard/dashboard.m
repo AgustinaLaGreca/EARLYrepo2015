@@ -72,16 +72,19 @@ switch lower(kw),
 
     case 'guimode', % dashboard('guimode', Mode, gmess, gmessmode)
         [ok, figh]=existGUI('dashboard');
+        figh=gcbf;
         figh = figh.Number;
         if ~ok, error('No dashboard rendered'); end
         local_GUImode(figh, varargin{:});
     case 'keypress',
-        figh = gcbf.Number;
+        figh = gcbf;
+        figh = figh.Number;
         local_keypress(figh, varargin{:});
     case {'play', 'playrecord', 'stop'}, % dashboard('Play', 'Left')
         LR = varargin{1};
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        figh = gcbf.Number;
+        figh=gcbf;
+        figh = figh.Number;
         blank(getGUIdata(figh,'Messenger')); % empty messages
         local_DA(figh, kw);
     case {'newunit', 'newelectrode' 'insertnote','addcomment','opendatabrowse'}, % dashboard('NewUnit', 'Left') etc

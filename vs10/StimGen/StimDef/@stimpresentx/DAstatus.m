@@ -19,9 +19,12 @@ if nargin<2,
     Stat = seqplaystatus;
     isam = Stat.isam_abs;
 end
-   
+
+
 [dum, S.ipres] = NthFloor(isam, SP.SamOffset);
     
+
+
 if isequal(0, S.ipres), % before stim onset
     S.icond=-inf; 
     S.irep = 0;

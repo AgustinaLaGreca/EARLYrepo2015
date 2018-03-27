@@ -62,7 +62,8 @@ switch lower(keyword),
         S = seqplaystatus;
         if ~S.Active, Str = 'No D/A.';
         else,
-            RemTime = (S.NsamTot-S.isam_abs)*S.dt; % ms remaining DA time
+            RemTime = (S.NsamTot-S.isam_abs)*S.dt; % m
+            s remaining DA time
             if isempty(DACinfo),
                 Str{1,1} = ['Playing from Wavebuffer ' num2str(S.WaveIndex) '.'];
             else,
