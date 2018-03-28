@@ -1,6 +1,11 @@
 function [] = save_movie(hObject,handles)
-%UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
+% [] = save_movie(hObject,handles)
+%   Saves the constructed movie with the selected name
+%   (handles.file_specs.name), in the selected location
+%   (handles.file_specs.location). 
+%   Make sure that the if you want to overwrite a movie (save in same place and with the same name as an
+%   existing movie) that this movie is not opened by another program at the
+%   same time
 
 %% Actual video and audio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

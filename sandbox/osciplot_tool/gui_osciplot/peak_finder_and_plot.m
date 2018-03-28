@@ -1,6 +1,10 @@
-function [peak_locs] = peak_finder_and_plot(hObject,handles)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+function [peak_locs] = peak_finder_and_plot(hObject,handles,plot_demand)
+% [peak_locs] = peak_finder_and_plot(hObject,handles,plot_demand)
+%   peak_finder_and_plot finds the peak values in hadles.trace above a
+%   certain threshold (handles.peak.threshold) and returs the location all the found
+%   paeks in an array (peak_locs). If plot_demand=1, the result of
+%   the peak search action is displayed on the gui. If plot_demand=0, nothing is
+%   displayed.
 
 %% Peak detection asserts
 
@@ -13,7 +17,6 @@ if handles.peak.threshold < 0
 end
 
 %% Preview of the whole signal and selected peaks
-
     %peakfinder
     warning('off','signal:findpeaks:largeMinPeakHeight') %turn the warning off in case no peaks are found
                                                        % (threshold to
@@ -21,6 +24,7 @@ end
     [~,peak_locs] = findpeaks(handles.trace,'MinPeakHeight',handles.peak.threshold);
 
     % Plot the data
+if plot_demand
     
 %   plot(handles.t,handles.trace,'-*','MarkerIndices',peak_locs,'MarkerEdgeColor','r');hold on %from2016b
 
@@ -33,7 +37,7 @@ end
     hline.Color = 'g';hold off
     xlabel('time [t]')
 
-
+end
 end
 
 

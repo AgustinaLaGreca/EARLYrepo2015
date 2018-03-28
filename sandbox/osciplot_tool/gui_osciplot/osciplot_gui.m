@@ -2,15 +2,15 @@ function varargout = osciplot_gui(varargin)
 %OSCIPLOT_GUI MATLAB code file for osciplot_gui.fig
 %      OSCIPLOT_GUI, by itself, creates a new OSCIPLOT_GUI or raises the existing
 %      singleton*.
-%
+%       
 %       osciplot_gui expects this input:
 %       ('experiment',recording number,channel,condition,[repetitions]).
-%       e.g. osciplot_gui('G17512',16,1,1,[1:10])
+%       e.g. osciplot_gui('G17512',6,1,1,[1:10])
 %
 %       Make shure the dataset of the experiment is complete; a stimulus
 %       and the corresponding trace (anadata)
 % See also: GUIDE, GUIDATA, GUIHANDLES
-
+% Code by Jan Everaert 2018
 % Edit the above text to modify the response to help osciplot_gui
 
 % Last Modified by GUIDE v2.5 05-Mar-2018 10:57:09
@@ -80,6 +80,9 @@ axis tight
 axes(handles.axes2)
 plot(handles.t,handles.stim)
 axis tight
+
+% initialization
+handles = init_gui(hObject,handles);
 
 % Choose default command line output for osciplot_gui
 handles.output = hObject;
@@ -179,7 +182,8 @@ function filter_pushbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 axes(handles.axes1)
-[trace_filtered] = filter_and_plot(hObject,handles);
+plot_demand = 1; %$ plot wanted
+[trace_filtered] = filter_and_plot(hObject,handles,plot_demand);
 handles.trace = trace_filtered;
 guidata(hObject, handles);
 
@@ -191,7 +195,8 @@ function peak_detection_pushbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 axes(handles.axes1)
-[peaks] = peak_finder_and_plot(hObject,handles);
+plot_demand = 1;
+[peaks] = peak_finder_and_plot(hObject,handles,plot_demand);
 handles.peak.positions = peaks;
 guidata(hObject, handles);
 
