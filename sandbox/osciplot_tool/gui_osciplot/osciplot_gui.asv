@@ -66,17 +66,11 @@ handles.trace_original = handles.trace_original';
 handles.trace = handles.trace_original;
 handles.stim = [];
 % Temp solution for data sets with for the stimulus a cell (don't know why)
-% Stimulus is constructed out of stim information present in the dataset
-% (added by Jan 2018)
-if iscell(handles.ds.Stim.Waveform(cond).Samples),
-    
-    stim_part = handles.ds.Stim.Waveform(cond).Samples{1};
-    stim_part_rep = handles.ds.Stim.Waveform(cond).Nrep(1);
-    pause_part = handles.ds.Stim.Waveform(cond).Samples{2};
-    pause_part_rep = handles.ds.Stim.Waveform(cond).Nrep(2);
+if ISCELL(handles.ds.Stim.Waveform(cond).Samples),
 
-    stim_construct = [repmat(stim_part,stim_part_rep,1);repmat(pause_part,pause_part_rep,1)];
-    handles.stim =  repmat(stim_construct,length(repetition),1);
+    stim_construct = [repmat(handles.ds.Stim.Waveform(cond).Samples{1},handles.ds.Stim.Waveform(cond).Nrep{1})...
+        repmat(handles.ds.Stim.Waveform(cond).Samples{2},handles.ds.Stim.Waveform(cond).Nrep{2})];
+    handles.stim =  repmat(stim_construct,length(repetition));
 
 else
     for ii = 1:length(repetition)
