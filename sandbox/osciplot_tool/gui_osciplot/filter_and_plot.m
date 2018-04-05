@@ -1,6 +1,11 @@
-function [trace_filtered] = filter_and_plot_filter(hObject,handles)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
+function [trace_filtered] = filter_and_plot_filter(hObject,handles,plot_demand)
+%[trace_filtered] = filter_and_plot_filter(hObject,handles,plot_demand)
+%   funtion that filters the input signal (handles.trace_original) with the
+%   cut-off frequencies (handles.filter.lowerthreshold
+%   andhandles.filter.upperthreshold) with a butterworth filter and returns
+%   the filtered signal (trace_filtered). If plot_demand=1, the result of
+%   the filter action is displayed on the gui. If plot_demand=0, nothing is
+%   displayed.
 
 
 %% filter asserts
@@ -36,14 +41,14 @@ end
     cof =  [handles.filter.lowerthreshold,handles.filter.upperthreshold]; %cut off freq
     [b,a] = butter(2,cof./handles.Fs);
     trace_filtered = filtfilt(b,a,handles.trace_original);
-    
+if plot_demand    
     % result of filtering
     plot(handles.t,handles.trace_original);hold on
     plot(handles.t,trace_filtered);hold off
     axis tight
     xlabel('time [t]')
     legend('original trace','filtered trace')
-    
+end
 end
 
 

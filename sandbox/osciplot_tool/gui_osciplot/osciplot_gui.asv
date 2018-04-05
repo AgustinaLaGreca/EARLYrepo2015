@@ -79,11 +79,9 @@ if iscell(handles.ds.Stim.Waveform(cond).Samples),
     handles.stim =  repmat(stim_construct,length(repetition),1);
     
 else
-    
     for ii = 1:length(repetition)
         handles.stim =  [handles.stim handles.ds.Stim.Waveform(cond).Samples'];
     end
-    
 end
 handles.stim = handles.stim';
 handles.Fs = handles.ds.Fsam;

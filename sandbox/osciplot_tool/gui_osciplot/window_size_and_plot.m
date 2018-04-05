@@ -1,6 +1,7 @@
 function [] = window_size_and_plot(hObject,handles)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+% [] = window_size_and_plot(hObject,handles)
+%   window_size_and_plot plots the result of the selected windowsize (handles.window_size)
+
 
 %% Window size
 

@@ -1,6 +1,7 @@
 function [video_frames,audio_frames_stim,audio_frames_trace] = get_all_frames(hObject,handles)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+% [video_frames,audio_frames_stim,audio_frames_trace] = get_all_frames(hObject,handles)
+% returns the video frames and audio frames for the movie, based on all the
+% selected parameters (stored in handles).
 
 %% Asserts get all frames
 
