@@ -70,18 +70,20 @@ handles.stim = [];
 % (added by Jan 2018)
 if iscell(handles.ds.Stim.Waveform(cond).Samples),
     
-    stim_part = handles.ds.Stim.Waveform(cond).Samples{1};
-    stim_part_rep = handles.ds.Stim.Waveform(cond).Nrep(1);
-    pause_part = handles.ds.Stim.Waveform(cond).Samples{2};
-    pause_part_rep = handles.ds.Stim.Waveform(cond).Nrep(2);
-
-    stim_construct = [repmat(stim_part,stim_part_rep,1);repmat(pause_part,pause_part_rep,1)];
+    stim_construct = [];
+    for ii = 1:length(handles.ds.Stim.Waveform(cond).Samples)
+    stim_part = handles.ds.Stim.Waveform(cond).Samples{ii};
+    stim_part_rep = handles.ds.Stim.Waveform(cond).Nrep(ii);
+    stim_construct = [stim_construct;repmat(stim_part,stim_part_rep,1)];
+    end
     handles.stim =  repmat(stim_construct,length(repetition),1);
-
+    
 else
+    
     for ii = 1:length(repetition)
         handles.stim =  [handles.stim handles.ds.Stim.Waveform(cond).Samples'];
     end
+    
 end
 handles.stim = handles.stim';
 handles.Fs = handles.ds.Fsam;
