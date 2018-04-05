@@ -150,14 +150,17 @@ else fcycle = fcycle(:); end;
 
         [N,Ph] = hist(spt,linspace(0,1,P.Nbin+1));
         bar(h, Ph, N, 'histc');  
-        xlim(h, [0 1])    
-        title(h, sprintf(fmt, Xval(icond)));
-        VSstr = ['r = ' num2str(VS) ', phi = ' num2str(phi)];
-        if Alpha<=0.001, 
+        xlim(h, [0 1])   
+        % round VS and phi and save as string for the display on the figure
+        VSstr = ['r = ' num2str(round(VS, 2)) ', phi = ' num2str(round(phi, 2))];
+                if Alpha<=0.001, 
             VSstr = [VSstr '*'];
-        end
+                end
+        title(h, {sprintf(fmt, Xval(icond)),VSstr});
         set(gcf,'CurrentAxes',h);
-        text(0.1, 0.1, VSstr, 'units', 'normalized', 'color', 'r', 'fontsize', 12 , 'interpreter', 'latex');
+            % this is displayed in the title instead of on the figure
+            % itself(see above)
+%           text(0.1, 0.9, VSstr, 'units', 'normalized', 'color', 'r', 'fontsize', 12 , 'interpreter', 'latex');
         data_struct.fcar = fcar;
         data_struct.T = T;
         data_struct.dur = dur;

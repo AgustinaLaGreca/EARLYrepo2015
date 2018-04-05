@@ -43,7 +43,7 @@ end
 H = local_PSTH(D, figh, open_new, P);
 
 % enable parameter editing when viewing offline
-if isSingleHandle(figh, 'figure'), enableparamedit(D, P, figh); end;
+if isSingleHandle(figh.Number, 'figure'), enableparamedit(D, P, figh.Number); end;
 
 
 
@@ -81,6 +81,7 @@ isortPlot=isortPlot(:).';
 for i=1:Ncond
     icond = isortPlot(i);
     BurstDur = max(burstdur(D,icond));
+%     d=repdur(D, icond)
     if isequal('burstdur', AW), aw = [0 BurstDur]; else aw = AW; end
     BinEdges = linspace(aw(1), aw(2), P.Nbin+1); % histogram bins
     BinWidths = diff(BinEdges);
