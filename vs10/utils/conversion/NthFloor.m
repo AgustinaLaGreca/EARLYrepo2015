@@ -17,13 +17,15 @@ if any(DX<=0),
 end
     
 % 
-% Xfloor = [-inf Xfloor(:).' inf];
-Xfloor = Xfloor(:).' ;
+% Xfloor = [-inf Xfloor(:).' inf]; % Hsin-Wei Mar30,2018: this generates errors in Matlab R2017b
+%Xfloor = Xfloor(:).'; % deleted by Hsin-Wei Mar30,2018
+Xfloor = [min(Xfloor)-1e10 Xfloor(:).' max(Xfloor)+1e10]; % This doesn't generate error. Hsin-Wei Mar30,2018
 N = numel(Xfloor);
 % first round to nearest element of Xfloor, using indices
     
-% inear = interp1(Xfloor, 1:N, X, 'nearest',NaN);
-inear = interp1(Xfloor, 1:N, X, 'previous','extrap'); %EVE: otherwise error when X-value is higher than table
+ inear = interp1(Xfloor, 1:N, X, 'nearest',NaN);
+ % following deleted by Hsin-Wei Mar30,2018.
+ %inear = interp1(Xfloor, 1:N, X, 'previous','extrap'); %EVE: otherwise error when X-value is higher than table
 
 inear(inear==N) = N-1; % even X=inf should be rounded down to max(Xfloor)
 iup = (Xfloor(inear)>X); % indices of upward-rounded X
