@@ -152,11 +152,12 @@ else fcycle = fcycle(:); end;
         bar(h, Ph, N, 'histc');  
         xlim(h, [0 1])   
         % round VS and phi and save as string for the display on the figure
+        % (Jan 2018)
         VSstr = ['r = ' num2str(round(VS, 2)) ', phi = ' num2str(round(phi, 2))];
                 if Alpha<=0.001, 
             VSstr = [VSstr '*'];
                 end
-        title(h, {sprintf(fmt, Xval(icond)),VSstr});
+        title(h, {sprintf(fmt, Xval(icond)),VSstr},'FontSize', 8);
         set(gcf,'CurrentAxes',h);
             % this is displayed in the title instead of on the figure
             % itself(see above)

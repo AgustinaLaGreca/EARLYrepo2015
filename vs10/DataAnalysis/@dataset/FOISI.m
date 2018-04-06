@@ -100,14 +100,16 @@ for i=1:Ncond
     H(i,:) = N;
     Mean = sum(BinCenters.*N)/sum(N); % mean interval in ms
     Rate = 1e3/Mean; % mean firing rate [/s]
-    Rstr = ['rate = ' num2str(Rate) ' spikes/s'];
+%     Rstr = ['rate = ' num2str(Rate) ' spikes/s']; replaced (Jan 2018)
+    Rstr = ['rate = ' num2str(round(Rate, 2)) ' spikes/s']; % round on two decimals (Jan 2018)
     h = axh(i); % current axes handle
     % axes(h); % slow!!!!
     bar(h, BinCenters, N, 'histc');
     xlim(h, [P.viewport(1) P.viewport(2)])
-    title(h, Clab{icond});
+    title(h,{Clab{icond},Rstr},'FontSize', 8); % Rstr added to te title, more readable (Jan 2018)
+%     title(h, Clab{icond});
     set(gcf,'CurrentAxes',h);
-    text(0.1, 0.1, Rstr, 'units', 'normalized', 'color', 'r', 'fontsize', 12 , 'interpreter', 'latex');
+%     text(0.1, 0.1, Rstr, 'units', 'normalized', 'color', 'r', 'fontsize', 12 , 'interpreter', 'latex'); % This ifno is put in the title (Jan 2018)
 
     data_struct.BurstDur = BurstDur;
     data_struct.aw = aw;

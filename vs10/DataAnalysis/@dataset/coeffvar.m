@@ -112,7 +112,7 @@ for i=1:Ncond
     Std = sqrt(sum((u-repmat(U,[Pres.Nrep 1])).^2,1)./N); % the corresponding standard deviation
     C = Std./U; % CV 
     meanCV = mean(C(imw));
-    CVstr = ['mean CV = ' num2str(meanCV)];
+    CVstr = ['mean CV = ' num2str(round(meanCV,2))];
     h = axh(i); % current axes handle
     % axes(h); % slow!!!
 %     plot(h, T, U, 'k'); hold on
@@ -124,7 +124,7 @@ for i=1:Ncond
     set(h,{'ycolor'},{'b';'r'});
     title(h(2), Clab{icond});
     set(gcf,'CurrentAxes',h(1));
-    text(0.1, 0.1, CVstr, 'units', 'normalized', 'color', 'r', 'fontsize', 12 , 'interpreter', 'latex');
+    text(0.1, 0.1, CVstr, 'units', 'normalized', 'color', 'r', 'fontsize', 10 , 'interpreter', 'latex');
 
     data_struct.spt{icond} = spt;
     data_struct.DiffSpt{icond} = DiffSpt;

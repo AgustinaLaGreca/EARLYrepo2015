@@ -369,6 +369,7 @@ clr = get(0,'defaultAxesColorOrder');
 axes(ha2); % plot the stim on the second gui axis (Jan 2018)
 xdplot([dt 0],real(x), 'color', clr(end,:));
 
+N = numel(x); %Added by Jan (2018)
 Export.Time = (dt*(0:N-1));
 Export.Recordings = D_tot;
 Export.Stim = W;
