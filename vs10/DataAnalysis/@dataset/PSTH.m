@@ -29,6 +29,7 @@ end
 if nargin<2 || isempty(figh),
     open_new = isempty(get(0,'CurrentFigure'));
     figh = gcf; 
+    figh = figh.Number;
 else
     open_new = isSingleHandle(figh);
 end
@@ -43,7 +44,7 @@ end
 H = local_PSTH(D, figh, open_new, P);
 
 % enable parameter editing when viewing offline
-if isSingleHandle(figh.Number, 'figure'), enableparamedit(D, P, figh.Number); end;
+if isSingleHandle(figh, 'figure'), enableparamedit(D, P, figh); end;
 
 
 
