@@ -9,6 +9,9 @@ function S = wrapup(S);
 
 eval(IamAt('indent')); % indent call to action/wrapup below
 oneshot(S, 'force');
-wrapup(S.Action); % stop timer & set S.Status
+
+% wrapup(S.Action); % stop timer & set S.Status 
+wrapup(S.action); % stop timer & set S.Status % .Action -> .action (Jan,
+% April 2018)
 
 
