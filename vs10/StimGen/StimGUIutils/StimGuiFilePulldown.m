@@ -23,6 +23,7 @@ if nargin<1, % create call
     Pfile=additem(Pfile,CL);
 else, % callback
     figh = parentfigh(src); % GUI figure handle
+    figh = figh.Number; % fig handle fix % By Jan April 2018
     if isequal('save', ID), 
         % ==========prompt user for param file & save=========
         GUIgrab(figh,'?',1); % last arg: 1 = do display GUImessage
