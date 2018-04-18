@@ -34,7 +34,9 @@ switch lower(kw),
         local_GUImode(figh, varargin{:});
     case 'keypress',
     case {'filesave' 'fileopen' 'fileemptylist'},
-        local_file(gcbf, kw, varargin);
+        figh = gcbf;
+        figh = figh.Number;
+        local_file(figh, kw, varargin);
     case {'probenamebutton'}, % GUI(dum, probenamebutton, LR, chan)
         LR = varargin{1}; 
         if ~isequal('Left', LR), return; end; % ignore right-clicks
