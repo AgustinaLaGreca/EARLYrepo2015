@@ -116,7 +116,8 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
         % peak is centered in the frame when it is in it
         new_frame_ind = ((current_peak_ind-floor((window_size)/2)):1:...
              (current_peak_ind+floor((window_size-1)/2)));
-        frame_trace = trace(new_frame_ind);   
+        frame_trace = trace(new_frame_ind);
+        frame_stim = stim(new_frame_ind);
     end
     
     
