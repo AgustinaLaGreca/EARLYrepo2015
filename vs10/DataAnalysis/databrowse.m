@@ -271,7 +271,7 @@ if has1 && has2, % consult button
 elseif has1, ichan = 1;
 elseif has2, ichan = 2;
 else
-    error('No analog data in this dataset.');
+%      error('No analog data in this dataset.'); % commented by Jan 2018
     ichan = nan;
 end
 

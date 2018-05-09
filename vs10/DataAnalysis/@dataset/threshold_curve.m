@@ -13,6 +13,9 @@ end
 if nargin<2 || isempty(figh),
     open_new = isempty(get(0,'CurrentFigure'));
     figh=gcf; 
+    if ~isa(figh,'double')
+        figh = figh.Number; % added by Jan 2018
+    end;
 else,
     open_new = isSingleHandle(figh);
 end
