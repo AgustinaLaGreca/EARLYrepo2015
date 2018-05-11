@@ -46,7 +46,7 @@ if plot_demand
     plot(handles.t,handles.trace_original);hold on
     plot(handles.t,trace_filtered);hold off
     axis tight
-    xlabel('time [t]')
+    xlabel('time [s]')
     legend('original trace','filtered trace')
 end
 end

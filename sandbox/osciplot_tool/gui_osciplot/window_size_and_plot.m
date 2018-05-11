@@ -52,7 +52,8 @@ end
 %                         '-*','MarkerIndices',floor((window_sizes)/2)+1,'MarkerEdgeColor','r')
             plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind)) %before 2016b
             axis tight
-        
+            xlabel('time [s]')
+
             end
     end
 

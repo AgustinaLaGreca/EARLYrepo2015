@@ -96,31 +96,24 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     % Save the corresponding audio frame
     FA_stim(:,k) = stim(ii:ii+window_step_size-1); %audio stim
     FA_trace(:,k) = trace(ii:ii+window_step_size-1); %audio trace
-
+    frame_ind = ii:ii+window_step_size-1; % used for x-axis in the plot
     
-    if  current_peaknr < length(peak_locs)
-        % go to the next peak, if there is one
-        next_peaknr = current_peaknr+1;
-        next_peak_ind = peak_locs(next_peaknr);
-
-        if (next_peak_ind < ii+window_size)...
-            && (ii > window_size/2) && (ii < nb_samples-window_size-window_size/2)
-        
-            current_peaknr = next_peaknr;
-            current_peak_ind = peak_locs(current_peaknr);
-        end
+    % get current peak nb
+    peaks_in_interval = peak_locs(peak_locs > ii & peak_locs < ii+window_step_size-1);
+    if ~isempty(peaks_in_interval) && (ii > window_size/2) && (ii < nb_samples-window_size-window_size/2)
+    current_peak_ind = peaks_in_interval(1);
     end
-    
+
     if (current_peak_ind < ii+window_size) && (ii-current_peak_ind)/(display_speed_ratio) < t_min_disp ...
             && (current_peak_ind > window_size/2) && (current_peak_ind < nb_samples-window_size-window_size/2)
         % peak is centered in the frame when it is in it
         new_frame_ind = ((current_peak_ind-floor((window_size)/2)):1:...
              (current_peak_ind+floor((window_size-1)/2)));
+        frame_ind = new_frame_ind; % used for x-axis in the plot
         frame_trace = trace(new_frame_ind);
         frame_stim = stim(new_frame_ind);
     end
-    
-    
+        
     M(:,k) = frame_trace; % Save the frames for the fading
     N(:,k) = frame_stim; % not really used yet
    
@@ -128,7 +121,7 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     if k <= nb_frames_fading  
         subplot(211)
         for ll = 1:k-1
-        plot(M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
+        plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         axis tight
         ylim([min_trace max_trace]); %Fix y-limits
         end
@@ -136,22 +129,23 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
         %% 
         subplot(211)
         for ll = k-nb_frames_fading:k-1
-        plot(M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
+        plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         axis tight
         ylim([min_trace max_trace]); %Fix y-limits
         end 
-    
+    end
     % Current display
-    plot(M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
+    plot((0:length(M(:,k))-1)./Fs,M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
     axis tight
     ylim([min_trace max_trace]); %Fix y-limits
     hold off;
-    end
+    
     
     subplot(212)
-    plot(frame_stim); %stim
+    plot((0:length(frame_stim)-1)./Fs,frame_stim); %stim
     axis tight
     ylim([min_stim max_stim]); %Fix y-limits
+    xlabel('time[s]')
     
     % Save complete frame for video
     FV(k) = getframe(gcf);
@@ -159,6 +153,20 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     
     k=k+1;
 end
+
+% Parameterframe at the end of the movie
+
+dim = [0.2 0.5 0.3 0.3];
+str = {'Used movie parameters:',...
+    strcat('BP filter: ','[',num2str(handles.filter.lowerthreshold),':',num2str(handles.filter.upperthreshold),']',' [Hz]'),...
+    strcat('Peak TH: ',num2str(handles.peak.threshold),' [V]'),...
+    strcat('Window size: ',num2str(handles.window_size.time),' [s]'),...
+    strcat('DSR: ',num2str(display_speed_ratio),' [-]'),...
+    strcat('Window step: ',num2str(handles.window_step_size.time),' [s]'),...
+    strcat('Min displ time: ',num2str(handles.minimal_display_time.time),' [s]')};
+annotation('textbox',dim,'Color','red','String',str,'BackgroundColor', 'k','FitBoxToText','on');
+FV(k-1) = getframe(gcf);
+
 
 video_frames = FV;
 audio_frames_stim = FA_stim;

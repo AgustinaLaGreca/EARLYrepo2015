@@ -35,7 +35,7 @@ if plot_demand
     axis tight
     hline = refline(0,handles.peak.threshold); 
     hline.Color = 'g';hold off
-    xlabel('time [t]')
+    xlabel('time [s]')
 
 end
 end
