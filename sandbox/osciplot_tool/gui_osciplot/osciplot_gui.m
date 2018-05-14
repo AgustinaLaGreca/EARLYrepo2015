@@ -13,7 +13,7 @@ function varargout = osciplot_gui(varargin)
 % Code by Jan Everaert 2018
 % Edit the above text to modify the response to help osciplot_gui
 
-% Last Modified by GUIDE v2.5 05-Mar-2018 10:57:09
+% Last Modified by GUIDE v2.5 14-May-2018 10:07:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,6 +56,11 @@ channel = varargin{3};
 cond = varargin{4};
 repetition = varargin{5};
 
+handles.experiment = experiment;
+handles.recording_number = recording_number;
+handles.channel = channel;
+handles.cond = cond;
+handles.repetition = repetition;
 
 handles.ds=read(dataset,experiment,recording_number);
 handles.trace_original = [];
@@ -89,6 +94,14 @@ handles.stim = handles.stim';
 handles.Fs = handles.ds.Fsam;
 handles.t = (0:length(handles.trace)-1)./handles.Fs;
 handles.nb_of_samples = length(handles.trace_original);
+
+% data info set
+set(handles.text53, 'String', handles.experiment);
+set(handles.text54, 'String', handles.recording_number);
+set(handles.text55, 'String', handles.channel);
+set(handles.text56, 'String', handles.cond);
+set(handles.text57, 'String', handles.repetition);
+
 
 % initial plot
 axes(handles.axes1)
@@ -452,3 +465,4 @@ function uibuttongroup13_SelectionChangedFcn(hObject, eventdata, handles)
 
 % Update handles structure
 guidata(hObject, handles);
+

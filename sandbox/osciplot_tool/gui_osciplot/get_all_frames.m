@@ -138,8 +138,9 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     plot((0:length(M(:,k))-1)./Fs,M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
     axis tight
     ylim([min_trace max_trace]); %Fix y-limits
+    title(strcat('Exp:',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
+        '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep;',num2str(handles.repetition)))
     hold off;
-    
     
     subplot(212)
     plot((0:length(frame_stim)-1)./Fs,frame_stim); %stim
