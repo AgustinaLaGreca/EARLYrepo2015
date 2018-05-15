@@ -17,22 +17,34 @@ if handles.peak.threshold < 0
 end
 
 %% Preview of the whole signal and selected peaks
-    %peakfinder
+% peakfinder
     warning('off','signal:findpeaks:largeMinPeakHeight') %turn the warning off in case no peaks are found
                                                        % (threshold to
                                                        % high)
     [~,peak_locs] = findpeaks(handles.trace,'MinPeakHeight',handles.peak.threshold);
 
-    % Plot the data
+% Plot the data
+
+% Y limits trace
+if handles.y_limits_trace.auto_on
+    y_min_trace = handles.y_limits_trace.auto.min;
+    y_max_trace = handles.y_limits_trace.auto.max;
+else
+    y_min_trace = handles.y_limits_trace.manual.min;
+    y_max_trace = handles.y_limits_trace.manual.max;
+end
+
 if plot_demand
     
 %   plot(handles.t,handles.trace,'-*','MarkerIndices',peak_locs,'MarkerEdgeColor','r');hold on %from2016b
 
     % alternative for before 2016b
     MarkerIndices = peak_locs;  
-    plot(handles.t,handles.trace, 'b-');   hold on               %plot everything with appropriate line color and no marker
+    h = plot(handles.t,handles.trace, 'b-');   hold on               %plot everything with appropriate line color and no marker
     plot(handles.t(MarkerIndices), handles.trace(MarkerIndices), 'r*');  %plot selectively with appropriate color and marker but no line
     axis tight
+    
+    ylim([y_min_trace y_max_trace]); %Fix y-limits
     hline = refline(0,handles.peak.threshold); 
     hline.Color = 'g';hold off
     xlabel('time [s]')

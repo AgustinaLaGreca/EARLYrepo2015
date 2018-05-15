@@ -64,19 +64,24 @@ trace = handles.trace;
 peak_locs = handles.peak.positions;
 window_step_size = handles.window_step_size.samples;
 window_size = handles.window_size.samples;
-nb_frames_fading = 15;
+nb_frames_fading = 10;
 nb_samples = length(trace);
 display_speed_ratio = handles.display_speed_ratio;
 Fs = handles.Fs;
 t_min_disp = handles.minimal_display_time.samples;
 
 % fix the plot window (fixed axis)
-max_stim = max(stim);
+max_stim = max(stim); 
 min_stim = min(stim);
-max_trace = max(trace);
-min_trace = min(trace);
+if handles.y_limits_trace.auto_on
+    y_min_trace = handles.y_limits_trace.auto.min;
+    y_max_trace = handles.y_limits_trace.auto.max;
+else
+    y_min_trace = handles.y_limits_trace.manual.min;
+    y_max_trace = handles.y_limits_trace.manual.max;
+end
 
-alpha = 0.80; % Fading parameter
+alpha = 0.82; % Fading parameter
 
 figure()
 k = 1; % iteration parameter for the savings of the frames in each step
@@ -123,7 +128,7 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
         for ll = 1:k-1
         plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         axis tight
-        ylim([min_trace max_trace]); %Fix y-limits
+        ylim([y_min_trace y_max_trace]); %Fix y-limits
         end
     else 
         %% 
@@ -131,13 +136,13 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
         for ll = k-nb_frames_fading:k-1
         plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         axis tight
-        ylim([min_trace max_trace]); %Fix y-limits
+        ylim([y_min_trace y_max_trace]); %Fix y-limits
         end 
     end
     % Current display
     plot((0:length(M(:,k))-1)./Fs,M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
     axis tight
-    ylim([min_trace max_trace]); %Fix y-limits
+    ylim([y_min_trace y_max_trace]); %Fix y-limits
     title(strcat('Exp:',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
         '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep;',num2str(handles.repetition)))
     hold off;

@@ -19,6 +19,16 @@ end
 
 %% -> Selection of the window size
 
+% y-limits trace for plot
+if handles.y_limits_trace.auto_on
+    y_min_trace = handles.y_limits_trace.auto.min;
+    y_max_trace = handles.y_limits_trace.auto.max;
+else
+    y_min_trace = handles.y_limits_trace.manual.min;
+    y_max_trace = handles.y_limits_trace.manual.max;
+end
+
+% 
     window_sizes = handles.window_size.samples; %from s to nb of samples
     preplot_peak_locs = handles.peak.positions(handles.peak.positions > window_sizes/2);
     preplot_peak_locs = preplot_peak_locs(preplot_peak_locs < handles.nb_of_samples-window_sizes/2);
@@ -31,27 +41,13 @@ end
 
     else
         figure();
-%         ylim = max(handles.trace);
-%         plot(handles.t,handles.trace); hold on
-        
-%         C = {'k','b','r','g','y',[.5 .6 .7],[.8 .2 .6]};
-%         for ii = 1:nb_of_plots
-%             frame_ind_lower = (preplot_peak_locs(ii)-floor((window_sizes)/2))/handles.Fs;
-%             frame_ind_higher = (preplot_peak_locs(ii)+floor((window_sizes-1)/2))/handles.Fs;
-%             line([frame_ind_lower frame_ind_lower], ylim,'color',C{ii});
-%             line([frame_ind_higher frame_ind_higher], ylim,'color',C{ii});
-%             axis tight
-%         end
-%         hold off
             for i = 1:nb_of_plots
             frame_ind = ((preplot_peak_locs(i)-floor((window_sizes)/2)):1:...
                          (preplot_peak_locs(i)+floor((window_sizes-1)/2)));
             subplot(nb_of_plots,1,i)
-            % from 2016b
-%             plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind),...
-%                         '-*','MarkerIndices',floor((window_sizes)/2)+1,'MarkerEdgeColor','r')
             plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind)) %before 2016b
             axis tight
+            ylim([y_min_trace y_max_trace]); %Fix y-limits
             xlabel('time [s]')
 
             end

@@ -13,7 +13,7 @@ function varargout = osciplot_gui(varargin)
 % Code by Jan Everaert 2018
 % Edit the above text to modify the response to help osciplot_gui
 
-% Last Modified by GUIDE v2.5 14-May-2018 10:07:46
+% Last Modified by GUIDE v2.5 15-May-2018 12:32:31
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -95,12 +95,6 @@ handles.Fs = handles.ds.Fsam;
 handles.t = (0:length(handles.trace)-1)./handles.Fs;
 handles.nb_of_samples = length(handles.trace_original);
 
-% data info set
-set(handles.text53, 'String', handles.experiment);
-set(handles.text54, 'String', handles.recording_number);
-set(handles.text55, 'String', handles.channel);
-set(handles.text56, 'String', handles.cond);
-set(handles.text57, 'String', handles.repetition);
 
 
 % initial plot
@@ -215,6 +209,11 @@ axes(handles.axes1)
 plot_demand = 1; %$ plot wanted
 [trace_filtered] = filter_and_plot(hObject,handles,plot_demand);
 handles.trace = trace_filtered;
+
+% update the auto Y limits
+handles.y_limits_trace.auto.min = min(handles.trace);
+handles.y_limits_trace.auto.max = max(handles.trace);
+
 guidata(hObject, handles);
 
 
@@ -465,4 +464,81 @@ function uibuttongroup13_SelectionChangedFcn(hObject, eventdata, handles)
 
 % Update handles structure
 guidata(hObject, handles);
+
+
+
+
+function edit37_Callback(hObject, eventdata, handles)
+% hObject    handle to edit37 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.y_limits_trace.manual.min = get(hObject,'String');
+if iscell(handles.y_limits_trace.manual.min)
+    handles.y_limits_trace.manual.min = cellfun(@str2num,handles.y_limits_trace.manual.min);
+elseif ischar(handles.y_limits_trace.manual.min)
+    handles.y_limits_trace.manual.min = str2double(handles.y_limits_trace.manual.min);
+end
+% Update handles structure
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function edit37_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit37 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function edit38_Callback(hObject, eventdata, handles)
+% hObject    handle to edit38 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.y_limits_trace.manual.max = get(hObject,'String');
+if iscell(handles.y_limits_trace.manual.max)
+    handles.y_limits_trace.manual.max = cellfun(@str2num,handles.y_limits_trace.manual.max);
+elseif ischar(handles.y_limits_trace.manual.max)
+    handles.y_limits_trace.manual.max = str2double(handles.y_limits_trace.manual.max);
+end
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function edit38_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit38 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+% --- Executes on button press in radiobutton12.
+function radiobutton12_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.y_limits_trace.auto_on = 1;
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in radiobutton13.
+function radiobutton13_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.y_limits_trace.auto_on = 0;
+% Update handles structure
+guidata(hObject, handles);
+
+
+
 
