@@ -258,10 +258,12 @@ title([IDstring(DS, 'full') '  AD-'  num2str(Y.Param.ADchan) ' (' dataType(anach
      'fontsize', 12, 'fontweight', 'bold', 'interpreter', 'none');
 ylabel(['magnitude (' Y.Yunit_dB ')'],'fontsize',10);
 xlog125;
+set(ah1, 'XLimSpec', 'Tight'); % x-axis tight %Jan 2018
 ah2 = subplot(2,1,2);
 xplot(1e-3*Y.Xval, Y.Phase_cycle, '.:', ColorSpec);
 xplot(1e-3*Y.Xval, Y.Phase_cycle+PLM, '-', 'marker', PlotMarker, ColorSpec);
 xlabel('frequency (kHz)','fontsize',10);
+set(ah2, 'XLimSpec', 'Tight'); % x-axis tight %Jan 2018
 % linkaxes([ah1 ah2], 'x');
 ylabel('phase (cycle)','fontsize',10);
 
