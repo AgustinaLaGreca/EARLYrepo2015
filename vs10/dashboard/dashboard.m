@@ -72,8 +72,8 @@ switch lower(kw),
 
     case 'guimode', % dashboard('guimode', Mode, gmess, gmessmode)
         [ok, figh]=existGUI('dashboard');
-        figh=gcbf;
-        figh = figh.Number;
+%         figh=gcbf; % This is completely unnescesary (figh is already given)
+%         figh = figh.Number; % removed by Jan (April 2018)
         if ~ok, error('No dashboard rendered'); end
         local_GUImode(figh, varargin{:});
     case 'keypress',
@@ -88,6 +88,7 @@ switch lower(kw),
         blank(getGUIdata(figh,'Messenger')); % empty messages
         local_DA(figh, kw);
     case {'newunit', 'newelectrode' 'insertnote','addcomment','opendatabrowse'}, % dashboard('NewUnit', 'Left') etc
+        
         figh = gcbf;
         figh = figh.Number;
         GUImessage(figh, ' ');
@@ -186,6 +187,7 @@ switch lower(kw),
         local_GUImode(Y, 'Ready');
         if nargin>1, dashboard('launchstimmenu', 'Left', Y, varargin{1}); end
     case 'backup'
+        
         Exp = current(experiment);
         backup(Exp);
     otherwise,
@@ -521,6 +523,7 @@ switch kw,
         PlayRecordStop(kw, figh, hstim, Exp, Rec);
     case 'Stop',
         PlayRecordStop(kw, figh);
+        
 end % switch/case
 
 %======
