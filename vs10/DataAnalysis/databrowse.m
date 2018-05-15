@@ -61,8 +61,8 @@ ViewRecButton = AnaButton(figh, Ymax-6*DYb, 'view recording', @local_viewrec);
 ViewRecButton = double(ViewRecButton);
 DYb = 55; Ygap = 310;
 
-%====CUSTOM BUTTONS=====
-for ibut=1:5
+%====CUSTOM BUTTONS===== % 6th button added by Jan 2018
+for ibut=1:6
     eval(['CustomAna_' num2str(ibut) '_Button = AnaButton(figh, Ymax-Ygap-' num2str(ibut-1) '*DYb, ''...'', @local_dotraster);']);
 end
 % CustomAna_1_Button = AnaButton(figh, Ymax-Ygap, '...', @local_dotraster);
@@ -100,12 +100,12 @@ ExportCoeffvar = uimenu(Export, 'label', '&Coeffvar', 'callback', @(Src,Ev)local
 handles = CollectInStruct(figh, RecList, ChanButton, ParamViewButton, ...
     DotRasterButton, CustomAna_1_Button, CustomAna_2_Button, ...
     CustomAna_3_Button, CustomAna_4_Button, ...
-    CustomAna_5_Button, ... ,   '-', ...
+    CustomAna_5_Button,CustomAna_6_Button, ... ,   '-', ...
     Data, UpdateItem, ParamViewItem, ListItem, '-',...
     Ana, RasterItem, Custom_1_Item, Custom_2_Item, '-',...
     Export, ExportTable, ExportDotraster, ExportSpectrum, ExportThresholdCurve, ...
     ExportPSTH, ExportCycleHisto, ExportRatePlot, ExportResponsArea, ...
-    ExportFOISI, ExportCoeffvar);
+    ExportFOISI, ExportCoeffvar); % 6th button added by Jan 2018
 setGUIdata(figh, 'handles', handles); % remember the handles in figure, so callbacks may use them
 setGUIdata(figh, 'Experiment', Exp); % remember the experiment in figure, so callbacks may use it
 setGUIdata(figh, 'datagetter', getds(name(Exp))); % quick dataset retriever
@@ -510,10 +510,10 @@ threshold_curve(ds);
 
 %LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 function local_listboxmove(Src, Ev)
-[figh, hlb, h1, h2, h3, h4, h5] = local_handle(Src, 'RecList', ...
+[figh, hlb, h1, h2, h3, h4, h5, h6] = local_handle(Src, 'RecList', ...
     'CustomAna_1_Button', 'CustomAna_2_Button', ...
     'CustomAna_3_Button', 'CustomAna_4_Button', ...
-    'CustomAna_5_Button');
+    'CustomAna_5_Button','CustomAna_6_Button');
 
 irec = get(hlb, 'value');
 StimTypes = getGUIdata(figh, 'StimTypes');
@@ -522,6 +522,8 @@ set(h2, 'String', '  ... ', 'callback', @nope);
 set(h3, 'String', '  ... ', 'callback', @nope);
 set(h4, 'String', '  ... ', 'callback', @nope);
 set(h5, 'String', '  ... ', 'callback', @nope);
+set(h6, 'String', '  ... ', 'callback', @nope); %added by Jan 2018
+
 switch upper(StimTypes{irec}),
     % Try to maintain as much uniformity amongst stimulus types as
     % possible.
@@ -531,18 +533,23 @@ switch upper(StimTypes{irec}),
         set(h3, 'String', '3 ISI histo', 'callback', @local_FOISI);
         set(h4, 'String', '4 coeffvar', 'callback', @local_coeffvar)
         set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
+        set(h6, 'String', '6 magn/phi', 'callback', @local_magn_phi); %added by Jan 2018
+
     case 'RF',
         set(h1, 'String', '1 PSTH', 'callback', @local_PSTH);
         set(h2, 'String', '2 IOfun', 'callback', @local_IOfun);
         set(h3, 'String', '3 area', 'callback', @local_resparea);
         set(h4, 'String', '4 coeffvar', 'callback', @local_coeffvar);
-        set(h5, 'String', '5 average', 'callback', @local_anamean);
+        set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
+        set(h6, 'String', '6 average', 'callback', @local_anamean);
+    
     case {'RCN','NITD','ARMIN','NRHO','MOVN','IRN','HP'}
         set(h1, 'String', '1 PSTH', 'callback', @local_PSTH);
         set(h2, 'String', '2 revcor', 'callback', @local_revcor);
         set(h3, 'String', '3 ISI histo', 'callback', @local_FOISI);
         set(h4, 'String', '4 magn/phi', 'callback', @local_magn_phi);
         set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
+        
     case {'MTF','DEP','RCM','RAM','BBFC','BBFM','BBFB','ITD','ILD','MBL',...
             'CFS','CTD','CSPL','MOVING_W','ZWICKER','QFM','NSAM','HAR',...
             'ENH_W','ENH_D','ENH_DB','W','NPHI','ENH_2T','ENH_FC','ENH_DURC'},
@@ -550,16 +557,22 @@ switch upper(StimTypes{irec}),
         set(h2, 'String', '2 cyclehisto', 'callback', @local_cyclehisto);
         set(h3, 'String', '3 ISI histo', 'callback', @local_FOISI);
         set(h4, 'String', '4 magn/phi', 'callback', @local_magn_phi);
-        set(h5, 'String', '5 average', 'callback', @local_anamean);
+        set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
+        set(h6, 'String', '6 average', 'callback', @local_anamean); %added by Jan 2018
+        
     case 'MASK',
         set(h1, 'String', '1 rateplot', 'callback', @local_rateplot);
         set(h2, 'String', '2 maskcorr', 'callback', @local_maskcorr);
+        
     case 'SUP',
         set(h1, 'String', '1 supspec', 'callback', @local_supspec);
+        
     case 'ZW',
         set(h1, 'String', '1 apple', 'callback', @local_apple);
+        
     case 'BINZW',
         set(h4, 'String', '4 rmsplot', 'callback', @local_rmsplot);
+        
     case {'THR','CAP'}
         set(h1, 'String', '1 threshold curve', 'callback', @local_threshold_curve);
 end % switch/case
