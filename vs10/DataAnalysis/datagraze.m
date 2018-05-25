@@ -9,8 +9,10 @@ function datagraze(Exp,varargin)
 %    See also databrowse, savedataprogress.
 
 
+
 % Set the matlab window title
-addpath(genpath('C:\Early\vs10'),'-end');
+addpath(genpath('C:\EARLYrepo2015\vs10'),'-end');
+
 rmpath(fullfile(matlabroot, 'toolbox', 'shared', 'statslib')); % removes dataset.m constructor in shared/statslib
 clc;
 disp(['--------------------------------------------------------------------' ...
@@ -117,9 +119,16 @@ if show_figures == 1
     
     if figh == -1
         figh = figure;
+        if ~isa(figh,'double')
+            figh = figh.Number;
+        end
     else
         figure(figh);
+        if ~isa(figh,'double')
+            figh = figh.Number;
+        end
     end
+    
     clf;
     placefig(figh,mfilename);
 
