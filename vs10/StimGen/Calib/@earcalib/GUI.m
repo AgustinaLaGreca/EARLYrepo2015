@@ -232,9 +232,9 @@ ProbeSens_2 = ParamQuery('ProbeSens_2',  'Probe mic:', '0.222XX', 'V/Pa', 'posit
 %==
 
 S = add(S, SpeakerName_1,'nextto',[20 0]);
-S = add(S, SpeakerNameButton_1, nextto(SpeakerName_1), [-9 0]);
+% S = add(S, SpeakerNameButton_1, nextto(SpeakerName_1), [-9 0]); % removed by Jan 2018; not used
 S = add(S, SpeakerName_2, nextto(SpeakerName_1), [170 0]);
-S = add(S, SpeakerNameButton_2, nextto(SpeakerName_2), [-9 0]);
+% S = add(S, SpeakerNameButton_2, nextto(SpeakerName_2), [-9 0]); % removed by Jan 2018; not used
 S = add(S, ProbeName_1, below(SpeakerName_1),[-15 0]);
 S = add(S, ProbeNameButton_1, nextto(ProbeName_1), [-9 0]);
 S = add(S,ProbeSens_1, below(ProbeName_1), [15 0]);
