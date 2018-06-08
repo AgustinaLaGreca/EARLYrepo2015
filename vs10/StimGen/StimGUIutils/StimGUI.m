@@ -98,6 +98,8 @@ setGUIdata(figh, 'StimMaker', fhandle(StimMake));
 setGUIdata(figh, 'StimulusType', StimName);
 CreateQueryContextMenu(figh,ParamQuery);
 draw(figh, SG); 
+movegui(figh,'center'); % center the stim gui on the screen, added by Jan 2018
+
 
 %             setGUIdata(varargin{1}, 'StimMaker', fhandle(StimMake));
 %             setGUIdata(varargin{1}, 'StimulusType', StimName);

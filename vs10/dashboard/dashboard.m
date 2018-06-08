@@ -227,6 +227,8 @@ P=additem(P,'&ResetEarly', @(Src,Ev)Reset_Early(Src,Ev,figh));
 DB = add(DB,P);
 DB=marginalize(DB,[40 20]);
 draw(figh, DB); 
+movegui(figh,'center') % center the gui, added by Jan 2018
+
 % Store references to the Panels in the UI UserData
 Panels(1) = P_stim;
 Panels(2) = P_rec;
