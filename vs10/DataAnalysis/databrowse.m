@@ -506,7 +506,8 @@ if ~isa(figh,'double')
     figh = figh.Number;
 end;
 [ds, ichan] = local_curds(figh);
-threshold_curve(ds);
+EvalTHR(ds);
+% threshold_curve(ds);
 
 %LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 function local_listboxmove(Src, Ev)
