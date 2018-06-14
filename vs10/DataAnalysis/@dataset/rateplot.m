@@ -136,7 +136,7 @@ if has2varparams(D),
     max_info = '';
 else,
     xplot(x, y);
-    max_info = [X.ParName '-max: ' num2str(max_x) ' ' num2str(X.ParUnit) ' => SR = ' sprintf('%.1f',max_y) ' spikes/s'];
+    max_info = [X.ParName '-max: ' num2str(max_x) ' ' num2str(X.ParUnit) ' ' sprintf('%.1f',max_y) ' spikes/s'];
     if useLog
         xlog125;
     end
