@@ -1,3 +1,4 @@
+
 function [H,G]=cyclehisto(D, figh, P);
 % dataset/cyclehisto - plot cycle histogram of a dataset
 %    cyclehisto(D) displays a cycle histogram of the spike times in dataset D.
@@ -141,7 +142,8 @@ else fcycle = fcycle(:); end;
         %round(aw)
         spt = AnWin(spt, aw);
         [VS, Alpha] = vectorstrength(spt,fcar);
-        phi = angle(VS)/(2*pi);
+%         phi = angle(VS)/(2*pi); %this is wrong I think (Jan), should be division by just pi not 2*pi
+        phi = abs(angle(VS)/(pi)); %Jan 2018: get phi=[0...1]
         VS = deciRound(abs(VS),2);
         spt = rem(spt,T)/T;
         h = axh(icond); % current axes handle
