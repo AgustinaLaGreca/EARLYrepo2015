@@ -104,7 +104,9 @@ for icond=1:Ncond,
     
     data_struct.spt{icond} = spt;
     data_struct.Nsp(icond) = Nsp(icond);
-    data_struct.Rate(Rate) = Rate(icond);
+
+%     data_struct.Rate(Rate) = Rate(icond);
+    data_struct.Rate = Rate;
 end; 
 
 data_struct.Chan = 1;
