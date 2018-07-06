@@ -267,9 +267,9 @@ if show_figures == 1
     end
 
     curTab = temp; % restore and use now the different tabs have been defined
-    set(hTabGroup, 'SelectedIndex', curTab);
+%     set(hTabGroup, 'SelectedIndex', curTab); %not being used 
     set(hTabGroup, 'UserData', curTab);
-    set(hTabGroup,'SelectionChangeCallback', @(Src,Ev)local_selectionChangedFcn(Src,Ev,D,Pfile,userdata_cell));
+%     set(hTabGroup,'SelectionChangeCallback', @(Src,Ev)local_selectionChangedFcn(Src,Ev,D,Pfile,userdata_cell)); %not being used 
 
     %Src.EnableRaisingEvents = true; %enable filesystemwatcher
 end
