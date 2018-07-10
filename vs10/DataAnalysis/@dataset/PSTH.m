@@ -81,7 +81,8 @@ H = zeros(Ncond, P.Nbin);
 isortPlot=isortPlot(:).';
 for i=1:Ncond
     icond = isortPlot(i);
-    BurstDur = max(burstdur(D,icond));
+%     BurstDur = max(burstdur(D,icond)); 
+    BurstDur = max(Pres.PresDur(2:end-1)); %PST plot over the complete ISI instead of burst only (Jan)
 %     d=repdur(D, icond)
     if isequal('burstdur', AW), aw = [0 BurstDur]; else aw = AW; end
     BinEdges = linspace(aw(1), aw(2), P.Nbin+1); % histogram bins
