@@ -54,6 +54,7 @@ G=marginalize(G,[0 0]);
 figh = newGUI('Stimplot', [S.StimType ' stimulus plot'], {fhandle(mfilename), S});
 setGUIdata(figh, 'Stim', S);
 draw(figh, G); 
+movegui(figh,'center') %Jan 2018
 TracePlotInterface(figh,false); % don't link axes
 set(figh, 'toolbar','figure');
 Q = getGUIdata(figh,'Query');
