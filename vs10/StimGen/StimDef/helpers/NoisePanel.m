@@ -75,7 +75,8 @@ SPL = ParamQuery([Prefix 'SPL'], 'level:', '120.5 120.5', {'dB SPL' 'dB/Hz'}, ..
 DAC = ParamQuery('DAC', 'DAC:', '', DACstr, ...
     '', ['Active D/A channels.' ClickStr 'channel(s).']);
 MaxSPL=messenger([Prefix 'MaxSPL'], 'max [**** ****] dB SPL @ [***** *****] Hz    ',1);
-
+Reverse = ParamQuery(['Reverse'], 'Noise Direction:', '', {'Normal' 'Reverse'}, ...
+    'rreal', ['Direction of the stimulus. Click button to switch between normal direction and reversed direction.' PairStr],Nchan);
 
 % ========Add queries to panel=======
 NP = GUIpanel('Noise', T);
@@ -86,6 +87,8 @@ NP = add(NP,Corr, 'aligned', [0 -7]);
 NP = add(NP,NoiseSeed, nextto(Corr), [0 0]);
 NP = add(NP,MaxSPL,below(HighFreq),[17 0]);
 NP = add(NP,DAC,'nextto',[5 -10]);
+NP = add(NP,Reverse, 'below', [0 0]);
+
 NP = marginalize(NP, [0 3]);
 
 % remove some, if requested
