@@ -126,7 +126,7 @@ for ichan=1:Nchan,
             ModFreq(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), ...
             ISI(idx), OnsetDelay(idx), BurstDur(idx), RiseDur(idx), FallDur(idx), ...
             FineDelay(idx), GateDelay(idx), ModDelay(idx), PhaseShift(idx), FreqShift(idx), Corr(idx), P.CorrChan, ...
-            SPL(idx), P.SPLtype);
+            SPL(idx), P.SPLtype, P.Reverse);
     end
 end
 P.Duration = SameSize(P.BurstDur, zeros(Ncond,Nchan)); 
@@ -141,7 +141,7 @@ function  W = local_Waveform(chanChar, EXP, Fsam, ...
     ModFreq, ModDepth, ModStartPhase, ModTheta, ...
     ISI, OnsetDelay, BurstDur, RiseDur, FallDur, ...
     FineDelay, GateDelay, ModDelay, PhaseShift, FreqShift, Corr, CorrChan, ...
-    SPL, SPLtype);
+    SPL, SPLtype, Reverse);
 % Generate the waveform from the elementary parameters
 Corr = corr2refcorr(Corr, CorrChan, chanChar, EXP); % 1 or Corr, depending on varied chan
 % complex spectrum
@@ -166,14 +166,20 @@ if ~logical(EXP.StoreComplexWaveforms);
 end
 % gating
 % subplot(211)
-% plot(n)
+
 n = ExactGate(n, Fsam, BurstDur, GateDelay, RiseDur, FallDur);
+
+% Flip the signal depending on user preference input
+if isequal(Reverse,'Reverse') % added by Jan 2018
+    n = flipud(n); 
+end
+
 
 % convert to waveform object & provide heading & trailing silence
 P = CollectInStruct(LowFreq, HighFreq, NoiseSeed, ModFreq, ModDepth, ModStartPhase, ModTheta, ...
     ISI, OnsetDelay, BurstDur, RiseDur, FallDur, ...
     FineDelay, GateDelay, ModDelay, PhaseShift, FreqShift, Corr, CorrChan, ...
-    SPL, SPLtype); % store stim parameters for debugging purposes
+    SPL, SPLtype, Reverse); % store stim parameters for debugging purposes
 NsamOnsetDelay = round(OnsetDelay/dt);
 W = Waveform(Fsam, chanChar, NaN, SPL, P, {0 n}, [NsamOnsetDelay 1]);
 W = AppendSilence(W, ISI);
