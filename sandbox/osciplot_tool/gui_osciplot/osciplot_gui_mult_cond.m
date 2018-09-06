@@ -1,11 +1,13 @@
-function varargout = osciplot_gui(varargin)
+function varargout = osciplot_gui_mult_cond(varargin)
 %OSCIPLOT_GUI MATLAB code file for osciplot_gui.fig
-%      OSCIPLOT_GUI, by itself, creates a new OSCIPLOT_GUI or raises the existing
-%      singleton*.
+%      OSCIPLOT_GUI is a user interface that can be used as a tool for
+%      creation of moving images of traces. The aim is to simulate (at
+%      least to a certain extend) the image that can be appreciated on an
+%      oscilloscope. This interface calls several matlab scibts.
 %       
 %       osciplot_gui expects this input:
-%       ('experiment',recording number,channel,condition,[repetitions]).
-%       e.g. osciplot_gui('G17512',6,1,1,[1:10])
+%       ('experiment',recording number,channel,[conditions],repetition).
+%       e.g. osciplot_gui_mult_cond('G17512',6,1,[1:3],1)
 %
 %       Make shure the dataset of the experiment is complete; a stimulus
 %       and the corresponding trace (anadata)
@@ -13,7 +15,7 @@ function varargout = osciplot_gui(varargin)
 % Code by Jan Everaert 2018
 % Edit the above text to modify the response to help osciplot_gui
 
-% Last Modified by GUIDE v2.5 05-Mar-2018 10:57:09
+% Last Modified by GUIDE v2.5 15-May-2018 12:32:31
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,19 +58,25 @@ channel = varargin{3};
 cond = varargin{4};
 repetition = varargin{5};
 
+handles.experiment = experiment;
+handles.recording_number = recording_number;
+handles.channel = channel;
+handles.cond = cond;
+handles.repetition = repetition;
 
 handles.ds=read(dataset,experiment,recording_number);
 handles.trace_original = [];
-for ii = 1:length(repetition)
-    handles.trace_original =  [handles.trace_original anadata(handles.ds,channel,cond,repetition(ii))'];
+for ii = 1:length(cond)
+    handles.trace_original =  [handles.trace_original anadata(handles.ds,channel,cond(ii),repetition)'];
 end
 handles.trace_original = handles.trace_original';
 handles.trace = handles.trace_original;
 handles.stim = [];
-% Temp solution for data sets with for the stimulus a cell (don't know why)
+% Solution for data sets with for the stimulus a cell (don't know why)
 % Stimulus is constructed out of stim information present in the dataset
 % (added by Jan 2018)
-if iscell(handles.ds.Stim.Waveform(cond).Samples),
+if iscell(handles.ds.Stim.Waveform(cond(1)).Samples)
+for kk = 1:length(cond)
     
     stim_construct = [];
     for ii = 1:length(handles.ds.Stim.Waveform(cond).Samples)
@@ -76,17 +84,23 @@ if iscell(handles.ds.Stim.Waveform(cond).Samples),
     stim_part_rep = handles.ds.Stim.Waveform(cond).Nrep(ii);
     stim_construct = [stim_construct;repmat(stim_part,stim_part_rep,1)];
     end
-    handles.stim =  repmat(stim_construct,length(repetition),1);
     
+    handles.stim =  [handles.stim stim_construct];
+end    
 else
-    for ii = 1:length(repetition)
-        handles.stim =  [handles.stim handles.ds.Stim.Waveform(cond).Samples'];
+    
+    for kk = 1:length(cond)
+        handles.stim =  [handles.stim handles.ds.Stim.Waveform(cond(kk)).Samples'];
     end
-end
+end 
+
+
 handles.stim = handles.stim';
 handles.Fs = handles.ds.Fsam;
 handles.t = (0:length(handles.trace)-1)./handles.Fs;
 handles.nb_of_samples = length(handles.trace_original);
+
+
 
 % initial plot
 axes(handles.axes1)
@@ -200,6 +214,11 @@ axes(handles.axes1)
 plot_demand = 1; %$ plot wanted
 [trace_filtered] = filter_and_plot(hObject,handles,plot_demand);
 handles.trace = trace_filtered;
+
+% update the auto Y limits
+handles.y_limits_trace.auto.min = min(handles.trace);
+handles.y_limits_trace.auto.max = max(handles.trace);
+
 guidata(hObject, handles);
 
 
@@ -450,3 +469,81 @@ function uibuttongroup13_SelectionChangedFcn(hObject, eventdata, handles)
 
 % Update handles structure
 guidata(hObject, handles);
+
+
+
+
+function edit37_Callback(hObject, eventdata, handles)
+% hObject    handle to edit37 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.y_limits_trace.manual.min = get(hObject,'String');
+if iscell(handles.y_limits_trace.manual.min)
+    handles.y_limits_trace.manual.min = cellfun(@str2num,handles.y_limits_trace.manual.min);
+elseif ischar(handles.y_limits_trace.manual.min)
+    handles.y_limits_trace.manual.min = str2double(handles.y_limits_trace.manual.min);
+end
+% Update handles structure
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function edit37_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit37 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function edit38_Callback(hObject, eventdata, handles)
+% hObject    handle to edit38 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.y_limits_trace.manual.max = get(hObject,'String');
+if iscell(handles.y_limits_trace.manual.max)
+    handles.y_limits_trace.manual.max = cellfun(@str2num,handles.y_limits_trace.manual.max);
+elseif ischar(handles.y_limits_trace.manual.max)
+    handles.y_limits_trace.manual.max = str2double(handles.y_limits_trace.manual.max);
+end
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function edit38_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit38 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+% --- Executes on button press in radiobutton12.
+function radiobutton12_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.y_limits_trace.auto_on = 1;
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in radiobutton13.
+function radiobutton13_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.y_limits_trace.auto_on = 0;
+% Update handles structure
+guidata(hObject, handles);
+
+
+
+
