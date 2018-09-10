@@ -26,7 +26,6 @@ for ii=1:numel(P.Items),
             ih = c.Handle;
             P.CycleItems = [P.CycleItems c];
     end
-    ih = double(ih); %Jan 2018
     P.ItemHandles(ii) = ih;
 end
 
