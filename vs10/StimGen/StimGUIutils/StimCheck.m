@@ -6,12 +6,12 @@ function okay = StimCheck(figh, varargin);
 %    the latter case, feedback is provided to the stimulus GUI through its
 %    messengers.
 %    Next, StimCheck calls the stimulus generator makestimFOO. This may
-%    again reveal invalid parameter values or incinsistencies between 
+%    again reveal invalid parameter values or inconsistencies between 
 %    parameters. StimCheck will then halt and return False.
 %    Finally, StimCheck obtains the generic stimulus parameters by calling
 %    GenericStimParams.
 %
-%    StimCheck is called when the CHECK baction button of the stimulus 
+%    StimCheck is called when the CHECK action button of the stimulus 
 %    GUI is pushed, but also implicitly, after a request to play or plot
 %    the stimuli.
 %

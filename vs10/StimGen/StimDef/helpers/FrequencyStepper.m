@@ -63,8 +63,3 @@ Fsweep = add(Fsweep, AdjustFreq, nextto(StepFreq), [10 0]);
 if ~isequal('notol', Flag),
     Fsweep = add(Fsweep, Tol, alignedwith(AdjustFreq) , [0 -10]);
 end
-
-
-
-
-

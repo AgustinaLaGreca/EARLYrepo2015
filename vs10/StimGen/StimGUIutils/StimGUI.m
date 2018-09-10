@@ -54,7 +54,7 @@ if nargout>1 && ~isempty(Mess), return; else, error(Mess); end
 % if nargout>1 && ~isempty(Mess), return; else, error(Mess); end
 
 % create param part of GUI. Delegate to stimdefXXX
-Params = feval(fhandle(['stimdef' StimName]), EXP); % Params = stimdefXXX(EXP);
+Params = feval(fhandle(StimDef), EXP); % Params = stimdefXXX(EXP);
 
 Pfile = StimGuiFilePulldown;
 Pedit = StimGuiEditPulldown;
