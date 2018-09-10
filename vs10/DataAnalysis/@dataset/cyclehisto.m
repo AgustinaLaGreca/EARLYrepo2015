@@ -121,6 +121,8 @@ switch P.Fcycle
         % Default option: look if mod is applicable, if not, take car.
         fcycle = D.Stim.Fmod(:,1);
         if any(fcycle==0), fcycle = D.Stim.Fcar(:,1); end;
+%         if isfield(D.Stim,'BeatFreq'), fcycle = D.Stim.BeatFreq(:,1); end
+
 end
 if any(fcycle==0), error('Error in cyclehisto.m: Chosen cycle frequency is zero.');
 else fcycle = fcycle(:); end;
@@ -142,8 +144,7 @@ else fcycle = fcycle(:); end;
         %round(aw)
         spt = AnWin(spt, aw);
         [VS, Alpha] = vectorstrength(spt,fcar);
-%         phi = angle(VS)/(2*pi); %this is wrong I think (Jan), should be division by just pi not 2*pi
-        phi = abs(angle(VS)/(pi)); %Jan 2018: get phi=[0...1]
+        phi = abs(angle(VS)/(pi)); %get phi=[0...1] (Jan 2018)
         VS = deciRound(abs(VS),2);
         spt = rem(spt,T)/T;
         h = axh(icond); % current axes handle
@@ -158,6 +159,7 @@ else fcycle = fcycle(:); end;
         VSstr = ['r = ' num2str(round(VS, 2)) ', phi = ' num2str(round(phi, 2))];
                 if Alpha<=0.001, 
             VSstr = [VSstr '*'];
+            
                 end
         title(h, {sprintf(fmt, Xval(icond)),VSstr},'FontSize', 8);
         set(gcf,'CurrentAxes',h);
