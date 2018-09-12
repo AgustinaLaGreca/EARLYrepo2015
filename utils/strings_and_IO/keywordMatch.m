@@ -1,7 +1,7 @@
 function [Kw, Mess] = keywordMatch(Kw, AllKeywords, Kwname);
 % keywordMatch - test if a string matches one of a set of keywords
 %   [Kw, Mess] = keywordMatch(Kw, AllKeywords, Kwname) 
-%   tests if Kw matches any if the keywords in cellstring AllKeywords.
+%   tests if Kw matches any in the keywords in cellstring AllKeywords.
 %   Matching is case-insensitive; abbreviations are allowed, unless
 %   ambiguous.
 %
@@ -35,8 +35,8 @@ end
 
 Mess = '';
 % test if condition is known & unique
-imatch = strmatch(lower(Kw),lower(AllKeywords));
-imatchexact = strmatch(lower(Kw),lower(AllKeywords), 'exact');
+imatch = find(startsWith(AllKeywords,Kw,'IgnoreCase',true));
+imatchexact = find(strcmpi(Kw,AllKeywords));
 if isempty(Kw), % see help
     Nmatch = inf;
 else,
