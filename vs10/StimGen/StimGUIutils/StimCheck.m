@@ -149,7 +149,7 @@ if strcmpi(StutterOn,'off')
     return;
 else
     % get the current number of conditions
-    Ncond = P.Presentation.Ncond;
+    %Ncond = P.Presentation.Ncond;
     % find all variables in the P struct with Ncond rows
     % make for each of these variables a copy of the first row and insert
     % it at the beginning so to create the stutter effect
