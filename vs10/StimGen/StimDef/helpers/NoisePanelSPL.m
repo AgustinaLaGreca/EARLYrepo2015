@@ -1,5 +1,8 @@
 function NP=NoisePanel(T, EXP, Prefix, Exclude, DAChan);
 % NoisePanel - generic noise panel for stimulus GUIs.
+%
+%   THIS PANEL IS DEPRECATED - NOT CURRENTLY USED. NoisePanel instead
+%
 %   NP=NoisePanel(Title, EXP) returns a GUIpanel NP allowing the 
 %   user to specify a white noise band. Guipanel NP has title Title. EXP is the 
 %   experiment definition, from which the number of DAC channels used 
@@ -14,7 +17,7 @@ function NP=NoisePanel(T, EXP, Prefix, Exclude, DAChan);
 %         NoiseSeed: random seed 
 %               DAC: toggle L|R|B
 %  
-%   A messenger fo reporting the maximum SPL is also created.
+%   A messenger for reporting the maximum SPL is also created.
 %
 %   NoisePanel is a helper function for stimulus definitions like
 %   stimdefNPHI.

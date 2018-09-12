@@ -12,7 +12,7 @@ function S=Waveform(Fsam, DAchan, MaxMagSam, SPL, Param, Samples, Nrep, NeedsAnn
 %
 %  Empty elements of Samples wil be removed, as will elements wit Nrep==0.
 %  Single-sample elements of Samples will be merged with other, or
-%  expanded. The total number of samples is a waveform must be at least 2.
+%  expanded. The total number of samples in a waveform must be at least 2.
 %  When specifying NaN for MaxMagSam, Waveform will evaluate the maximum
 %  sample magnitude automatically.
 
