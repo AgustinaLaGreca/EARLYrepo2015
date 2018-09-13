@@ -28,7 +28,8 @@ function P = noiseStim(P, varargin);
 %       CorrChan: channel in which to realize Corr (I|C|L|R)
 %            DAC: left|right|both active DAC channel(s)
 %            SPL: sound pressure level [dB SPL]
-%        SPLtype: meaning of SPL. total level | spectrum level 
+%        SPLtype: meaning of SPL. total level | spectrum level
+%        Reverse: noise direction ('Normal' or 'Reverse')
 %
 %   Most of these parameters may be a scalar or a [1 2] array, or 
 %   a [Ncond x 1] or [Ncond x 2] or array, where Ncond is the number of 
@@ -82,6 +83,10 @@ error(local_test_singlechan(P,{'NoiseSeed', 'FineITD', 'GateITD', 'ModITD', 'IPD
 % "rename" some common fields
 if ~isfield(P, 'CorrChan'), P.CorrChan = P.CorrUnit; end % channel used for varying interaural noise correlation
 if ~isfield(P, 'SPLtype'), P.SPLtype = P.SPLUnit; end % total level vs spectrum level
+
+% check if noise direction field exists, Normal otherwise. Marta 09/18
+if ~isfield(P,'Reverse'), P.Reverse = 'Normal'; end
+
 % There are Ncond conditions and Nch DA channels.
 % Cast all numerical params in Ncond x Nch size, so we don't have to check
 % sizes all the time.

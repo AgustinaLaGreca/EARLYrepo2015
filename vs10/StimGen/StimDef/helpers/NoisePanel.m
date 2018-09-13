@@ -93,7 +93,7 @@ NP = marginalize(NP, [0 3]);
 
 % remove some, if requested
 NP = remove(NP, Exclude);
-if isequal(Exclude,'SPL')
+if isequal(Exclude,'SPL') || any(strcmp(Exclude,'SPL'))
     NP = remove(NP, 'MaxSPL');
 end
 if isequal(DAChan,'nobinaural')
