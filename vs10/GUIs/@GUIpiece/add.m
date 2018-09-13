@@ -84,8 +84,8 @@ end
 pos = cat(1,CA.Position);
 ext = cat(1,CA.Extent);
 ilast = length(CA);
-[dum, ilowest] = max(pos(:,2)+ext(:,2));
-[dum, irightmost] = max(pos(:,1)+ext(:,1));
+[~, ilowest] = max(pos(:,2)+ext(:,2));
+[~, irightmost] = max(pos(:,1)+ext(:,1));
 switch Qualifier,
     case 'last', iref = ilast;
     case 'rightmost', iref = irightmost;

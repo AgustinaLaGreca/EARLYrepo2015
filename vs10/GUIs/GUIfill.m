@@ -57,7 +57,7 @@ if ischar(S), % a filename; retrieve struct S
     if isequal('?', fn),
         fn = uigetfile(fullfile(DD,'*.GUIdef'), ['Reading from file:  select ' GUIname ' parameter file']);
         if isequal(0,fn), FN=''; return; end % user canceled
-        [dum fn dum2]= fileparts(fn); % strip off  extension
+        [~, fn, ~]= fileparts(fn); % strip off  extension
     end
     FN = FullFilename(fn, DD, '.GUIdef');
     if exist(FN,'file'),

@@ -1,5 +1,5 @@
 function [fv, s] = getFieldOrDefault(s,fn,def);
-% GETFIELDORDEFAULT - return field of struct or default valueif field is not in struct
+% GETFIELDORDEFAULT - return field of struct or default value if field is not in struct
 %    GETFIELDORDEFAULT(S,'Foo', D) returns S.Foo if field Foo exists
 %    in S. If Foo is not a field of S, the default value D is returned.
 %
