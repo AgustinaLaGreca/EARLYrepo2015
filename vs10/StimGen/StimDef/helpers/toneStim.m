@@ -36,7 +36,7 @@ function P = toneStim(P, varargin);
 %   
 %   The output of toneStim is realized by updating/creating the following 
 %   fields of P
-%         Fsam: sample rate [Hz] of all waveforms.
+%         Fsam:  sample rate [Hz] of all waveforms.
 %         Fcar: adjusted to slightly rounded values to save memory using cyclic
 %               storage (see CyclicStorage).
 %         Fmod: modulation frequencies [Hz] in Ncond x Nchan matrix or column 
