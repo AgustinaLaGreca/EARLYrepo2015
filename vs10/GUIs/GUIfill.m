@@ -120,7 +120,7 @@ for ii=1:numel(Q),
     end
     if ~isempty(UnitStr) && iscellstr(q.Unit) && isUIcontrol(hu), % impose it on q
         T = get(hu,'userdata'); % toggle object
-        [T, okay] = impose(T, UnitStr, 'force'); % okay checks whether UnitStr is valid choice
+        [T, okay] = impose(T, UnitStr); % okay checks whether UnitStr is valid choice
         if okay,
             T = enable(T,1);
             show(T);
