@@ -22,7 +22,7 @@ function [L,N]=GUIactionList(figh, FN, flag);
 %    (only to be used by setGUIdata).
 %
 %    GUIactionList(figh, I, 'resort') changes the order of the current
-%    action list stored in figh by replacing L by L(I). I must be a
+%    action list stored in figh by replacing L by L(I). It must be a
 %    permutation of 1:numel(L). This call affects the order of handling the
 %    list members during a call to GUIaction.
 %    (depricated)

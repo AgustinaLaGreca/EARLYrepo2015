@@ -33,7 +33,17 @@ writerObj = vision.VideoFileWriter(strcat(handles.file_specs.location,'\',handle
 writerObj.FrameRate = display_freq;
 writerObj.VideoCompressor ='None (uncompressed)'; 
 nb_of_frames = length(FV);
-nb_of_replays_video = 1;
+nb_of_replays_video = 10;
+
+%%% Downsampling %%% If display freq is really high and the .avi file to large
+% display_freq;
+% downsample_rate = 3;
+% writerObj.FrameRate = display_freq/downsample_rate;
+% FV = downsample(FV,downsample_rate);
+% FA = downsample(FA,downsample_rate);
+% nb_of_frames = length(FV);
+
+
 
 for ll = 1:nb_of_replays_video
     for i = 1 :1: nb_of_frames

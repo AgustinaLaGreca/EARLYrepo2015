@@ -153,6 +153,8 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     ylim([min_stim max_stim]); %Fix y-limits
     xlabel('time[s]')
     
+
+
     % Save complete frame for video
     FV(k) = getframe(gcf);
 
