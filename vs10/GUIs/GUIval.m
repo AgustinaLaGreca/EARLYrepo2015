@@ -33,7 +33,7 @@ for ii=1:numel(Q),
         SeP = separator(q);
         S.(['i_________' SeP '_______']) = ['_____' SeP '_____'];
     end
-    [Value, Unit, Mess h]=read(q,'coloredit');
+    [Value, Unit, Mess, h]=read(q,'coloredit');
     if ~isempty(Mess),
         if nargin<2
             break;

@@ -53,7 +53,7 @@ colortoggle(Q,false);
 
 persistent GSM; if isempty(GSM), GSM = GUIsettings('Messenger'); end
 
-[Mode ModeMess] = keywordMatch(Mode,{'neutral', 'warning', 'error', 'append' 'shy'}, 'Message mode ');
+[Mode, ModeMess] = keywordMatch(Mode,{'neutral', 'warning', 'error', 'append' 'shy'}, 'Message mode ');
 error(ModeMess);
 
 M = getGUIdata(figh,'MainMessenger');
