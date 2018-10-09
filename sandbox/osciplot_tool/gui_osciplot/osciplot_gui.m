@@ -73,16 +73,18 @@ handles.stim = [];
 % Temp solution for data sets with for the stimulus a cell (don't know why)
 % Stimulus is constructed out of stim information present in the dataset
 % (added by Jan 2018)
+% extract both channels added by Marta, Oct 2018
 if iscell(handles.ds.Stim.Waveform(cond).Samples),
-    
-    stim_construct = [];
-    for ii = 1:length(handles.ds.Stim.Waveform(cond).Samples)
-    stim_part = handles.ds.Stim.Waveform(cond).Samples{ii};
-    stim_part_rep = handles.ds.Stim.Waveform(cond).Nrep(ii);
-    stim_construct = [stim_construct;repmat(stim_part,stim_part_rep,1)];
+    for channel = 1:numel(handles.ds.Stim.Waveform(cond,:)) %for binaural stimulus
+        stim_construct = [];
+        for ii = 1:length(handles.ds.Stim.Waveform(cond,channel).Samples)
+            stim_part = handles.ds.Stim.Waveform(cond,channel).Samples{ii};
+            stim_part_rep = handles.ds.Stim.Waveform(cond,channel).Nrep(ii);
+            stim_construct = [stim_construct;repmat(stim_part,stim_part_rep,1)];
+            stim =  repmat(stim_construct,length(repetition),1);
+        end
+        handles.stim(:,channel) = stim;
     end
-    handles.stim =  repmat(stim_construct,length(repetition),1);
-    
 else
     
     for ii = 1:length(repetition)
@@ -91,6 +93,8 @@ else
     
 end
 handles.stim = handles.stim';
+wf = handles.ds.Stim.Waveform(cond,:);
+handles.DAchan = [wf(:).DAchan]';
 handles.Fs = handles.ds.Fsam;
 handles.t = (0:length(handles.trace)-1)./handles.Fs;
 handles.nb_of_samples = length(handles.trace_original);
@@ -104,6 +108,7 @@ axis tight
 axes(handles.axes2)
 plot(handles.t,handles.stim)
 axis tight
+legend(handles.DAchan)
 
 % initialization
 handles = init_gui(hObject,handles);
