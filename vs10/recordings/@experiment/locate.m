@@ -18,8 +18,12 @@ Er = '';
 
 D = folder(dummy(dum, ExpName));
 
-if isempty(D) && ~doRelax, 
-    error(['Experiment ''' ExpName ''' not found in any subdir of ''' parentfolder(dum)  '''.']);
+if isempty(D) && ~doRelax,
+    msg = ['Experiment ''' ExpName ''' not found in any subdir of ''' parentfolder(dum)  '''.'];
+    title = 'File Error';
+    errorh = errordlg(msg,title);
+    uiwait(errorh);
+    %error(['Experiment ''' ExpName ''' not found in any subdir of ''' parentfolder(dum)  '''.']);
 end
 
 
