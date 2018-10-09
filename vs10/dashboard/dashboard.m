@@ -212,7 +212,7 @@ P_exp = local_Exp(CLR); % panel with experiment info
 M_cal = local_Calib(); % calibration pulldown menu
 
 
-%======GUI itself===========
+% ======GUI itself===========
 % open figure and draw GUI in it
 figh = newGUI(mfilename, 'Dashboard', {fhandle(mfilename), 'launch'}, 'color', CLR);
 DB=GUIpiece('Dashboard',[],[0 0],[10 4]);

@@ -3,12 +3,13 @@ function C=draw(h, C, XY);
 %   draw(h,C) renders cycleList C in the uimenu control with handle h.
 %
 %   See CycleList, CycleList/refresh, GUIpiece/draw, GUIpiece.
+
 C.parentHandle = h;
 % create invisible uimenu that serves as "container"
 C.Handle = uimenu(C.parentHandle,...
         'visible', 'off', ...
         'tag', ['Cycle list ' C.Name]);
-C.Handle = double(C.Handle); %Jan 2018
+
 % Create uimenuitems
 Sepa = 'on';
 for ii=1:C.Nmax,

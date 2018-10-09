@@ -15,7 +15,7 @@ elseif ischar(Name),
     Name = cellify(Name);
 elseif ~iscellstr(Name),
     p = Name;
-    Name = {};
+    Name = cell(1,numel(p));
     for ii=1:numel(p),
         Name{ii} = name(p(ii));
     end
@@ -24,20 +24,10 @@ end
 % now Name is a cellstring
 for ii=1:numel(Name),
     nam = Name{ii};
-    ihit = strmatch(nam, {P.ChildArrangement.Name}, 'exact');
+    ihit = find(strcmp(nam, {P.ChildArrangement.Name}));
     if isempty(ihit),
         error(['No query named ''' nam ''' in Guipiece.'])
     end
     P.Children(ihit) = [];
     P.ChildArrangement(ihit) = [];
 end
-
-
-
-
-
-
-
-
-
-

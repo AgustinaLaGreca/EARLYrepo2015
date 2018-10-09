@@ -1,8 +1,8 @@
-function [okay, RandSeed,P] = EvalNoisePanel(figh, P, Prefix)
-% EvalNoisePanel - evaluate SAM parameters from stimulus GUI
-%   [okay, Seed] = EvalSAMpanel(figh, P, Prefix) evaluates the parameters obtained 
+function [okay, RandSeed, P] = EvalNoisePanel(figh, P, Prefix)
+% EvalNoisePanel - evaluate noise parameters from stimulus GUI
+%   [okay, Seed] = EvalNoisePanel(figh, P, Prefix) evaluates the parameters obtained 
 %   from the paramqueries created by NoisePanel.
-%   EvalSAMpanel tests if the SAM parameter values from the SAM panel
+%   EvalNoisePanel tests if the Noise parameter values from the Noise panel
 %   are within range, that is, if all sidebands are within the frequency 
 %   bounds dictated by the stimulus context of the GUI. Input parameters:
 %      figh: handle to GUI, or stimulus context for non-interactive calls.
@@ -16,7 +16,7 @@ function [okay, RandSeed,P] = EvalNoisePanel(figh, P, Prefix)
 %   EvalNoisePanel is a helper function for stimulus generators like 
 %   makestimFS.
 %   
-%   See StimGUI, SAMpanel, makestimFS.
+%   See StimGUI, Noisepanel, makestimFS.
 
 Prefix = arginDefaults('Prefix', ''); 
 okay = 0; % pessimistic default
@@ -53,6 +53,9 @@ elseif abs(P.Corr)>1,
 else, % passed all the tests..
     somethingwrong=0;
 end
+
+% check if noise direction field exists, Normal otherwise. Marta 09/18
+%if ~isfield(P,'Reverse'), P.Reverse = 'Normal'; end
 
 FQnames = {[Prefix 'StartSPL']  [Prefix 'StepSPL'] [Prefix 'EndSPL']};
 if isfield(P,'EndSPL')

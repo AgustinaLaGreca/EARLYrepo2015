@@ -173,7 +173,7 @@ function iSortPlot = local_sort(P, varargin)
 try
     if nargin<3 % Only 1 independent parameter
         X = varargin{1};
-        [dum, iSortPlot] = sort(X);
+        [~, iSortPlot] = sort(X);
         if P.SortOrder>0
             % do nothing
         elseif P.SortOrder<0
@@ -186,9 +186,9 @@ try
         if ischar(P.ParamOrder), P.ParamOrder = str2num(P.ParamOrder); end
         [ParamOrder, SortOrder] = SameSize(P.ParamOrder, P.SortOrder);
         X = varargin{ParamOrder(1)}; X = X(:); 
-        [dum, ia, ic] = unique(X); ia = sort(ia); X = X(ia);  % now X is always "Fastest varied"
+        [~, ia, ~] = unique(X); ia = sort(ia); X = X(ia);  % now X is always "Fastest varied"
         Y = varargin{ParamOrder(2)}; Y = Y(:); 
-        [dum, ia, ic] = unique(Y); ia = sort(ia); Y = Y(ia); 
+        [~, ia, ~] = unique(Y); ia = sort(ia); Y = Y(ia); 
         if ~(SortOrder(ParamOrder(1))==0) % not as visisted, assume ascending
             X = sort(X);
         end 

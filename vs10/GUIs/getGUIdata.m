@@ -19,12 +19,14 @@ function Y = getGUIdata(h, FN, Def);
 
 provideDefault = (nargin>2);
 
-if length(h)>1, % recursive handling
+nHandles = length(h);
+if nHandles>1, % recursive handling
     if nargin==1, Args = {};
     elseif nargin==2, Args = {FN};
     else, Args = {FN Def};
-    end    
-    for ii=1:length(h),
+    end
+    Y = cell(1,nHandles);
+    for ii=1:nHandles,
         Y{ii} = getGUIdata(h(ii), Args{:});
     end
     return
@@ -53,7 +55,7 @@ end
 error(handleTest(h,'any', 'Graphics handle'));
 
 ud = get(h,'userdata');
-if isstruct(ud) & numel(ud)>1,
+if isstruct(ud) && numel(ud)>1,
     error('Userdata contains struct array with multiple elements.')
 end
 if nargin<2,
@@ -62,9 +64,13 @@ if nargin<2,
 end
 
 FNfound = 0;
-if isempty(ud),
-elseif ~isfield(ud,FN),
-else, 
+% if isempty(ud),
+% elseif ~isfield(ud,FN),
+% else, 
+%     Y = ud.(FN);
+%     FNfound = 1;
+% end
+if ~isempty(ud) && isfield(ud,FN)
     Y = ud.(FN);
     FNfound = 1;
 end

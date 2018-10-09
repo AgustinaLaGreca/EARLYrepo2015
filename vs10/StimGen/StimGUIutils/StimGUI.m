@@ -69,7 +69,7 @@ SG = add(SG, Pedit);
 SG = add(SG, Pview);
 SG = add(SG, Params);
 SG = add(SG, local_Action, 'below', [20 10]);
-SG = add(SG, local_Dataview, 'nextto', [10 0]);
+SG = add(SG, local_Dataview(StimName), 'nextto', [10 0]);
 SG=marginalize(SG,[0 20]);
 
 
@@ -155,10 +155,11 @@ Act = marginalize(Act,[3 5]);
 % D = add(D,EditPV,'nextto',[-5 0]);
 % D = marginalize(D,[0 5]);
 
-function D = local_Dataview;
+function D = local_Dataview(StimType);
 % Dataview panel
 D = GUIpanel('Dataview', 'data view');
-Viewer = ParamQuery('Dataviewer', 'viewer:', '', {'-', 'active'}, ...
+DVlist = listdataviewerfor(dataset(),StimType);
+Viewer = ParamQuery('Dataviewer', 'viewer:', '', [{'-', 'active'}, DVlist], ...
     '', 'Activate dataviewer(s) for online data analysis by clicking the toggle.');
 Dataviewers = ActionButton('Dataviewers', 'dataviewers', 'dataviewers',...
     'Select dataviewer(s) for online data analysis.',@(Src,Ev,LR)local_dataviewers(Src, name(Viewer)));
@@ -183,13 +184,13 @@ figh = parentfigh(Src);
 figh = figh.Number;
 GUImessage(figh, ' ');
 Q = getGUIdata(figh, 'Query');
-[Viewer, dum, Mess, hViewerEdit] = read(Q(nameQ_Viewer));
+[Viewer, ~, Mess, hViewerEdit] = read(Q(nameQ_Viewer));
 if isequal('-', Viewer),
     GUImessage(figh, {'Viewer(s) are not in use;', 'toggle the viewer button.'}, 'error');
     return;
 end
 StimType = getGUIdata(figh, 'StimulusType');
-DVlist = listdataviewerfor(dataset(),StimType); % list of applicable dataviewers
+DVlist = [{'-'}, listdataviewerfor(dataset(),StimType)]; % list of applicable dataviewers
 [S,okay] = listdlg('ListString', DVlist,...
                 'SelectionMode','multiple',...
                 'Name','dataviewers',...
@@ -233,7 +234,7 @@ if isequal('-', Viewer) || isequal('active', Viewer), % No dataviewers specified
     return;
 end
 DVlist = regexp(Viewer,' ','split');
-[Pfile, dum, Mess, hFileEdit] = read(Q(nameQ_Pfile), 'coloredit');
+[Pfile, ~, Mess, hFileEdit] = read(Q(nameQ_Pfile), 'coloredit');
 if ~isempty(Mess),
     GUImessage(figh, Mess, 'error');
     return;

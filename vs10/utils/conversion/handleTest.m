@@ -31,10 +31,13 @@ if ~isempty(mess), return; end
 mess = dimensionTest(h, 'singlevalue', Descr);
 if ~isempty(mess), return; end
 
+
 switch CondStr,
 case 'any',
-    hmess = ([Descr ' is not a handle of existing graphics object.']);
-    if ~ishandle(h), mess = hmess; end
+    if ~ishandle(h)
+        hmess = ([Descr ' is not a handle of existing graphics object.']);
+        mess = hmess;
+    end
 case 'figure',
     hmess = ([Descr ' is not a handle of existing figure.']);
     if ~ishandle(h), mess = hmess; end

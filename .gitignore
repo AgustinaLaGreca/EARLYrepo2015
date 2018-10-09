@@ -50,3 +50,8 @@ vs10/StimGen/StimDef/@stimulus/GUI.m
 
 # GUIdefaults
 GUIdefaults/**/most-recent.GUIhistory
+GUIdefaults/*/*.CycleList
+
+# Temporary saved files
+*~$*
+*.asv
