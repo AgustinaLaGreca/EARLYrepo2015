@@ -64,13 +64,13 @@ P.ReducedStorage = {'',''};
 Chan = 'LR';
 CorrChan = ipsicontra2LR(P.CorrChan, P.Experiment);
 P.ReducedStorage{Chan~=CorrChan} = 'nonzero';
-P.RX6_circuit = ['RX6seqplay-trig-2ADC'];
+P.RX6_circuit = 'RX6seqplay-trig-2ADC';
 
 % Sort conditions, add baseline waveforms (!), provide info on varied parameter etc
 P = sortConditions(P, 'Corr', 'Interaural noise correlation', '', 'lin');
 
 % Levels and active channels (must be called *after* adding the baseline waveforms)
-[mxSPL P.Attenuation] = maxSPL(P.Waveform, P.Experiment);
+[mxSPL, P.Attenuation] = maxSPL(P.Waveform, P.Experiment);
 okay=EvalSPLpanel(figh,P, mxSPL, []);
 if ~okay, return; end
 

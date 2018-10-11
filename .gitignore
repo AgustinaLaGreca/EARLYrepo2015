@@ -50,3 +50,11 @@ vs10/StimGen/StimDef/@stimulus/GUI.m
 
 # GUIdefaults
 GUIdefaults/**/most-recent.GUIhistory
+GUIdefaults/*/*.CycleList
+
+# setup files
+setupInfo\Experiment-only_experiment.PNXsetup
+
+# Temporary saved files
+*~$*
+*.asv

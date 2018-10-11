@@ -57,7 +57,7 @@ if ischar(S), % a filename; retrieve struct S
     if isequal('?', fn),
         fn = uigetfile(fullfile(DD,'*.GUIdef'), ['Reading from file:  select ' GUIname ' parameter file']);
         if isequal(0,fn), FN=''; return; end % user canceled
-        [dum fn dum2]= fileparts(fn); % strip off  extension
+        [~, fn, ~]= fileparts(fn); % strip off  extension
     end
     FN = FullFilename(fn, DD, '.GUIdef');
     if exist(FN,'file'),
@@ -120,7 +120,7 @@ for ii=1:numel(Q),
     end
     if ~isempty(UnitStr) && iscellstr(q.Unit) && isUIcontrol(hu), % impose it on q
         T = get(hu,'userdata'); % toggle object
-        [T, okay] = impose(T, UnitStr, 'force'); % okay checks whether UnitStr is valid choice
+        [T, okay] = impose(T, UnitStr); % okay checks whether UnitStr is valid choice
         if okay,
             T = enable(T,1);
             show(T);

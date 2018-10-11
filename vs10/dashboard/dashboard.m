@@ -212,7 +212,7 @@ P_exp = local_Exp(CLR); % panel with experiment info
 M_cal = local_Calib(); % calibration pulldown menu
 
 
-%======GUI itself===========
+% ======GUI itself===========
 % open figure and draw GUI in it
 figh = newGUI(mfilename, 'Dashboard', {fhandle(mfilename), 'launch'}, 'color', CLR);
 DB=GUIpiece('Dashboard',[],[0 0],[10 4]);
@@ -632,32 +632,42 @@ end
 function [Mess, MessMode, doRefresh] = local_ResumeExp(figh); 
 % resume exp
 doRefresh = false;
-prompt = sprintf(['Enter the name of the Experiment you want to resume:\n' ...
-    '(leave empty to resume lase experiment)']);
 
-dlg_title = 'Resume Experiment';
-num_lines = 1;
-defaultans = {''};
-exp_name = inputdlg(prompt,dlg_title,num_lines,defaultans);
-exp_name = exp_name{1};
 EXP = current(experiment);
 if ~isvoid(EXP),
-    Mess = [{'Resuming an experiment requires ' 'finishing the current one.'}];
+    Mess = {'Resuming an experiment requires ' 'finishing the current one.'};
     MessMode = 'warning';
     return;
 end
+
 EXP = experiment();
+dlg_title = 'Resume Experiment. Select folder or leave empty to resume last experiment.';
+folder = fullfile(parentfolder(experiment()), 'Exp');
+
+%prompt = sprintf(['Enter the name of the Experiment you want to resume:\n' ...
+%    '(leave empty to resume last experiment)']);
+%num_lines = 1;
+%defaultans = {''};
+
 while (isvoid(EXP))
-    if (strcmp(exp_name,''))
-        EXP = current(experiment);
+    expname = uigetdir(folder, dlg_title);
+    %exp_name = inputdlg(prompt,dlg_title,num_lines,defaultans);
+    %exp_name = exp_name{1};
+    %if (strcmp(exp_name,''))
+    if (strcmp(expname,folder))
+        %EXP = current(experiment);
         if ~exist(experiment, lastcurrentname(experiment)),
             Mess = {'Nothing to resume.'};
             MessMode = 'warning';
             return;
         end
         EXP = find(experiment, lastcurrentname(experiment));
+    elseif isnumeric(expname) %cancel option
+        Mess = '';
+        MessMode = 'neutral';
+        return;
     else
-        EXP = find(experiment(), exp_name);
+        EXP = find(experiment(), expname);
         makecurrent(EXP);
     end
 end    

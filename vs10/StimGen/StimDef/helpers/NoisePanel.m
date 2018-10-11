@@ -14,7 +14,7 @@ function NP=NoisePanel(T, EXP, Prefix, Exclude, DAChan);
 %         NoiseSeed: random seed 
 %               DAC: toggle L|R|B
 %  
-%   A messenger fo reporting the maximum SPL is also created.
+%   A messenger for reporting the maximum SPL is also created.
 %
 %   NoisePanel is a helper function for stimulus definitions like
 %   stimdefNPHI.
@@ -75,7 +75,7 @@ SPL = ParamQuery([Prefix 'SPL'], 'level:', '120.5 120.5', {'dB SPL' 'dB/Hz'}, ..
 DAC = ParamQuery('DAC', 'DAC:', '', DACstr, ...
     '', ['Active D/A channels.' ClickStr 'channel(s).']);
 MaxSPL=messenger([Prefix 'MaxSPL'], 'max [**** ****] dB SPL @ [***** *****] Hz    ',1);
-Reverse = ParamQuery(['Reverse'], 'Noise Direction:', '', {'Normal' 'Reverse'}, ...
+Reverse = ParamQuery('Reverse', 'Noise Direction:', '', {'Normal' 'Reverse'}, ...
     'rreal', ['Direction of the stimulus. Click button to switch between normal direction and reversed direction.' PairStr],Nchan);
 
 % ========Add queries to panel=======
@@ -93,7 +93,7 @@ NP = marginalize(NP, [0 3]);
 
 % remove some, if requested
 NP = remove(NP, Exclude);
-if isequal(Exclude,'SPL')
+if isequal(Exclude,'SPL') || any(strcmp(Exclude,'SPL'))
     NP = remove(NP, 'MaxSPL');
 end
 if isequal(DAChan,'nobinaural')

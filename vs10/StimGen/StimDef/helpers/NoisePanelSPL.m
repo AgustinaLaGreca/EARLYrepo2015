@@ -14,7 +14,7 @@ function NP=NoisePanel(T, EXP, Prefix, Exclude, DAChan);
 %         NoiseSeed: random seed 
 %               DAC: toggle L|R|B
 %  
-%   A messenger fo reporting the maximum SPL is also created.
+%   A messenger for reporting the maximum SPL is also created.
 %
 %   NoisePanel is a helper function for stimulus definitions like
 %   stimdefNPHI.

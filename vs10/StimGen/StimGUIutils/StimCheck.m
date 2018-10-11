@@ -50,7 +50,7 @@ P.GenericStimParams = GenericStimparams(P); % get generic stimulus parameters (u
 error(TestNsam(P.Waveform)); % equal sample counts in DAC channels
 % Collect dataviewer info into cells
 [P, okay] = local_collectDataview(figh, P);
-if ~okay, return; end;
+if ~okay, return; end
 % Load dataviewparam
 [DVparam, DVPokay] = local_loadDataviewParam(figh, P);
 if ~DVPokay, return; end
@@ -81,10 +81,10 @@ if isequal('-', P.Dataviewer), % no viewer active, so use default dotraster
     P.DataGrazeActive = 0;
     P.DataviewerParamfile = 'def';
 elseif isequal('active', P.Dataviewer) % viewer(s) active but not specified
-    GUImessage(figh, 'No dataviewer specified.', 'error', {P.handle.Dataviewer});
+    GUImessage(figh, 'No dataviewer specified.', 'error', {'Dataviewer'});
     return;
 else
-    P.Dataviewer = regexp(P.Dataviewer, ' ', 'split');
+    P.Dataviewer = regexp(erase(P.Dataviewer, '- '), ' ', 'split');
     if numel(P.Dataviewer) > 2,
         GUImessage(figh, 'Too many dataviewers possibly make online analysis slow.', 'warning', P.handle.Dataviewer);
     end
@@ -149,7 +149,7 @@ if strcmpi(StutterOn,'off')
     return;
 else
     % get the current number of conditions
-    Ncond = P.Presentation.Ncond;
+    %Ncond = P.Presentation.Ncond;
     % find all variables in the P struct with Ncond rows
     % make for each of these variables a copy of the first row and insert
     % it at the beginning so to create the stutter effect

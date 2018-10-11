@@ -6,6 +6,7 @@ function [Mess, T] = numericTest(N, CondStr, MessPrefix, Dim);
 %
 %         {numeric nonnan noninf real rreal imaginary positive negative ...
 %                nonnegative nonpositive nonzero integer posint nonnegint scalar unique}
+%     Multiple conditions: Conditions in CondStr separated by /
 %
 %     Note: rreal == real & noninf & nonnan.
 %     These keywords are case-insensitive and may be abbreviated, as long they

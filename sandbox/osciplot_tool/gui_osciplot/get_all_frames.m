@@ -71,8 +71,8 @@ Fs = handles.Fs;
 t_min_disp = handles.minimal_display_time.samples;
 
 % fix the plot window (fixed axis)
-max_stim = max(stim); 
-min_stim = min(stim);
+max_stim = max(stim(:)); 
+min_stim = min(stim(:));
 if handles.y_limits_trace.auto_on
     y_min_trace = handles.y_limits_trace.auto.min;
     y_max_trace = handles.y_limits_trace.auto.max;
@@ -96,10 +96,10 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     
 
     frame_trace = trace(ii:ii+window_size-1);
-    frame_stim = stim(ii:ii+window_size-1);
+    frame_stim = stim(:,ii:ii+window_size-1);
     
     % Save the corresponding audio frame
-    FA_stim(:,k) = stim(ii:ii+window_step_size-1); %audio stim
+    FA_stim(:,k) = stim(1,ii:ii+window_step_size-1); %audio stim - only one channel
     FA_trace(:,k) = trace(ii:ii+window_step_size-1); %audio trace
     frame_ind = ii:ii+window_step_size-1; % used for x-axis in the plot
     
@@ -116,11 +116,11 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
              (current_peak_ind+floor((window_size-1)/2)));
         frame_ind = new_frame_ind; % used for x-axis in the plot
         frame_trace = trace(new_frame_ind);
-        frame_stim = stim(new_frame_ind);
+        frame_stim = stim(:,new_frame_ind);
     end
         
     M(:,k) = frame_trace; % Save the frames for the fading
-    N(:,k) = frame_stim; % not really used yet
+    %N(:,k) = frame_stim; % not really used yet
    
     % Fade out of previous displays
     if k <= nb_frames_fading  
@@ -152,6 +152,7 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     axis tight
     ylim([min_stim max_stim]); %Fix y-limits
     xlabel('time[s]')
+    legend(handles.DAchan)
     
 
 
