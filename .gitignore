@@ -53,7 +53,7 @@ GUIdefaults/**/most-recent.GUIhistory
 GUIdefaults/*/*.CycleList
 
 # setup files
-setupInfo\Experiment-only_experiment.PNXsetup
+setupInfo/Experiment-only_experiment.PNXsetup
 
 # Temporary saved files
 *~$*
