@@ -21,6 +21,7 @@ function [okay, FFN] = save(T, FN, Prompt);
 %      save(T, '?*.extension')
 %      save(T, '?dir/*.extension')
 %
+%    EVE: change fullfilename --> FullFileName
 %    See also Probetubecalib/datadir, Probetubecalib/load, UIPUTFILE.
 
 okay = 1;
@@ -35,12 +36,12 @@ if isequal('?', FN(1)), % prompt for file
     if isempty(FileFilter),
         FileFilter = '*';
     end
-    FileFilter = FullFilename(FileFilter, datadir(T), fileExtension(T));
+    FileFilter = FullFileName(FileFilter, datadir(T), fileExtension(T));
     [FN, PATH]  = uiputfile(FileFilter, Prompt);
     if isequal(0, FN), okay=0; FFN = ''; return; end % user cancelled
     FN = fullfile(PATH, FN);
 end
-FFN = fullfilename(FN, datadir(T), fileExtension(T));
+FFN = FullFileName(FN, datadir(T), fileExtension(T));
 save(FFN,'T','-mat');
 
 
