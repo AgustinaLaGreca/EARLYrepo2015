@@ -58,22 +58,32 @@ if any(Nstep<0.5) && ~isequal(X0,X1),
     Mess = 'largestep';
     return;
 end
-Nstep = round(Nstep);
-if any(Nstep~=Nstep(1)),
+Nstepr = round(Nstep);
+if any(Nstepr~=Nstepr(1))
+    difStep = diff(Nstep);
+    if abs(difStep) < 1
+        difStep = abs(Nstepr-Nstep);
+        [~,I] = min(difStep);
+        Nstepr(:) = Nstepr(I);
+    else
     Mess = 'cripple'; % see help text
     return;
+    end
 end
 
 for ii=1:Nchan,
-    x0=X0(ii); x1=X1(ii); xstep = Xstep(ii); nstep = Nstep(ii);
+    x0=X0(ii); x1=X1(ii); xstep = Xstep(ii); nstep = Nstepr(ii);
+    if x0>x1, stepdir = -1;
+    else stepdir = 1; end
     switch Adjust,
         case 'Start',
-            x0 = x1-nstep*xstep;
+            x0 = x1-stepdir*nstep*xstep;
         case 'End',
-            x1 = x0+nstep*xstep;
+            x1 = x0+stepdir*nstep*xstep;
     end
-    x = linspace(min(x0,x1),max(x0,x1),nstep+1).';
-    if x0>x1, x = flipud(x); end
+    %x = linspace(min(x0,x1),max(x0,x1),nstep+1).';
+    x = linspace(x0,x1,nstep+1).';
+    %if x0>x1, x = flipud(x); end
     X = [X x];
 end
 if isequal('Octave', StepMode), % convert back from octave scale to linear
