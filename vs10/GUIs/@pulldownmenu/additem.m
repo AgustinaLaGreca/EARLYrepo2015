@@ -40,7 +40,7 @@ switch lower(class(Label)),
     case {'pulldownmenu' ,'cyclelist'}, % recursive pulldown menu
         newItem = Label;
         if nargin>2, error('Too many input args.'); end
-    otherwise,
+    otherwise
         error('Second input arg must be string (Label), or PulldownMenu or CycleList object.');
 end
 P.Items{end+1} = newItem; % strangely, P.Items = [P.Items newItem] fails

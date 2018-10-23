@@ -15,7 +15,7 @@ if nargin<2, k=1:length(C.Items); end
 
 
 if ischar(k),
-    k = strmatch(k,{C.Items.Label},'exact');
+    k = find(strcmp(k,{C.Items.Label}));
 end
 C.Items(k) = [];
 
