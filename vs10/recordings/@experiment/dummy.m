@@ -1,4 +1,4 @@
-function E=dummy(E, name);
+function E=dummy(~, name);
 % experiment/dummy - named dummy experiment 
 %    dummy(experiment(), 'Foo') returns a dummy experiment named Foo.
 %    For an application, see adc_data/folder.

@@ -49,8 +49,13 @@ Temporary Items
 vs10/StimGen/StimDef/@stimulus/GUI.m
 
 # GUIdefaults
-GUIdefaults/**/most-recent.GUIhistory
+GUIdefaults/*/most-recent.GUIhistory
 GUIdefaults/*/*.CycleList
+
+# setup files
+setupInfo/Experiment-only_experiment.PNXsetup
+setupInfo/Experiment-only_localsettings.PNXsetup
+setupInfo/KULAK*
 
 # Temporary saved files
 *~$*

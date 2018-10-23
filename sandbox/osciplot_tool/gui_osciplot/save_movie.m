@@ -33,7 +33,7 @@ writerObj = vision.VideoFileWriter(strcat(handles.file_specs.location,'\',handle
 writerObj.FrameRate = display_freq;
 writerObj.VideoCompressor ='None (uncompressed)'; 
 nb_of_frames = length(FV);
-nb_of_replays_video = 10;
+nb_of_replays_video = 1;
 
 %%% Downsampling %%% If display freq is really high and the .avi file to large
 % display_freq;
@@ -48,7 +48,7 @@ nb_of_replays_video = 10;
 for ll = 1:nb_of_replays_video
     for i = 1 :1: nb_of_frames
         Frame=FV(i).cdata;
-        Frame = rgb2gray(Frame); %turn frames grayscale
+        %Frame = rgb2gray(Frame); %turn frames grayscale
         % add audio frames
         step(writerObj,Frame,FA(:,i));
     end

@@ -12,7 +12,8 @@ function C = additem(C, Label, Userdata);
 
 if nargin<3, Userdata=[]; end
 
-if nargout<1, error('Too few output args'); end
+% Marta 10/2018: no necessary error
+%if nargout<1, error('Too few output args'); end
 newItem = CollectInStruct(Label,Userdata);
 Nit = numel(C.Items);
 % look if newItem already exists
