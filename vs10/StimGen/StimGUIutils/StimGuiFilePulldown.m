@@ -1,4 +1,4 @@
-function Pfile=StimGuiFilePulldown(src, dum, ID, varargin);
+function Pfile=StimGuiFilePulldown(src, ~, ID, varargin);
 % StimGuiFilePulldown - creator & callback File Pulldown menu of StimGUI
 %    P=StimGuiFilePulldown returns the PulldownMenu object to be
 %    included in a StimGUI. It contains the standard repertory of menu
@@ -13,7 +13,7 @@ function Pfile=StimGuiFilePulldown(src, dum, ID, varargin);
 %
 %    See also StimGUI, StimGuiEditPulldown, StimGuiViewPulldown.
 
-if nargin<1, % create call
+if nargin<1 % create call
     callme = fhandle(mfilename); % function handle to this function 
     Pfile=pulldownmenu('File','&File');
     Pfile=additem(Pfile,'&Save parameters', {callme 'save'}, 'accelerator', 'S');
@@ -21,24 +21,24 @@ if nargin<1, % create call
     Pfile=additem(Pfile,'&Empty File List', {callme 'emptylist'});
     CL=cycleList('StimparamDefaults', 10, callme); % clicking an item calls this fcn with 4 input args; see CycleList
     Pfile=additem(Pfile,CL);
-else, % callback
+else % callback
     figh = parentfigh(src); % GUI figure handle
     figh = figh.Number; % fig handle fix % By Jan April 2018
-    if isequal('save', ID), 
+    if isequal('save', ID)
         % ==========prompt user for param file & save=========
         GUIgrab(figh,'?',1); % last arg: 1 = do display GUImessage
-    elseif isequal('read', ID), 
+    elseif isequal('read', ID)
         % =========prompt user for param file & read=========
-        [Mess, Ignored, FileName]=GUIfill(figh,'?',1); % last arg: 1 = do display GUImessage
-        if ~isempty(FileName), % add filename to cycleList
-            [PP FileName ee] = fileparts(FileName); % strip off dir & extension
+        [~, ~, FileName]=GUIfill(figh,'?',1); % last arg: 1 = do display GUImessage
+        if ~isempty(FileName) % add filename to cycleList
+            [~, FileName, ~] = fileparts(FileName); % strip off dir & extension
             % first retrieve cycle list C, then add 
-            hP = get(src, 'parent'); % parent of item is uimenu
-            P = get(hP,'userdata'); % Pulldown object
+            hP = get(src, 'parent'); % parent of item is uimenu FilePullDown
+            P = get(hP,'userdata'); % Pulldown object (Save, Open..)
             C = getCycleList(P,'StimparamDefaults');
-            C = additem(C,FileName);
+            additem(C,FileName);
         end
-    elseif isequal('emptylist', ID), 
+    elseif isequal('emptylist', ID)
         % ============clear the cycle list============================
         % first retrieve cycle list C
         hP = get(src, 'parent'); % parent of item is uimenu 
@@ -46,16 +46,16 @@ else, % callback
         iC = find(P.CycleItems, 'StimparamDefaults');
         C = P.CycleItems(iC(1));
         % clear its contents
-        C = rmitem(C);
-    elseif isCycleList(ID), %4th arg passed to callback is item (see cycleList/select)
+        rmitem(C);
+    elseif isCycleList(ID) %4th arg passed to callback is item (see cycleList/select)
         %=============read params from file of cycleList item =====================
         C = ID; % the up-to-date cycleList
-        item = varargin{1}; FileName = item.Label;
-        [Mess, Ignored, FileName]=GUIfill(figh,FileName,1);
-        if isempty(FileName), % remove item from list as it appears obsolete
-            C=rmitem(C,item.Label);
+        FileName = varargin{1}.Label;
+        [~, ~, FileName]=GUIfill(figh,FileName,1);
+        if isempty(FileName) % remove item from list as it appears obsolete
+            rmitem(C,varargin{1}.Label);
         end
-    else, 
+    else 
         error('Invalid callback.');
     end
 end

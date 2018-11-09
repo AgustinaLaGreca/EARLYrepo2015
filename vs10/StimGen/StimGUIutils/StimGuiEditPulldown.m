@@ -1,4 +1,4 @@
-function P=StimGuiEditPulldown(src, dum, ID, varargin);
+function P=StimGuiEditPulldown(src, ~, ID, varargin);
 % StimGuiEditPulldown - creator & callback Edit Pulldown menu of StimGUI
 %    P=StimGuiEditPulldown returns the PulldownMenu object to be
 %    included in a StimGUI. It contains the standard repertory of menu
