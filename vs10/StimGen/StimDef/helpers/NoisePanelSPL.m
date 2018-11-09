@@ -1,4 +1,4 @@
-function NP=NoisePanel(T, EXP, Prefix, Exclude, DAChan);
+function NP=NoisePanelSPL(T, EXP, Prefix, Exclude, DAChan);
 % NoisePanel - generic noise panel for stimulus GUIs.
 %   NP=NoisePanel(Title, EXP) returns a GUIpanel NP allowing the 
 %   user to specify a white noise band. Guipanel NP has title Title. EXP is the 
@@ -34,24 +34,13 @@ if nargin<5, DAChan=''; end
 % ---levels and active DACs
 if isequal('-',T), T = 'SPLs & active channels'; end
 % # DAC channels fixes the allowed multiplicity of user-specied numbers
-if ~isequal(DAChan,'nobinaural') && isequal('Both', EXP.AudioChannelsUsed), 
+if ~isequal(DAChan,'nobinaural') && isequal('Both', EXP.AudioChannelsUsed) 
     Nchan = 2;
     PairStr = ' Pairs of numbers are interpreted as [left right].';
-else, % single Audio channel
+else % single Audio channel
     Nchan = 1;
     PairStr = '';
 end
-Levels = GUIpanel('Levels', T);
-switch EXP.Recordingside,
-    case 'Left', Lstr = 'Left=Ipsi'; Rstr = 'Right=Contra';
-    case 'Right', Lstr = 'Left=Contra'; Rstr = 'Right=Ipsi';
-end
-switch EXP.AudioChannelsUsed,
-    case 'Left', DACstr = {Lstr};
-    case 'Right', DACstr = {Rstr};
-    case 'Both', DACstr = {Lstr Rstr 'Both'};
-end
-ClickStr = ' Click button to select ';
 
 %===========Queries========
 % ---freq & seed
@@ -66,14 +55,11 @@ Corr = ParamQuery([Prefix 'Corr'], 'corr:', '-0.9997 ', {'I', 'C'}, ...
     'Click button to change the "varied channel" (where mixing is done).'],1);
 NoiseSeed = ParamQuery([Prefix 'ConstNoiseSeed'], 'seed:', '844596300', '', ...
     'rseed', 'Random seed used for realization of noise waveform. Specify NaN to refresh seed upon each realization.',1);
-NoiseIPD = ParamQuery([Prefix 'Corr'], 'corr:', '-0.9997 ', {'I', 'C'}, ...
-    'rreal', ['Interaural noise correlation (number between -1 and 1)', char(10), ... 
-    'Click button to change the "varied channel" (where mixing is done).'],1);
 % ---SPL
-SPL = ParamQuery([Prefix 'SPL'], 'level:', '120.5 120.5', {'dB SPL' 'dB/Hz'}, ...
-    'rreal', ['Intensity. Click button to switch between overall level (dB SPL) and spectrum level (dB/Hz).' PairStr],Nchan);
-DAC = ParamQuery('DAC', 'DAC:', '', DACstr, ...
-    '', ['Active D/A channels.' ClickStr 'channel(s).']);
+% SPL = ParamQuery([Prefix 'SPL'], 'level:', '120.5 120.5', {'dB SPL' 'dB/Hz'}, ...
+%     'rreal', ['Intensity. Click button to switch between overall level (dB SPL) and spectrum level (dB/Hz).' PairStr],Nchan);
+% DAC = ParamQuery('DAC', 'DAC:', '', DACstr, ...
+%     '', ['Active D/A channels.' ClickStr 'channel(s).']);
 MaxSPL=messenger([Prefix 'MaxSPL'], 'max [**** ****] dB SPL @ [***** *****] Hz    ',1);
 
 

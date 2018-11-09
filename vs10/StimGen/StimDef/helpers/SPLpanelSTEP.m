@@ -31,25 +31,17 @@ function Levels=SPLpanelSTEP(T, EXP, Prefix, CmpName);
 if isequal('-',T), T = 'SPLs & active channels'; end
 
 % # DAC channels fixes the allowed multiplicity of user-specied numbers
-if isequal('Both', EXP.AudioChannelsUsed), 
+if isequal('Both', EXP.AudioChannelsUsed) 
     Nchan = 2;
     PairStr = ' Pairs of numbers are interpreted as [left right].';
-else, % single Audio channel
+else % single Audio channel
     Nchan = 1;
     PairStr = ''; 
 end
 ClickStr = ' Click button to select ';
 
 % ---SPL
-switch EXP.Recordingside,
-    case 'Left', Lstr = 'Left=Ipsi'; Rstr = 'Right=Contra';
-    case 'Right', Lstr = 'Left=Contra'; Rstr = 'Right=Ipsi';
-end
-switch EXP.AudioChannelsUsed,
-    case 'Left', DACstr = {Lstr};
-    case 'Right', DACstr = {Rstr};
-    case 'Both', DACstr = {Lstr Rstr 'Both'};
-end
+DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);
 
 SPL = ParamQuery([Prefix 'SPL'], 'levels:', '120.5 120.5', 'dB SPL', ...
     'rreal', [CmpName ' SPL.' PairStr],Nchan);
@@ -64,5 +56,4 @@ Levels = add(Levels,SPL,'below');
 Levels = add(Levels,StepFactor,'nextto');
 Levels = add(Levels,MaxSPL,['below ' Prefix 'SPL'],[17 0]);
 Levels = add(Levels,DAC,'nextto');
-
 Levels = marginalize(Levels, [0 3]);

@@ -41,15 +41,7 @@ end
 ClickStr = ' Click button to select ';
 
 % ---SPL
-switch EXP.Recordingside,
-    case 'Left', Lstr = 'Left=Ipsi'; Rstr = 'Right=Contra';
-    case 'Right', Lstr = 'Left=Contra'; Rstr = 'Right=Ipsi';
-end
-switch EXP.AudioChannelsUsed,
-    case 'Left', DACstr = {Lstr};
-    case 'Right', DACstr = {Rstr};
-    case 'Both', DACstr = {Lstr Rstr 'Both'};
-end
+DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);
 
 SPL = ParamQuery([Prefix 'SPL'], 'levels:', '120.5', 'dB SPL', ...
     'rreal', [CmpName ' SPL.' PairStr],Nchan);
