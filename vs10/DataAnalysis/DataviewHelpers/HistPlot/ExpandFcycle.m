@@ -5,7 +5,7 @@ function [freq, freqstr] = ExpandFcycle(FcycType, Chan, Fcyc, ds);
 %   See also UCcyc, UCcycParam and ExploreFcycle.
 
 if isequal('auto', FcycType), % use ExploreFcycle to get default values
-   [ifc icc fstr cstr defaultstr] = ExploreFcycle(ds);
+   [~, ~, ~, ~, defaultstr] = ExploreFcycle(ds);
    FcycType = defaultstr{1};
    Chan = defaultstr{2};
    Fcyc = 137;

@@ -68,7 +68,10 @@ switch lower(kw),
             end
             %--->
             refresh(stimh);
-        end;
+        catch e
+            display(e.identifier);
+            display(e.message);
+        end
 
     case 'guimode', % dashboard('guimode', Mode, gmess, gmessmode)
         [ok, figh]=existGUI('dashboard');
