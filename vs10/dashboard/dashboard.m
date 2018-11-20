@@ -47,11 +47,11 @@ switch lower(kw),
             % fig handle is either the callback figure, ...
         else
             figh = varargin{3};
-        end;% ... or passed explicitly
+        end% ... or passed explicitly
         
         if ~isa(figh,'double')
             figh = figh.Number;
-        end;
+        end
         try
             blank(getGUIdata(figh,'Messenger')); % empty messages
             stimh = local_stimmenu(figh, StimType);
@@ -402,7 +402,7 @@ if ~hasExp
 % elseif needsEarcalib(current(experiment)),
 %     GUI(earcalib);
 %     return;
-else, % read stimname if not already specified and try to launch corresponding stim menu
+else % read stimname if not already specified and try to launch corresponding stim menu
     if isempty(StimType), 
         PP = GUIval(figh);
         if isempty(PP), return; end
