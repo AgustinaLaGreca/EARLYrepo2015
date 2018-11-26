@@ -1,26 +1,26 @@
-function varargout = osciplot_gui(varargin)
-%OSCIPLOT_GUI MATLAB code file for osciplot_gui.fig
-%      OSCIPLOT_GUI, by itself, creates a new OSCIPLOT_GUI or raises the existing
+function varargout = osciplot_gui_v2(varargin)
+%OSCIPLOT_GUI_V2 MATLAB code file for osciplot_gui_v2.fig
+%      OSCIPLOT_GUI_V2, by itself, creates a new OSCIPLOT_GUI_V2 or raises the existing
 %      singleton*.
 %       
-%       osciplot_gui expects this input:
+%       osciplot_gui_v2 expects this input:
 %       ('experiment',recording number,channel,condition,[repetitions]).
-%       e.g. osciplot_gui('G17512',6,1,1,[1:10])
+%       e.g. osciplot_gui_v2('G17512',6,1,1,[1:10])
 %
 %       Make shure the dataset of the experiment is complete; a stimulus
 %       and the corresponding trace (anadata)
 % See also: GUIDE, GUIDATA, GUIHANDLES
 % Code by Jan Everaert 2018
-% Edit the above text to modify the response to help osciplot_gui
+% Edit the above text to modify the response to help osciplot_gui_v2
 
-% Last Modified by GUIDE v2.5 23-Nov-2018 12:52:19
+% Last Modified by GUIDE v2.5 23-Nov-2018 18:04:55
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @osciplot_gui_OpeningFcn, ...
-                   'gui_OutputFcn',  @osciplot_gui_OutputFcn, ...
+                   'gui_OpeningFcn', @osciplot_gui_v2_OpeningFcn, ...
+                   'gui_OutputFcn',  @osciplot_gui_v2_OutputFcn, ...
                    'gui_LayoutFcn',  [], ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -35,8 +35,8 @@ end
 % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before osciplot_gui is made visible.
-function osciplot_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+% --- Executes just before osciplot_gui_v2 is made visible.
+function osciplot_gui_v2_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -74,7 +74,7 @@ handles.stim = [];
 % Stimulus is constructed out of stim information present in the dataset
 % (added by Jan 2018)
 % extract both channels added by Marta, Oct 2018
-if iscell(handles.ds.Stim.Waveform(cond).Samples),
+if iscell(handles.ds.Stim.Waveform(cond).Samples)
     for channel = 1:numel(handles.ds.Stim.Waveform(cond,:)) %for binaural stimulus
         stim_construct = [];
         for ii = 1:length(handles.ds.Stim.Waveform(cond,channel).Samples)
@@ -86,20 +86,19 @@ if iscell(handles.ds.Stim.Waveform(cond).Samples),
         handles.stim(:,channel) = stim;
     end
 else
-    
+    % Seems to be non optimal (Marta)
     for ii = 1:length(repetition)
         handles.stim =  [handles.stim handles.ds.Stim.Waveform(cond).Samples'];
     end
     
 end
+% handles stim is (2,X) array (if 2 channels)
 handles.stim = handles.stim';
 wf = handles.ds.Stim.Waveform(cond,:);
 handles.DAchan = [wf(:).DAchan]';
 handles.Fs = handles.ds.Fsam;
 handles.t = (0:length(handles.trace)-1)./handles.Fs;
 handles.nb_of_samples = length(handles.trace_original);
-
-
 
 % initial plot
 axes(handles.axes1)
@@ -110,21 +109,21 @@ plot(handles.t,handles.stim)
 axis tight
 legend(handles.DAchan)
 
-% initialization
+% Initialization of handles user input fields
 handles = init_gui(hObject,handles);
 
-% Choose default command line output for osciplot_gui
+% Choose default command line output for osciplot_gui_v2
 handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
 
-% UIWAIT makes osciplot_gui wait for user response (see UIRESUME)
+% UIWAIT makes osciplot_gui_v2 wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = osciplot_gui_OutputFcn(hObject, eventdata, handles)
+function varargout = osciplot_gui_v2_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -153,7 +152,7 @@ function axes2_CreateFcn(hObject, eventdata, handles)
 
 
 function filter_LL_Callback(hObject, eventdata, handles)
-% hObject    handle to edit9 (see GCBO)
+% hObject    handle to edit_tFilterlow (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.filter.lowerthreshold = str2double(get(hObject,'String'));
@@ -162,13 +161,13 @@ handles.filter.lowerthreshold = str2double(get(hObject,'String'));
 guidata(hObject, handles);
 
 
-% Hints: get(hObject,'String') returns contents of edit9 as text
-%        str2double(get(hObject,'String')) returns contents of edit9 as a double
+% Hints: get(hObject,'String') returns contents of edit_tFilterlow as text
+%        str2double(get(hObject,'String')) returns contents of edit_tFilterlow as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function filter_LL_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit9 (see GCBO)
+% hObject    handle to edit_tFilterlow (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -181,7 +180,7 @@ end
 
 
 function filter_UL_Callback(hObject, eventdata, handles)
-% hObject    handle to edit10 (see GCBO)
+% hObject    handle to edit_tFilterup (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.filter.upperthreshold = str2double(get(hObject,'String'));
@@ -189,13 +188,13 @@ handles.filter.upperthreshold = str2double(get(hObject,'String'));
 % Update handles structure
 guidata(hObject, handles);
 
-% Hints: get(hObject,'String') returns contents of edit10 as text
-%        str2double(get(hObject,'String')) returns contents of edit10 as a double
+% Hints: get(hObject,'String') returns contents of edit_tFilterup as text
+%        str2double(get(hObject,'String')) returns contents of edit_tFilterup as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function filter_UL_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit10 (see GCBO)
+% hObject    handle to edit_tFilterup (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -205,14 +204,14 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-% --- Executes on button press in pushbutton9.
+% --- Executes on button press in pushbutton_extFilter.
 function filter_pushbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton9 (see GCBO)
+% hObject    handle to pushbutton_extFilter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 axes(handles.axes1)
 plot_demand = 1; %$ plot wanted
-[trace_filtered] = filter_and_plot(hObject,handles,plot_demand);
+trace_filtered = filter_and_plot(hObject,handles,plot_demand);
 handles.trace = trace_filtered;
 
 % update the auto Y limits
@@ -222,22 +221,47 @@ handles.y_limits_trace.auto.max = max(handles.trace);
 guidata(hObject, handles);
 
 
+% --- Executes on selection change in popup_tTrigger.
+function popup_tTrigger_Callback(hObject, eventdata, handles)
+% hObject    handle to popup_tTrigger (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.peak.channel = get(hObject,'Value');
+guidata(hObject,handles);
 
-% --- Executes on button press in pushbutton14.
+
+% Hints: contents = cellstr(get(hObject,'String')) returns popup_tTrigger contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popup_tTrigger
+
+
+% --- Executes during object creation, after setting all properties.
+function popup_tTrigger_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popup_tTrigger (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton_extTrigger.
 function peak_detection_pushbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton14 (see GCBO)
+% hObject    handle to pushbutton_extTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 axes(handles.axes1)
 plot_demand = 1;
-[peaks] = peak_finder_and_plot(hObject,handles,plot_demand);
+peaks = peak_finder_and_plot(hObject,handles,plot_demand);
 handles.peak.positions = peaks;
 guidata(hObject, handles);
 
 
 
 function peak_threshold_Callback(hObject, eventdata, handles)
-% hObject    handle to edit21 (see GCBO)
+% hObject    handle to edit_tTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.peak.threshold = str2double(get(hObject,'String'));
@@ -245,13 +269,13 @@ handles.peak.threshold = str2double(get(hObject,'String'));
 % Update handles structure
 guidata(hObject, handles);
 
-% Hints: get(hObject,'String') returns contents of edit21 as text
-%        str2double(get(hObject,'String')) returns contents of edit21 as a double
+% Hints: get(hObject,'String') returns contents of edit_tTrigger as text
+%        str2double(get(hObject,'String')) returns contents of edit_tTrigger as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function peak_threshold_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit21 (see GCBO)
+% hObject    handle to edit_tTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -264,12 +288,12 @@ end
 
 
 function window_size_Callback(hObject, eventdata, handles)
-% hObject    handle to edit23 (see GCBO)
+% hObject    handle to edit_tWsize (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit23 as text
-%        str2double(get(hObject,'String')) returns contents of edit23 as a double
+% Hints: get(hObject,'String') returns contents of edit_tWsize as text
+%        str2double(get(hObject,'String')) returns contents of edit_tWsize as a double
 
 handles.window_size.time = str2double(get(hObject,'String'));
 handles.window_size.samples = round(handles.window_size.time*handles.Fs);
@@ -281,7 +305,7 @@ guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
 function window_size_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit23 (see GCBO)
+% hObject    handle to edit_tWsize (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -292,21 +316,21 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton15.
+% --- Executes on button press in pushbutton_extWsize.
 function window_size_pushbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton15 (see GCBO)
+% hObject    handle to pushbutton_extWsize (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 window_size_and_plot(hObject,handles);
 
 
 function display_speed_ratio_Callback(hObject, eventdata, handles)
-% hObject    handle to edit33 (see GCBO)
+% hObject    handle to edit_mSpeed (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit33 as text
-%        str2double(get(hObject,'String')) returns contents of edit33 as a double
+% Hints: get(hObject,'String') returns contents of edit_mSpeed as text
+%        str2double(get(hObject,'String')) returns contents of edit_mSpeed as a double
 handles.display_speed_ratio = str2double(get(hObject,'String'));
 
 % Update handles structure
@@ -316,7 +340,7 @@ guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
 function display_speed_ratio_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit33 (see GCBO)
+% hObject    handle to edit_mSpeed (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -328,12 +352,12 @@ end
 
 
 function window_step_size_Callback(hObject, eventdata, handles)
-% hObject    handle to edit35 (see GCBO)
+% hObject    handle to edit_mWstep (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit35 as text
-%        str2double(get(hObject,'String')) returns contents of edit35 as a double
+% Hints: get(hObject,'String') returns contents of edit_mWstep as text
+%        str2double(get(hObject,'String')) returns contents of edit_mWstep as a double
 handles.window_step_size.time = str2double(get(hObject,'String'));
 handles.window_step_size.samples = round(handles.window_step_size.time*handles.Fs);
 % Update handles structure
@@ -341,7 +365,7 @@ guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
 function window_step_size_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit35 (see GCBO)
+% hObject    handle to edit_mWstep (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -353,12 +377,12 @@ end
 
 
 function minimal_display_time_Callback(hObject, eventdata, handles)
-% hObject    handle to edit36 (see GCBO)
+% hObject    handle to edit_mMinDisp (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit36 as text
-%        str2double(get(hObject,'String')) returns contents of edit36 as a double
+% Hints: get(hObject,'String') returns contents of edit_mMinDisp as text
+%        str2double(get(hObject,'String')) returns contents of edit_mMinDisp as a double
 handles.minimal_display_time.time = str2double(get(hObject,'String'));
 handles.minimal_display_time.samples = round(handles.minimal_display_time.time*handles.Fs);
 % Update handles structure
@@ -366,7 +390,7 @@ guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
 function minimal_display_time_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit36 (see GCBO)
+% hObject    handle to edit_mMinDisp (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -399,12 +423,12 @@ movie_preview(hObject,handles);
 
 
 function file_name_Callback(hObject, eventdata, handles)
-% hObject    handle to edit28 (see GCBO)
+% hObject    handle to edit_mName (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit28 as text
-%        str2double(get(hObject,'String')) returns contents of edit28 as a double
+% Hints: get(hObject,'String') returns contents of edit_mName as text
+%        str2double(get(hObject,'String')) returns contents of edit_mName as a double
 handles.file_specs.name = get(hObject,'String');
 % Update handles structure
 guidata(hObject, handles);
@@ -412,7 +436,7 @@ guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
 function file_name_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit28 (see GCBO)
+% hObject    handle to edit_mName (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -425,12 +449,12 @@ end
 
 
 function file_location_Callback(hObject, eventdata, handles)
-% hObject    handle to edit29 (see GCBO)
+% hObject    handle to edit_mFolder (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit29 as text
-%        str2double(get(hObject,'String')) returns contents of edit29 as a double
+% Hints: get(hObject,'String') returns contents of edit_mFolder as text
+%        str2double(get(hObject,'String')) returns contents of edit_mFolder as a double
 handles.file_specs.location = get(hObject,'String');
 % Update handles structure
 guidata(hObject, handles);
@@ -438,7 +462,7 @@ guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
 function file_location_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit29 (see GCBO)
+% hObject    handle to edit_mFolder (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -464,17 +488,15 @@ function uibuttongroup13_SelectionChangedFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 		% Get the values of the radio buttons in this group.
-		handles.source_audio.stim = get(handles.radiobutton_stim, 'Value');
-		handles.source_audio.trace = get(handles.radiobutton_trace, 'Value');
+		handles.source_audio.stim = get(handles.radiobutton_mAudstim, 'Value');
+		handles.source_audio.trace = get(handles.radiobutton_mAudtrace, 'Value');
 
 % Update handles structure
 guidata(hObject, handles);
 
 
-
-
-function edit37_Callback(hObject, eventdata, handles)
-% hObject    handle to edit37 (see GCBO)
+function edit_tYlim_max_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_max (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -489,8 +511,8 @@ guidata(hObject, handles);
 
 
 % --- Executes during object creation, after setting all properties.
-function edit37_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit37 (see GCBO)
+function edit_tYlim_max_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_max (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -500,8 +522,8 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function edit38_Callback(hObject, eventdata, handles)
-% hObject    handle to edit38 (see GCBO)
+function edit_tYlim_min_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_min (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -515,8 +537,8 @@ end
 guidata(hObject, handles);
 
 % --- Executes during object creation, after setting all properties.
-function edit38_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit38 (see GCBO)
+function edit_tYlim_min_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_min (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -526,18 +548,18 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-% --- Executes on button press in radiobutton12.
-function radiobutton12_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton12 (see GCBO)
+% --- Executes on button press in radiobutton_tYlim_auto.
+function radiobutton_tYlim_auto_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton_tYlim_auto (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.y_limits_trace.auto_on = 1;
 % Update handles structure
 guidata(hObject, handles);
 
-% --- Executes on button press in radiobutton13.
-function radiobutton13_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton13 (see GCBO)
+% --- Executes on button press in radiobutton_tYlim_man.
+function radiobutton_tYlim_man_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton_tYlim_man (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.y_limits_trace.auto_on = 0;
@@ -549,24 +571,10 @@ guidata(hObject, handles);
 
 
 
-% --- Executes on selection change in popupmenu2.
-function popupmenu2_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu2 (see GCBO)
+
+
+% --- Executes on button press in pushbutton_mfolder.
+function pushbutton_mfolder_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton_mfolder (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu2 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu2
-
-
-% --- Executes during object creation, after setting all properties.
-function popupmenu2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end

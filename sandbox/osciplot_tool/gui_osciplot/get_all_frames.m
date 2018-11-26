@@ -85,16 +85,16 @@ alpha = 0.82; % Fading parameter
 
 figure()
 k = 1; % iteration parameter for the savings of the frames in each step
-current_peaknr = 1;
+%current_peaknr = 1;
 if isempty(peak_locs) % when no peak is selected by the peakfinder (peakfinder_and_plot.m)
     current_peak_ind = 0;
 else
-    current_peak_ind = peak_locs(current_peaknr); 
+    current_peak_ind = peak_locs(1); 
 end
 
-for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
-    
-
+ind_frames = 1:window_step_size:nb_samples-window_size;
+for k=1:numel(ind_frames) 
+    ii = ind_frames(k);
     frame_trace = trace(ii:ii+window_size-1);
     frame_stim = stim(:,ii:ii+window_size-1);
     
@@ -103,7 +103,7 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     FA_trace(:,k) = trace(ii:ii+window_step_size-1); %audio trace
     frame_ind = ii:ii+window_step_size-1; % used for x-axis in the plot
     
-    % get current peak nb
+    % get current peak nb (in current window, but not in next window)
     peaks_in_interval = peak_locs(peak_locs > ii & peak_locs < ii+window_step_size-1);
     if ~isempty(peaks_in_interval) && (ii > window_size/2) && (ii < nb_samples-window_size-window_size/2)
     current_peak_ind = peaks_in_interval(1);
@@ -159,8 +159,6 @@ for ii = 1:window_step_size:nb_samples-max([window_size window_step_size])
     % Save complete frame for video
     FV(k) = getframe(gcf);
 
-    
-    k=k+1;
 end
 
 % Parameterframe at the end of the movie
