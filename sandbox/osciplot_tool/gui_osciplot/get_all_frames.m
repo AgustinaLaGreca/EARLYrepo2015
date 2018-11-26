@@ -84,7 +84,7 @@ end
 alpha = 0.82; % Fading parameter
 
 figure()
-k = 1; % iteration parameter for the savings of the frames in each step
+%k = 1; % iteration parameter for the savings of the frames in each step
 %current_peaknr = 1;
 if isempty(peak_locs) % when no peak is selected by the peakfinder (peakfinder_and_plot.m)
     current_peak_ind = 0;
@@ -93,6 +93,7 @@ else
 end
 
 ind_frames = 1:window_step_size:nb_samples-window_size;
+M = zeros(window_size,numel(ind_frames));
 for k=1:numel(ind_frames) 
     ii = ind_frames(k);
     frame_trace = trace(ii:ii+window_size-1);
@@ -103,15 +104,21 @@ for k=1:numel(ind_frames)
     FA_trace(:,k) = trace(ii:ii+window_step_size-1); %audio trace
     frame_ind = ii:ii+window_step_size-1; % used for x-axis in the plot
     
-    % get current peak nb (in current window, but not in next window)
+    % get current peak nb (in current window second half, but not in next window)
     peaks_in_interval = peak_locs(peak_locs > ii & peak_locs < ii+window_step_size-1);
     if ~isempty(peaks_in_interval) && (ii > window_size/2) && (ii < nb_samples-window_size-window_size/2)
     current_peak_ind = peaks_in_interval(1);
     end
-
+    
+    % peak is centered in the frame when current frame contains a peak
+    
+    % if peak is not in current window (ie it was in previous window), and
+    % time between current window and previous spike is shorter than
+    % t_min_disp, the displayed frame will continue centered in previous
+    % spike. If it is larger, the frame is exactly the current window
     if (current_peak_ind < ii+window_size) && (ii-current_peak_ind)/(display_speed_ratio) < t_min_disp ...
             && (current_peak_ind > window_size/2) && (current_peak_ind < nb_samples-window_size-window_size/2)
-        % peak is centered in the frame when it is in it
+        
         new_frame_ind = ((current_peak_ind-floor((window_size)/2)):1:...
              (current_peak_ind+floor((window_size-1)/2)));
         frame_ind = new_frame_ind; % used for x-axis in the plot
@@ -123,36 +130,31 @@ for k=1:numel(ind_frames)
     %N(:,k) = frame_stim; % not really used yet
    
     % Fade out of previous displays
+    subplot(211)
     if k <= nb_frames_fading  
-        subplot(211)
         for ll = 1:k-1
-        plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
-        axis tight
-        ylim([y_min_trace y_max_trace]); %Fix y-limits
+            plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         end
     else 
         %% 
-        subplot(211)
         for ll = k-nb_frames_fading:k-1
-        plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
-        axis tight
-        ylim([y_min_trace y_max_trace]); %Fix y-limits
+            plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         end 
     end
     % Current display
     plot((0:length(M(:,k))-1)./Fs,M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
-    axis tight
     ylim([y_min_trace y_max_trace]); %Fix y-limits
-    title(strcat('Exp:',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
-        '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep;',num2str(handles.repetition)))
+    title(strcat('Exp: ',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
+        '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep:',num2str(handles.repetition)))
     hold off;
     
     subplot(212)
     plot((0:length(frame_stim)-1)./Fs,frame_stim); %stim
-    axis tight
-    ylim([min_stim max_stim]); %Fix y-limits
+    %axis tight
+    %ylim([min_stim max_stim]); %Fix y-limits
     xlabel('time[s]')
-    legend(handles.DAchan)
+    lg = legend(handles.DAchan, 'Location','southeast');
+    lg.FontSize = 8;
     
 
 
