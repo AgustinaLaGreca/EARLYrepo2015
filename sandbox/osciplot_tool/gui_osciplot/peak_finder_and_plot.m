@@ -27,18 +27,24 @@ end
 %% Triggering channel
 if handles.peak.channel > 1
     trigChannel = handles.stim(handles.peak.channel-1,:);
+    raiseTrig = diff(trigChannel); % Positive if x(2)>x(1)
+    raiseTrig = [raiseTrig(1) raiseTrig];
+    trigChannel(raiseTrig<=0) = 0;
+    higherInd = [0 diff(trigChannel > handles.peak.threshold)];
+    peak_locs = find(higherInd > 0);
 else
+    %% Triggering on trace: finding peaks
     trigChannel = handles.trace;
-end
-
-%% Preview of the whole signal and selected peaks
+    % Preview of the whole signal and selected peaks
 % peakfinder
     warning('off','signal:findpeaks:largeMinPeakHeight') %turn the warning off in case no peaks are found
                                                        % (threshold too
                                                        % high)
     [~,peak_locs] = findpeaks(trigChannel,'MinPeakHeight',handles.peak.threshold);
+end
+%[~,peak_locs] = findpeaks(trigChannel,'MinPeakHeight',handles.peak.threshold);
 
-% Plot the data
+%% Plot the data
 if plot_demand
     
     % Y limits trace

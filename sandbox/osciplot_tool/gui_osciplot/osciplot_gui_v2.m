@@ -13,7 +13,7 @@ function varargout = osciplot_gui_v2(varargin)
 % Code by Jan Everaert 2018
 % Edit the above text to modify the response to help osciplot_gui_v2
 
-% Last Modified by GUIDE v2.5 23-Nov-2018 18:04:55
+% Last Modified by GUIDE v2.5 30-Nov-2018 19:54:36
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -324,6 +324,78 @@ function window_size_pushbutton_Callback(hObject, eventdata, handles)
 window_size_and_plot(hObject,handles);
 
 
+function edit_tYlim_max_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_min (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.y_limits_trace.manual.max = get(hObject,'String');
+if iscell(handles.y_limits_trace.manual.max)
+    handles.y_limits_trace.manual.max = cellfun(@str2num,handles.y_limits_trace.manual.max);
+elseif ischar(handles.y_limits_trace.manual.max)
+    handles.y_limits_trace.manual.max = str2double(handles.y_limits_trace.manual.max);
+end
+% Update handles structure
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_tYlim_max_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_min (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function edit_tYlim_min_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_min (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.y_limits_trace.manual.min = get(hObject,'String');
+if iscell(handles.y_limits_trace.manual.min)
+    handles.y_limits_trace.manual.min = cellfun(@str2num,handles.y_limits_trace.manual.min);
+elseif ischar(handles.y_limits_trace.manual.min)
+    handles.y_limits_trace.manual.min = str2double(handles.y_limits_trace.manual.min);
+end
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function edit_tYlim_min_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_tYlim_min (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+% --- Executes on button press in radiobutton_tYlim_auto.
+function radiobutton_tYlim_auto_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton_tYlim_auto (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.y_limits_trace.auto_on = 1;
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in radiobutton_tYlim_man.
+function radiobutton_tYlim_man_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton_tYlim_man (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.y_limits_trace.auto_on = 0;
+% Update handles structure
+guidata(hObject, handles);
+
+
 function display_speed_ratio_Callback(hObject, eventdata, handles)
 % hObject    handle to edit_mSpeed (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -447,7 +519,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
 function file_location_Callback(hObject, eventdata, handles)
 % hObject    handle to edit_mFolder (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -458,6 +529,7 @@ function file_location_Callback(hObject, eventdata, handles)
 handles.file_specs.location = get(hObject,'String');
 % Update handles structure
 guidata(hObject, handles);
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -472,6 +544,19 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
+
+% --- Executes on button press in pushbutton_mfolder.
+function pushbutton_mfolder_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton_mfolder (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+path = fileparts(fileparts(mfilename('fullpath')));
+mfolder = uigetdir(path,'Select folder');
+if all(mfolder)
+    handles.file_specs.location = mfolder;
+    h_mFolder = findobj('Tag','edit_mFolder');
+    h_mFolder.String = mfolder;
+end
 
 % --- Executes on button press in pushbutton20.
 function save_movie_pushbutton_Callback(hObject, eventdata, handles)
@@ -495,24 +580,19 @@ function uibuttongroup13_SelectionChangedFcn(hObject, eventdata, handles)
 guidata(hObject, handles);
 
 
-function edit_tYlim_max_Callback(hObject, eventdata, handles)
-% hObject    handle to edit_tYlim_max (see GCBO)
+
+function edit_sYlim_max_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_sYlim_max (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-handles.y_limits_trace.manual.min = get(hObject,'String');
-if iscell(handles.y_limits_trace.manual.min)
-    handles.y_limits_trace.manual.min = cellfun(@str2num,handles.y_limits_trace.manual.min);
-elseif ischar(handles.y_limits_trace.manual.min)
-    handles.y_limits_trace.manual.min = str2double(handles.y_limits_trace.manual.min);
-end
-% Update handles structure
-guidata(hObject, handles);
+% Hints: get(hObject,'String') returns contents of edit_sYlim_max as text
+%        str2double(get(hObject,'String')) returns contents of edit_sYlim_max as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function edit_tYlim_max_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit_tYlim_max (see GCBO)
+function edit_sYlim_max_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_sYlim_max (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -522,23 +602,20 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function edit_tYlim_min_Callback(hObject, eventdata, handles)
-% hObject    handle to edit_tYlim_min (see GCBO)
+
+
+function edit_sYlim_min_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_sYlim_min (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-handles.y_limits_trace.manual.max = get(hObject,'String');
-if iscell(handles.y_limits_trace.manual.max)
-    handles.y_limits_trace.manual.max = cellfun(@str2num,handles.y_limits_trace.manual.max);
-elseif ischar(handles.y_limits_trace.manual.max)
-    handles.y_limits_trace.manual.max = str2double(handles.y_limits_trace.manual.max);
-end
-% Update handles structure
-guidata(hObject, handles);
+% Hints: get(hObject,'String') returns contents of edit_sYlim_min as text
+%        str2double(get(hObject,'String')) returns contents of edit_sYlim_min as a double
+
 
 % --- Executes during object creation, after setting all properties.
-function edit_tYlim_min_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit_tYlim_min (see GCBO)
+function edit_sYlim_min_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_sYlim_min (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -548,33 +625,89 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-% --- Executes on button press in radiobutton_tYlim_auto.
-function radiobutton_tYlim_auto_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton_tYlim_auto (see GCBO)
+
+
+function edit_sTrigger_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_sTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.y_limits_trace.auto_on = 1;
-% Update handles structure
-guidata(hObject, handles);
 
-% --- Executes on button press in radiobutton_tYlim_man.
-function radiobutton_tYlim_man_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton_tYlim_man (see GCBO)
+% Hints: get(hObject,'String') returns contents of edit_sTrigger as text
+%        str2double(get(hObject,'String')) returns contents of edit_sTrigger as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_sTrigger_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_sTrigger (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton_sTrigger.
+function pushbutton_sTrigger_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton_sTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.y_limits_trace.auto_on = 0;
-% Update handles structure
-guidata(hObject, handles);
 
 
-
-
-
-
-
-
-% --- Executes on button press in pushbutton_mfolder.
-function pushbutton_mfolder_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton_mfolder (see GCBO)
+% --- Executes on selection change in popup_sTrigger.
+function popup_sTrigger_Callback(hObject, eventdata, handles)
+% hObject    handle to popup_sTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns popup_sTrigger contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popup_sTrigger
+
+
+% --- Executes during object creation, after setting all properties.
+function popup_sTrigger_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popup_sTrigger (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton_sWsize.
+function pushbutton_sWsize_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton_sWsize (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+window_size_and_plot(hObject,handles);
+
+
+
+function edit_sWsize_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_sWsize (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_sWsize as text
+%        str2double(get(hObject,'String')) returns contents of edit_sWsize as a double
+handles.window_size_s.time = str2double(get(hObject,'String'));
+handles.window_size_s.samples = round(handles.window_size.time*handles.Fs);
+
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_sWsize_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_sWsize (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

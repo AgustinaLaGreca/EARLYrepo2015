@@ -83,7 +83,8 @@ end
 
 alpha = 0.82; % Fading parameter
 
-figure()
+framesfig = figure('CloseRequestFcn',@close_showoff);
+wb = waitbar(0,'0%','Name','Creating frames in background');
 %k = 1; % iteration parameter for the savings of the frames in each step
 %current_peaknr = 1;
 if isempty(peak_locs) % when no peak is selected by the peakfinder (peakfinder_and_plot.m)
@@ -111,11 +112,12 @@ for k=1:numel(ind_frames)
     end
     
     % peak is centered in the frame when current frame contains a peak
-    
-    % if peak is not in current window (ie it was in previous window), and
-    % time between current window and previous spike is shorter than
-    % t_min_disp, the displayed frame will continue centered in previous
-    % spike. If it is larger, the frame is exactly the current window
+    % first frames without peaks are not centered
+    % if peak is not in current window (ie it was in previous window) and time between current window and previous spike is
+    % shorter than t_min_disp, the displayed frame will continue centered
+    % in previous spike. If it is larger, the frame is current window (no
+    % centering done).
+    %if handles.peak.channel == 1
     if (current_peak_ind < ii+window_size) && (ii-current_peak_ind)/(display_speed_ratio) < t_min_disp ...
             && (current_peak_ind > window_size/2) && (current_peak_ind < nb_samples-window_size-window_size/2)
         
@@ -124,12 +126,16 @@ for k=1:numel(ind_frames)
         frame_ind = new_frame_ind; % used for x-axis in the plot
         frame_trace = trace(new_frame_ind);
         frame_stim = stim(:,new_frame_ind);
+    %end
     end
         
     M(:,k) = frame_trace; % Save the frames for the fading
     %N(:,k) = frame_stim; % not really used yet
    
+    % Update waitbar
+    waitbar(k/numel(ind_frames),wb, [sprintf('%12.2f',k/numel(ind_frames)*100) '%']);
     % Fade out of previous displays
+    set(0, 'CurrentFigure', framesfig);
     subplot(211)
     if k <= nb_frames_fading  
         for ll = 1:k-1
@@ -174,11 +180,21 @@ str = {'Used movie parameters:',...
     strcat('Window step: ',num2str(handles.window_step_size.time),' [s]'),...
     strcat('Min displ time: ',num2str(handles.minimal_display_time.time),' [s]')};
 annotation('textbox',dim,'Color','red','String',str,'BackgroundColor', 'k','FitBoxToText','on');
-FV(k-1) = getframe(gcf);
+FV(k-1) = getframe(framesfig);
+if strcmpi(framesfig.Visible,'off')
+    framesfig.Visible = 'on';
+    delete(framesfig);
+end
 
 
 video_frames = FV;
 audio_frames_stim = FA_stim;
 audio_frames_trace = FA_trace;
+end
+
+function close_showoff(src,callbackdata)
+% Close request function 
+% to hide figure and display a question dialog box 
+   src.Visible = 'Off';
 end
 
