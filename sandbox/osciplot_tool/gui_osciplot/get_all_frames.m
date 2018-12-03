@@ -159,8 +159,8 @@ for k=1:numel(ind_frames)
     % Current display
     plot((0:length(M(:,k))-1)./Fs, M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
     ylim([y_min_trace y_max_trace]); %Fix y-limits
-    title(strcat('Exp: ',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
-        '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep:',num2str(handles.repetition)))
+%     title(strcat('Exp: ',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
+%         '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep:',num2str(handles.repetition)))
     hold off;
     xl = xticklabels;
     xt = xticks;
