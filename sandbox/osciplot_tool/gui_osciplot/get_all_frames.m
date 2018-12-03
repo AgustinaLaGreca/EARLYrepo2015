@@ -58,8 +58,15 @@ end
 
 
 %% get frames
-
-stim = handles.stim;
+% If channeling in stim (peak.channel == 2 | == 3)
+% use interpolated time and stimulus
+if handles.peak.channel > 1
+    time = handles.t_int;
+    stim = handles.stim_int;
+else
+    time = handles.t;
+    stim = handles.stim;
+end
 trace = handles.trace;
 peak_locs = handles.peak.positions;
 window_step_size = handles.window_step_size.samples;
@@ -99,6 +106,7 @@ for k=1:numel(ind_frames)
     ii = ind_frames(k);
     frame_trace = trace(ii:ii+window_size-1);
     frame_stim = stim(:,ii:ii+window_size-1);
+    frame_time = time(ii:ii:ii+window_size-1);
     
     % Save the corresponding audio frame
     FA_stim(:,k) = stim(1,ii:ii+window_step_size-1); %audio stim - only one channel
@@ -123,9 +131,10 @@ for k=1:numel(ind_frames)
         
         new_frame_ind = ((current_peak_ind-floor((window_size)/2)):1:...
              (current_peak_ind+floor((window_size-1)/2)));
-        frame_ind = new_frame_ind; % used for x-axis in the plot
+        
         frame_trace = trace(new_frame_ind);
         frame_stim = stim(:,new_frame_ind);
+        frame_time = time(new_frame_ind);
     %end
     end
         
@@ -139,26 +148,36 @@ for k=1:numel(ind_frames)
     subplot(211)
     if k <= nb_frames_fading  
         for ll = 1:k-1
-            plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
+            plot((0:length(M(:,ll))-1)./Fs, M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         end
     else 
         %% 
         for ll = k-nb_frames_fading:k-1
-            plot((0:length(M(:,ll))-1)./Fs,M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
+            plot((0:length(M(:,ll))-1)./Fs, M(:,ll),'color',[0,0,0]+1-(alpha^(k-ll))^2,'LineWidth',1.2);hold on;
         end 
     end
     % Current display
-    plot((0:length(M(:,k))-1)./Fs,M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
+    plot((0:length(M(:,k))-1)./Fs, M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
     ylim([y_min_trace y_max_trace]); %Fix y-limits
     title(strcat('Exp: ',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
         '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep:',num2str(handles.repetition)))
     hold off;
+    xl = xticklabels;
+    xt = xticks;
     
-    subplot(212)
-    plot((0:length(frame_stim)-1)./Fs,frame_stim); %stim
-    %axis tight
-    %ylim([min_stim max_stim]); %Fix y-limits
-    xlabel('time[s]')
+    subplot(212);
+    for i=1:size(frame_stim,1)
+    plot(frame_time, frame_stim(i,:)); ylim([min_stim max_stim]); %Fix y-limits
+    yticks([])
+    hold on;  %stim
+    end
+    xticks([])
+    %set(sp,'xtickl',[])
+    %set(sp,'xticklabel',[])
+    hold off;
+    axis tight
+    %xticks(xt), xticklabels(xl),
+    xlabel('time[s]');
     lg = legend(handles.DAchan, 'Location','southeast');
     lg.FontSize = 8;
     
@@ -195,6 +214,16 @@ end
 function close_showoff(src,callbackdata)
 % Close request function 
 % to hide figure and display a question dialog box 
-   src.Visible = 'Off';
+% Close request function 
+% to display a question dialog box 
+   selection = questdlg('Close This Figure? It will interrump current set of frames.',...
+      'Close frames figure',...
+      'Yes','No','Yes'); 
+   switch selection, 
+      case 'Yes',
+         delete(gcf)
+      case 'No'
+      return 
+   end
 end
 

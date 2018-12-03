@@ -254,8 +254,10 @@ function peak_detection_pushbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 axes(handles.axes1)
 plot_demand = 1;
-peaks = peak_finder_and_plot(hObject,handles,plot_demand);
+[peaks, stim_int, t_int] = peak_finder_and_plot(hObject,handles,plot_demand);
 handles.peak.positions = peaks;
+handles.stim_int = stim_int;
+handles.t_int = t_int;
 guidata(hObject, handles);
 
 
@@ -556,6 +558,8 @@ if all(mfolder)
     handles.file_specs.location = mfolder;
     h_mFolder = findobj('Tag','edit_mFolder');
     h_mFolder.String = mfolder;
+    handles.file_specs.location = mfolder; 
+    guidata(hObject, handles);
 end
 
 % --- Executes on button press in pushbutton20.
