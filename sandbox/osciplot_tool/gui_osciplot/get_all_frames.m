@@ -32,7 +32,7 @@ end
 % For optimal performace, the window step size should be smaller than 2/3 of the
 % window size
 
-if handles.window_step_size.samples > handles.window_size.samples*2/3
+if handles.window_step_size.time > handles.window_size.time*2/3
     msgbox(strcat('For optimal visual performace, the step size should be smaller than 2/3  of the the window size (=',num2str(handles.window_size.samples*2/3/handles.Fs),'s), please change your input.'));
     
     video_frames = [];audio_frames_stim=[];audio_frames_trace=[];
@@ -91,7 +91,7 @@ end
 alpha = 0.82; % Fading parameter
 
 framesfig = figure('CloseRequestFcn',@close_showoff);
-wb = waitbar(0,'0%','Name','Creating frames in background');
+wb = waitbar(0,'0%','Name','Creating frames in background','CloseRequestFcn',@close_showoff);
 %k = 1; % iteration parameter for the savings of the frames in each step
 %current_peaknr = 1;
 if isempty(peak_locs) % when no peak is selected by the peakfinder (peakfinder_and_plot.m)
@@ -106,18 +106,19 @@ for k=1:numel(ind_frames)
     ii = ind_frames(k);
     frame_trace = trace(ii:ii+window_size-1);
     frame_stim = stim(:,ii:ii+window_size-1);
-    frame_time = time(ii:ii:ii+window_size-1);
+    frame_time = time(ii:ii+window_size-1);
     
     % Save the corresponding audio frame
     FA_stim(:,k) = stim(1,ii:ii+window_step_size-1); %audio stim - only one channel
     FA_trace(:,k) = trace(ii:ii+window_step_size-1); %audio trace
     frame_ind = ii:ii+window_step_size-1; % used for x-axis in the plot
     
-    % get current peak nb (in current window second half, but not in next window)
+    % get current peak nb (in current window, but not in next window)
     peaks_in_interval = peak_locs(peak_locs > ii & peak_locs < ii+window_step_size-1);
     if ~isempty(peaks_in_interval) && (ii > window_size/2) && (ii < nb_samples-window_size-window_size/2)
     current_peak_ind = peaks_in_interval(1);
     end
+    
     
     % peak is centered in the frame when current frame contains a peak
     % first frames without peaks are not centered
@@ -125,7 +126,7 @@ for k=1:numel(ind_frames)
     % shorter than t_min_disp, the displayed frame will continue centered
     % in previous spike. If it is larger, the frame is current window (no
     % centering done).
-    %if handles.peak.channel == 1
+    %
     if (current_peak_ind < ii+window_size) && (ii-current_peak_ind)/(display_speed_ratio) < t_min_disp ...
             && (current_peak_ind > window_size/2) && (current_peak_ind < nb_samples-window_size-window_size/2)
         
@@ -135,7 +136,6 @@ for k=1:numel(ind_frames)
         frame_trace = trace(new_frame_ind);
         frame_stim = stim(:,new_frame_ind);
         frame_time = time(new_frame_ind);
-    %end
     end
         
     M(:,k) = frame_trace; % Save the frames for the fading
@@ -162,16 +162,19 @@ for k=1:numel(ind_frames)
 %     title(strcat('Exp: ',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
 %         '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep:',num2str(handles.repetition)))
     hold off;
-    xl = xticklabels;
-    xt = xticks;
+    %xl = xticklabels;
+    %xt = xticks;
     
     subplot(212);
+    axis tight;
+    ylim([min_stim max_stim]); %Fix y-limits
     for i=1:size(frame_stim,1)
-    plot(frame_time, frame_stim(i,:)); ylim([min_stim max_stim]); %Fix y-limits
+    plot(frame_time, frame_stim(i,:));
     yticks([])
     hold on;  %stim
     end
-    xticks([])
+    xticks([frame_time(1) frame_time(end)]);
+    xticklabels({'0',num2str(handles.window_size.time)})
     %set(sp,'xtickl',[])
     %set(sp,'xticklabel',[])
     hold off;

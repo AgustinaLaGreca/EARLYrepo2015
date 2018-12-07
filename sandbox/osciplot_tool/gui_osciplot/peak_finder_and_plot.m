@@ -80,8 +80,13 @@ if plot_demand
     axis tight
     
     ylim([y_min_trace y_max_trace]); %Fix y-limits
+    try
     hline = refline(0,handles.peak.threshold); 
-    hline.Color = 'g';hold off
+    hline.Color = 'g';
+    catch ME
+        disp(['Threshold line not displayed. Error: ', ME.message]);
+    end
+    hold off;
     xlabel('time [s]')
 end
 
