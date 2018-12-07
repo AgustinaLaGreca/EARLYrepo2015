@@ -32,7 +32,7 @@ end
 % For optimal performace, the window step size should be smaller than 2/3 of the
 % window size
 
-if handles.window_step_size.time > handles.window_size.time*2/3
+if handles.window_step_size.time > handles.window_size.time*2/3 || handles.window_step_size.time > handles.window_size_s.time*2/3
     msgbox(strcat('For optimal visual performace, the step size should be smaller than 2/3  of the the window size (=',num2str(handles.window_size.samples*2/3/handles.Fs),'s), please change your input.'));
     
     video_frames = [];audio_frames_stim=[];audio_frames_trace=[];
@@ -58,9 +58,9 @@ end
 
 
 %% get frames
-% If channeling in stim (peak.channel == 2 | == 3)
+% If channeling in stim (strigger.channel == 2 | == 3)
 % use interpolated time and stimulus
-if handles.peak.channel > 1
+if handles.strigger.channel > 1
     time = handles.t_int;
     stim = handles.stim_int;
 else
@@ -69,8 +69,12 @@ else
 end
 trace = handles.trace;
 peak_locs = handles.peak.positions;
-window_step_size = handles.window_step_size.samples;
+peak_stim = handles.strigger.positions;
+
 window_size = handles.window_size.samples;
+window_step_size = handles.window_step_size.samples;
+window_size_s = handles.window_size_s.samples;
+
 nb_frames_fading = 10;
 nb_samples = length(trace);
 display_speed_ratio = handles.display_speed_ratio;
@@ -99,17 +103,36 @@ if isempty(peak_locs) % when no peak is selected by the peakfinder (peakfinder_a
 else
     current_peak_ind = peak_locs(1); 
 end
+current_peak_stim = peak_stim(1);
 
-ind_frames = 1:window_step_size:nb_samples-window_size;
+ind_trace = 1:window_step_size:nb_samples-window_size;
+ind_stim = 1:window_step_size:nb_samples-window_size_s;
+
+if numel(ind_trace)<numel(ind_stim)
+    ind_frames = ind_stim;
+else
+    ind_frames = ind_trace;
+end
 M = zeros(window_size,numel(ind_frames));
 for k=1:numel(ind_frames) 
-    ii = ind_frames(k);
+    %is = ind_frames(k);
+    if k > numel(ind_trace)
+        ii = ind_trace(end);
+        is = ind_frames(k);
+    elseif k > numel(ind_stim)
+        ii = ind_frames(k);
+        is = ind_stim(end);
+    else
+        ii = ind_frames(k);
+        is = ind_frames(k);
+    end
+        
     frame_trace = trace(ii:ii+window_size-1);
-    frame_stim = stim(:,ii:ii+window_size-1);
-    frame_time = time(ii:ii+window_size-1);
+    frame_stim = stim(:,is:is+window_size_s-1);
+    frame_time = time(is:is+window_size_s-1);
     
     % Save the corresponding audio frame
-    FA_stim(:,k) = stim(1,ii:ii+window_step_size-1); %audio stim - only one channel
+    FA_stim(:,k) = stim(1,is:is+window_step_size-1); %audio stim - only one channel
     FA_trace(:,k) = trace(ii:ii+window_step_size-1); %audio trace
     frame_ind = ii:ii+window_step_size-1; % used for x-axis in the plot
     
@@ -117,6 +140,12 @@ for k=1:numel(ind_frames)
     peaks_in_interval = peak_locs(peak_locs > ii & peak_locs < ii+window_step_size-1);
     if ~isempty(peaks_in_interval) && (ii > window_size/2) && (ii < nb_samples-window_size-window_size/2)
     current_peak_ind = peaks_in_interval(1);
+    end
+    
+    % get current stimulus trigger nb (in current window, but not in next window)
+    peaks_in_stim = peak_stim(peak_stim >= is & peak_stim < is+window_step_size-1);
+    if ~isempty(peaks_in_stim) && (is > window_size_s/2) && (is < nb_samples-window_size_s-window_size_s/2)
+    current_peak_stim = peaks_in_stim(1);
     end
     
     
@@ -134,17 +163,27 @@ for k=1:numel(ind_frames)
              (current_peak_ind+floor((window_size-1)/2)));
         
         frame_trace = trace(new_frame_ind);
-        frame_stim = stim(:,new_frame_ind);
-        frame_time = time(new_frame_ind);
+        %frame_stim = stim(:,new_frame_ind);
+        %frame_time = time(new_frame_ind);
     end
+    
+    % Stimulus triggering will always be first value if present in first
+    % half of window
+        if (current_peak_stim >= is) && ...
+                (current_peak_stim < is+window_size_s/2) && ...
+            (current_peak_stim < nb_samples-window_size_s-window_size_s/2)
+        new_frame_stim = current_peak_stim:(current_peak_stim+window_size_s-1);
+        frame_stim = stim(:,new_frame_stim);
+        frame_time = time(new_frame_stim);
+        end
         
     M(:,k) = frame_trace; % Save the frames for the fading
     %N(:,k) = frame_stim; % not really used yet
    
     % Update waitbar
     waitbar(k/numel(ind_frames),wb, [sprintf('%12.2f',k/numel(ind_frames)*100) '%']);
-    % Fade out of previous displays
     set(0, 'CurrentFigure', framesfig);
+    % Fade out of previous displays
     subplot(211)
     if k <= nb_frames_fading  
         for ll = 1:k-1
@@ -158,34 +197,32 @@ for k=1:numel(ind_frames)
     end
     % Current display
     plot((0:length(M(:,k))-1)./Fs, M(:,k),'color',[0,0,0],'LineWidth',1.2);hold on %trace
-    ylim([y_min_trace y_max_trace]); %Fix y-limits
 %     title(strcat('Exp: ',handles.experiment,'|Rec nb:',num2str(handles.recording_number),...
 %         '|Channel:',num2str(handles.channel),'|Cond:',num2str(handles.cond),'|Rep:',num2str(handles.repetition)))
-    hold off;
-    %xl = xticklabels;
-    %xt = xticks;
+ if ~isempty(handles.movietitle)
+    title(handles.movietitle)
+ end
+ ylim([y_min_trace y_max_trace]); %Fix y-limits
+hold off;
     
     subplot(212);
-    axis tight;
-    ylim([min_stim max_stim]); %Fix y-limits
+    %axis tight;
     for i=1:size(frame_stim,1)
-    plot(frame_time, frame_stim(i,:));
+    plot(frame_time, frame_stim(i,:)); ylim([min_stim max_stim]); %Fix y-limits
     yticks([])
     hold on;  %stim
     end
+    if ~isempty(handles.movieinfo)
+        title(handles.movieinfo)
+    end
+    axis tight;
     xticks([frame_time(1) frame_time(end)]);
-    xticklabels({'0',num2str(handles.window_size.time)})
-    %set(sp,'xtickl',[])
-    %set(sp,'xticklabel',[])
+    xticklabels({'0',num2str(handles.window_size_s.time)})
     hold off;
-    axis tight
-    %xticks(xt), xticklabels(xl),
-    xlabel('time[s]');
+    xlabel('time (s)');
     lg = legend(handles.DAchan, 'Location','southeast');
     lg.FontSize = 8;
     
-
-
     % Save complete frame for video
     FV(k) = getframe(gcf);
 
@@ -203,10 +240,6 @@ str = {'Used movie parameters:',...
     strcat('Min displ time: ',num2str(handles.minimal_display_time.time),' [s]')};
 annotation('textbox',dim,'Color','red','String',str,'BackgroundColor', 'k','FitBoxToText','on');
 FV(k-1) = getframe(framesfig);
-if strcmpi(framesfig.Visible,'off')
-    framesfig.Visible = 'on';
-    delete(framesfig);
-end
 
 
 video_frames = FV;

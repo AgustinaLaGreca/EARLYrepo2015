@@ -13,7 +13,7 @@ function varargout = osciplot_gui_v2(varargin)
 % Code by Jan Everaert 2018
 % Edit the above text to modify the response to help osciplot_gui_v2
 
-% Last Modified by GUIDE v2.5 30-Nov-2018 19:54:36
+% Last Modified by GUIDE v2.5 07-Dec-2018 14:00:49
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -256,8 +256,8 @@ axes(handles.axes1)
 plot_demand = 1;
 [peaks, stim_int, t_int] = peak_finder_and_plot(hObject,handles,plot_demand);
 handles.peak.positions = peaks;
-handles.stim_int = stim_int;
-handles.t_int = t_int;
+%handles.stim_int = stim_int;
+%handles.t_int = t_int;
 guidata(hObject, handles);
 
 
@@ -646,6 +646,9 @@ function edit_sTrigger_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_sTrigger as text
 %        str2double(get(hObject,'String')) returns contents of edit_sTrigger as a double
+handles.strigger.threshold = str2double(get(hObject,'String'));
+% Update handles structure
+guidata(hObject, handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -666,6 +669,13 @@ function pushbutton_sTrigger_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton_sTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+axes(handles.axes2)
+plot_demand = 1;
+[peaks, stim_int, t_int] = peak_finder_and_plot(hObject,handles,plot_demand,'s');
+handles.strigger.positions = peaks;
+handles.stim_int = stim_int;
+handles.t_int = t_int;
+guidata(hObject, handles);
 
 
 % --- Executes on selection change in popup_sTrigger.
@@ -673,9 +683,9 @@ function popup_sTrigger_Callback(hObject, eventdata, handles)
 % hObject    handle to popup_sTrigger (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.strigger.channel = get(hObject,'Value');
+guidata(hObject,handles);
 
-% Hints: contents = cellstr(get(hObject,'String')) returns popup_sTrigger contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popup_sTrigger
 
 
 % --- Executes during object creation, after setting all properties.
@@ -696,7 +706,7 @@ function pushbutton_sWsize_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton_sWsize (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-window_size_and_plot(hObject,handles);
+% window_size_and_plot(hObject,handles);
 
 
 
@@ -708,13 +718,68 @@ function edit_sWsize_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of edit_sWsize as text
 %        str2double(get(hObject,'String')) returns contents of edit_sWsize as a double
 handles.window_size_s.time = str2double(get(hObject,'String'));
-handles.window_size_s.samples = round(handles.window_size.time*handles.Fs);
+handles.window_size_s.samples = round(handles.window_size_s.time*handles.Fs);
+guidata(hObject,handles);
 
 
 
 % --- Executes during object creation, after setting all properties.
 function edit_sWsize_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to edit_sWsize (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_mTitle_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_mTitle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+if strcmpi(get(hObject,'String'),'Insert movie title')
+    handles.movietitle = '';
+else
+    handles.movietitle = get(hObject,'String');
+end
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_mTitle_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_mTitle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_mTitle2_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_mTitle2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_mTitle2 as text
+%        str2double(get(hObject,'String')) returns contents of edit_mTitle2 as a double
+if strcmpi(get(hObject,'String'),'Insert movie info')
+    handles.movieinfo = '';
+else
+    handles.movieinfo = get(hObject,'String');
+end
+guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function edit_mTitle2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_mTitle2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

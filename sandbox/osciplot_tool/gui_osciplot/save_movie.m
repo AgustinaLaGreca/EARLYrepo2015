@@ -55,6 +55,6 @@ for ll = 1:nb_of_replays_video
 end
 release(writerObj)
 
-msgbox('Movie successfully saved')
+msgbox('Movie successfully saved.')
 end
 

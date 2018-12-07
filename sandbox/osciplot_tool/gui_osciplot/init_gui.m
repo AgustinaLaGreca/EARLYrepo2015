@@ -23,6 +23,20 @@ hbutton_tYlim = findobj('Tag','radiobutton_tYlim_auto');
 h_tYlim_max = findobj('Tag','edit_tYlim_max');
 h_tYlim_min = findobj('Tag','edit_tYlim_min');
 
+% STIMULUS -------------------------
+
+% Trigger
+hpop_sTrigger = findobj('Tag','popup_sTrigger');
+hedit_sTrigger = findobj('Tag','edit_sTrigger');
+
+% Window size
+h_sWsize = findobj('Tag','edit_sWsize');
+
+% Ylim
+hbutton_sYlim = findobj('Tag','radiobutton_sYlim_auto');
+h_sYlim_max = findobj('Tag','edit_sYlim_max');
+h_sYlim_min = findobj('Tag','edit_sYlim_min');
+
 
 % MOVIE -------------------------------
 h_mSpeed = findobj('Tag','edit_mSpeed');
@@ -34,7 +48,11 @@ h_mAudTrace = findobj('Tag','radiobutton_mAudtrace');
 h_mFilename = findobj('Tag','edit_mName');
 h_mFolder = findobj('Tag','edit_mFolder');
 
-%% filter init
+h_mTitle = findobj('Tag','edit_mTitle');
+h_mInfo = findobj('Tag','edit_mTitle2');
+
+%% TRACE INIT
+% filter init
 
 handles.filter.lowerthreshold = str2double(get(h_tFilterLow,'String'));
 handles.filter.upperthreshold = str2double(get(h_tFilterUp,'String'));
@@ -73,6 +91,34 @@ handles.peak.positions = peaks;
 handles.window_size.time = str2double(get(h_tWsize,'String'));
 handles.window_size.samples = round(handles.window_size.time*handles.Fs);
 
+%% STIMULUS init
+% Y limits plots
+
+% TODO
+
+% Update values on GUI
+
+%% Peak detection init
+% Update popup menu with Experiment channels
+str = ['Trace'; cellstr(handles.DAchan)];
+hpop_sTrigger.String = str;
+
+% Channel to used as trigger
+handles.strigger.channel = get(hpop_sTrigger,'Value');
+
+% Threshold values peakfinder
+handles.strigger.threshold = str2double(get(hedit_sTrigger,'String'));
+
+% Peakfinder excecution
+plotting = 0;
+peaks = peak_finder_and_plot(hObject,handles,plotting,'s');
+handles.strigger.positions = peaks;
+
+%% Window size init
+
+handles.window_size_s.time = str2double(get(h_sWsize,'String'));
+handles.window_size_s.samples = round(handles.window_size_s.time*handles.Fs);
+
 %% Movie parameters init
 
 handles.display_speed_ratio = str2double(get(h_mSpeed,'String'));
@@ -82,6 +128,9 @@ handles.window_step_size.samples = round(handles.window_step_size.time*handles.F
 
 handles.minimal_display_time.time = str2double(get(h_mDisp,'String'));
 handles.minimal_display_time.samples = round(handles.minimal_display_time.time*handles.Fs);
+
+handles.movietitle = get(h_mTitle,'String');
+handles.movieinfo = get(h_mInfo,'String');
 
 %% Audio selection init
 
