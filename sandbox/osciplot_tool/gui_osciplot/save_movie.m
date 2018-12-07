@@ -54,5 +54,7 @@ for ll = 1:nb_of_replays_video
     end
 end
 release(writerObj)
+
+msgbox('Movie successfully saved')
 end
 

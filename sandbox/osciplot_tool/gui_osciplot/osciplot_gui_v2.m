@@ -478,7 +478,15 @@ function save_movie_pushbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton20 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-save_movie(hObject,handles);
+answer = 'Yes';
+if isfile(strcat(handles.file_specs.location,'\',handles.file_specs.name,'.avi'))
+    answer = questdlg('A file with the same name already exists. Do you want to overwrite it?', ...
+	'Movie file name', ...
+	'Yes','No','No');
+end
+if strcmp(answer, 'Yes')
+    save_movie(hObject,handles);
+end
 
    
 % --- Executes when selected object is changed in uibuttongroup13.
