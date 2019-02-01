@@ -1,4 +1,4 @@
-function [peak_locs, stim_int, t_int] = peak_finder_and_plot(hObject,handles,plot_demand)
+function [peak_locs, stim_int, t_int] = peak_finder_and_plot(hObject,handles,plot_demand,triggeringOn)
 % [peak_locs] = peak_finder_and_plot(hObject,handles,plot_demand)
 %   peak_finder_and_plot finds the peak values in hadles.trace above a
 %   certain threshold (handles.peak.threshold) and returns the location of all the found
@@ -23,26 +23,35 @@ if handles.peak.threshold < 0
     return
 end
 
+%% Trigger of which channel?
+if nargin > 3 % Triggering stimulus
+    channel = handles.strigger.channel;
+    th = handles.strigger.threshold;
+else % Triggering trace
+    channel = handles.peak.channel;
+    th = handles.peak.threshold;
+end
+
 %% Triggering channel
-if handles.peak.channel > 1
-    trigChannel = handles.stim(handles.peak.channel-1,:);
-    peak_locs = findtrigger(trigChannel, handles.peak.threshold, 'positive');
+if channel > 1
+    trigChannel = handles.stim(channel-1,:);
+    peak_locs = findtrigger(trigChannel, th, 'positive');
     
     % Interpolate channel, time and other stimulus if exists
-    t_int_vals = interpolatechannel(trigChannel, handles.t, peak_locs, handles.peak.threshold);
+    t_int_vals = interpolatechannel(trigChannel, handles.t, peak_locs, th);
     t_int = handles.t;
     t_int(peak_locs) = t_int_vals;
     
     stim_int = handles.stim;
     if size(handles.stim,1) > 1
-        otherChannel = 1:size(handles.stim,1) ~= (handles.peak.channel-1);
+        otherChannel = 1:size(handles.stim,1) ~= (channel-1);
         otherChannel = find(otherChannel);
         for i=otherChannel
             ochannel_int_vals = interpolatechannel(handles.t, handles.stim(i,:), peak_locs, t_int_vals);
             stim_int(i,peak_locs) = ochannel_int_vals;
         end
     end
-    stim_int(handles.peak.channel-1,peak_locs) = handles.peak.threshold;
+    stim_int(channel-1,peak_locs) = th;
     
 else
     %% Triggering on trace: finding peaks
@@ -52,7 +61,7 @@ else
     warning('off','signal:findpeaks:largeMinPeakHeight') %turn the warning off in case no peaks are found
                                                        % (threshold too
                                                        % high)
-    [~,peak_locs] = findpeaks(trigChannel,'MinPeakHeight',handles.peak.threshold);
+    [~,peak_locs] = findpeaks(trigChannel,'MinPeakHeight',th);
     stim_int = [];
     t_int = [];
     
@@ -80,8 +89,13 @@ if plot_demand
     axis tight
     
     ylim([y_min_trace y_max_trace]); %Fix y-limits
+    try
     hline = refline(0,handles.peak.threshold); 
-    hline.Color = 'g';hold off
+    hline.Color = 'g';
+    catch ME
+        disp(['Threshold line not displayed. Error: ', ME.message]);
+    end
+    hold off;
     xlabel('time [s]')
 end
 
