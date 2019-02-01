@@ -1,4 +1,4 @@
-function [trace_filtered] = filter_and_plot_filter(hObject,handles,plot_demand)
+function [trace_filtered] = filter_and_plot(hObject,handles,plot_demand)
 %[trace_filtered] = filter_and_plot_filter(hObject,handles,plot_demand)
 %   funtion that filters the input signal (handles.trace_original) with the
 %   cut-off frequencies (handles.filter.lowerthreshold
@@ -12,7 +12,7 @@ function [trace_filtered] = filter_and_plot_filter(hObject,handles,plot_demand)
 
 % LL and UL should be positive
 if handles.filter.lowerthreshold <= 0 || handles.filter.upperthreshold <= 0
-    msgbox('Please insert strictly positive values for the cuttof frequencies of the filter, please change your input.');
+    msgbox('Please insert strictly positive values for the cutoff frequencies of the filter, please change your input.');
     
     trace_filtered = handles.trace;
     return
@@ -27,7 +27,7 @@ if handles.filter.lowerthreshold >= handles.filter.upperthreshold
 end
 
 
-% UL should be smaller than the Nyquist frequency (=0.5*Fs)
+% UL should be larger than the Nyquist frequency (=0.5*Fs)
 if handles.filter.upperthreshold >= handles.Fs/2
     msgbox(strcat('The upper CUF should be smaller than the Nyquist freq (=',num2str(floor(handles.Fs/2)),'Hz), please change your input.'));
     
@@ -47,7 +47,7 @@ if plot_demand
     plot(handles.t,trace_filtered);hold off
     axis tight
     xlabel('time [s]')
-    legend('original trace','filtered trace')
+    legend('original trace','filtered trace','Location','best')
 end
 end
 

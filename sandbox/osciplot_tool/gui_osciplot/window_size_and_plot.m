@@ -42,14 +42,13 @@ end
     else
         figure();
             for i = 1:nb_of_plots
-            frame_ind = ((preplot_peak_locs(i)-floor((window_sizes)/2)):1:...
-                         (preplot_peak_locs(i)+floor((window_sizes-1)/2)));
-            subplot(nb_of_plots,1,i)
-            plot((1:window_sizes)./handles.Fs,handles.trace(frame_ind)) %before 2016b
-            axis tight
-            ylim([y_min_trace y_max_trace]); %Fix y-limits
-            xlabel('time [s]')
-
+                frame_ind = ((preplot_peak_locs(i)-floor((window_sizes)/2)):...
+                    (preplot_peak_locs(i)+floor((window_sizes-1)/2)));
+                subplot(nb_of_plots,1,i)
+                plot(handles.t(frame_ind),handles.trace(frame_ind)) %before 2016b
+                axis tight
+                ylim([y_min_trace y_max_trace]); %Fix y-limits
+                xlabel('time [s]')
             end
     end
 

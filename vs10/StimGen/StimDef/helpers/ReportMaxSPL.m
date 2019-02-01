@@ -1,6 +1,6 @@
 function ReportMaxSPL(figh, maxSPL);
 % SPLpanel - generic SPL and DAchannel panel for stimulus GUIs.
-%   NOT USED anywhere
+%   NOT USED ANYWHERE
 %   S=SPLpanel(Title, CT) returns a GUIpanel M named 'Levels' allowing the 
 %   user to specify a fixed sinusiodal amplitude modulation to be applied 
 %   to all the stimuli of a series. Guipanel S has title Title. CT is the 
@@ -35,9 +35,9 @@ ClickStr = ' Click button to select ';
 
 % ---SPL
 Levels = GUIpanel('Levels', T);
-SPL = paramquery([Prefix 'SPL'], ...
-    'frequency:', '102.5 101.2', 'dB SPL', 'rreal', ...
-    ['Sound pressure level.' PairStr], nchan(CT));
+% SPL = paramquery([Prefix 'SPL'], ...
+%     'frequency:', '102.5 101.2', 'dB SPL', 'rreal', ...
+%     ['Sound pressure level.' PairStr], nchan(CT));
 switch CT.recSide,
     case 'Left', Lstr = 'Left=Ipsi'; Rstr = 'Right=Contra';
     case 'Right', Lstr = 'Left=Contra'; Rstr = 'Right=Ipsi';
