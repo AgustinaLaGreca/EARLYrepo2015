@@ -10,12 +10,13 @@ function E=current(dumE);
 %
 %    See also experiment/makecurrent, experiment/touch.
 
-if nargin<2, Ndays=1; end % default expiration interval
+% Marta 11/2018 - Useless line
+%if nargin<2, Ndays=1; end % default expiration interval
 
-[Nam, dum, isC] = lastcurrentname(experiment);
-if isC && exist(experiment(), Nam),
+[Nam, ~, isC] = lastcurrentname(experiment);
+if isC && exist(experiment(), Nam)
     E = find(experiment(), Nam);
-else,
+else
     E = experiment();
 end
 
