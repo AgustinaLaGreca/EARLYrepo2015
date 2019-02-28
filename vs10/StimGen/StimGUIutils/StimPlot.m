@@ -350,7 +350,8 @@ S = getGUIdata(hstim, 'StimParam');
 setGUIdata(figh, 'Stim', S);
 local_refresh(figh);
 % bug: remove redundant figure
-if ishandle(1), close(1); end
+% Marta: dashboard was getting closed
+%if ishandle(1), close(1); end
 
 function local_help(Src, Ev, LR);
 GUImessage(parentfigh(Src), 'See command window');
