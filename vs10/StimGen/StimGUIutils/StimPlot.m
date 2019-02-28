@@ -13,7 +13,9 @@ S = local_getstim(S);
 if isempty(S), return; end;
 %-----------the whole GUI-----------------
 G=GUIpiece('StimPlot',[],[0 0],[10 4]);
-if strcmpi(S.StimType,'hp') || strcmpi(S.StimType,'armin')|| (strcmpi(S.StimType,'har') && length(S.Waveform(1,:)) ~= 1) || strcmpi(S.StimType,'irn') || strcmpi(S.StimType,'qfm')
+if strcmpi(S.StimType,'hp') || strcmpi(S.StimType,'irn') ...
+        || ( (strcmpi(S.StimType,'armin') || strcmpi(S.StimType,'har') || strcmpi(S.StimType,'qfm')) && length(S.Waveform(1,:)) ~= 1)
+    
     AXWL = AxesDisplay('@WaveformAxesL', [580 280], 'linewidth', 2, 'fontsize',12); % Left
     AXML = AxesDisplay('MagnitudeAxesL', [580 280], 'linewidth', 2, 'fontsize',12);
     AXPL = AxesDisplay('PhaseAxesL', [580 280], 'linewidth', 2, 'fontsize',12);
@@ -95,7 +97,7 @@ HLP = ActionButton('Help', 'Help', 'XXXXXXX', ...
     @local_help);
 UP = add(UP, iCond);
 UP = add(UP, StimInfoX, 'below');
-if ~isempty(Y),
+if ~isempty(Y)
     UP = add(UP, StimInfoY, 'below');
 end
 UP = add(UP, RF, 'below');
@@ -121,7 +123,8 @@ W = S.Waveform(GV.iCond, :);
 [X, Y] = deal(Pres.X, Pres.Y);
 set(0,'showhidden', 'on');
 % plot waveform; for pitch stimuli plot for each ear and plot difference
-if strcmpi(S.StimType,'hp') || strcmpi(S.StimType,'armin') || (strcmpi(S.StimType,'har') && length(S.Waveform(1,:)) ~= 1) || strcmpi(S.StimType,'irn') || strcmpi(S.StimType,'qfm')
+if strcmpi(S.StimType,'hp') || strcmpi(S.StimType,'irn') ...
+        || ( (strcmpi(S.StimType,'armin') || strcmpi(S.StimType,'har') || strcmpi(S.StimType,'qfm')) && length(S.Waveform(1,:)) ~= 1)
     ah = GUIaxes(figh, '@WaveformAxesL');
     axes(ah);
     if strcmpi(W(1).DAchan,'l')
@@ -147,8 +150,10 @@ if strcmpi(S.StimType,'hp') || strcmpi(S.StimType,'armin') || (strcmpi(S.StimTyp
         xlim([0 S.HighFreq*1.1]);
     elseif isfield(S,'Fc')
         xlim([0 S.Fc(end)*1.1]);
-    else
+    elseif isfield(S,'F01F01Harmonics') && isfield(S,'F02F01') && isfield(S,'F02Harmonics')
         xlim([0 max(S.Fcar*max(max([S.F01Harmonics, S.F02F01.*S.F02Harmonics])))*1.1]); 
+    else
+        xlim auto
     end
     set(gca,'ylimmode', 'manual');
     % plot phase spectrum
@@ -160,8 +165,10 @@ if strcmpi(S.StimType,'hp') || strcmpi(S.StimType,'armin') || (strcmpi(S.StimTyp
     ylim(ylim); % fix y limits so they won't jump when scrolling
     if isfield(S,'HighFreq')
         xlim([0 S.HighFreq*1.1]);
-    else
+    elseif isfield(S,'F01F01Harmonics') && isfield(S,'F02F01') && isfield(S,'F02Harmonics')
        xlim([0 max(S.Fcar*max(max([S.F01Harmonics, S.F02F01.*S.F02Harmonics])))*1.1]); 
+    else
+        xlim auto
     end
     set(gca,'ylimmode', 'manual');
     %set(0,'showhidden', 'off');
