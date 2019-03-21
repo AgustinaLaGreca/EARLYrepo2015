@@ -23,8 +23,13 @@ switch S.type,
             nam = S.subs;
             Y = [];
             for ii=1:numel(nam),
-                imatch = strmatch(nam{ii},{P.Name},'exact');
-                if ~isempty(imatch), Y = [Y P(imatch)]; end;
+                % 2019 Mar, Marta: P.Name non existent
+                %imatch = strmatch(nam{ii},{P.Name},'exact');
+                %if ~isempty(imatch), Y = [Y P(imatch)]; end;
+                match = strcmp(nam{ii},fieldnames(P));
+                if any(match)
+                    Y = [Y P.(nam{ii})];
+                end
             end
             if isempty(Y),
                 error(['Array of ' class(P) ' object does not contain elements with the name(s) as specified in parentheses.'])

@@ -50,14 +50,15 @@ if ischar(Str), % char matrix -> convert to cellstring
         end
     end
 end
-if ~iscellstr(Str),
+if ~iscellstr(Str)
     error('Str input must be character string or cell array of strings.')
 end
 E = [0 0];
-for ii=1:length(Str),
+for ii=1:length(Str)
     iascii = double(Str{ii})+1; % indices in Ext_chars of the characters in Str{ii}
     DX = sum(Ext_chars(iascii,1)); % width of line: add individual character widths
     DY = max(Ext_chars(iascii,2)); % height of line: largest individual character height
+    if isempty(DY); DY = 19; end;
     E(1) = max(E(1),DX); % width of block = width of widest line
     E(2) = E(2) + DY; % height of block summed heights of lines
 end

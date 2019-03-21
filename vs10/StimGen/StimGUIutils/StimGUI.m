@@ -120,23 +120,31 @@ setGUIdata(figh, 'Experiment', EXP);
 % empty all edit fields & message field
 Q = getGUIdata(figh, 'Query');
 clearedit(Q);
+% Main message empty
 GUImessage(figh, ' ','neutral');
+% RMS message empty
+M = find(messenger(), figh, 'RMSDisp1');
+report(M,'');
 % reload any previous pameters
 GUIfill(figh,0,0);
 % open figure and draw GUI in it
 
 %===================================
-function Act = local_Action;
+function Act = local_Action
 % Check/Play/PlayRec dashboard
 Act = GUIpanel('Act', '', 'backgroundcolor', 0.75+[0 0.1 0.05]);
 MessBox = messenger('@MessBox', 'The problem is what you think the problem is         ',7, ... % the '@' in the name indicates that ...
     'fontsize', 12, 'fontweight', 'bold'); % MessBox will be the Main Messenger of he GUI
 FsamDisp = messenger('FsamDisp', 'Fsam = ***.* kHz', 1, 'FontWeight', 'bold', 'ForegroundColor', [0.25 0.15 0.1]);
+RMSDisp1 = messenger('RMSDisp1', 'C rms = **.* mV', 1, 'FontWeight', 'bold', 'ForegroundColor', [0.25 0.15 0.1]);
+RMSDisp2 = messenger('RMSDisp2', 'C rms = **.* mV', 1, 'FontWeight', 'bold', 'ForegroundColor', [0.25 0.15 0.1]);
 Check = ActionButton('Check', 'CHECK', 'XXXXXXXXXX', 'Check stimulus parameters and update information.', fhandle('StimCheck'));
 Check = accelerator(Check,'&Action', 'K');
 Act = add(Act,MessBox);
 Act = add(Act,FsamDisp, 'nextto', [32 3]);
-Act = add(Act,Check, 'below', [0 88]);
+Act = add(Act,RMSDisp1, 'below', [0 3]);
+Act = add(Act,RMSDisp2, 'below', [0 3]);
+Act = add(Act,Check, 'below', [0 35]);
 Act = marginalize(Act,[3 5]);
 
 % function D = local_Dataview;
