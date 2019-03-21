@@ -71,6 +71,7 @@ switch lower(kw),
         catch e
             display(e.identifier);
             display(e.message);
+            rethrow(e);
         end
 
     case 'guimode', % dashboard('guimode', Mode, gmess, gmessmode)

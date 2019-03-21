@@ -32,7 +32,6 @@ for ii=1:numel(W),
 end
 Ncond = size(W,1);
 
-AnaAtten = 0;
 % Numerical amplification toward the ceiling is often possible as 
 % long as it can be compensated by analog attenuation. Be aware that 
 % the analog attenuator cannot be set during stimulus delivery. So the 
