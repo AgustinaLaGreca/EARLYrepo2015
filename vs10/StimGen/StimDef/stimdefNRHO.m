@@ -13,7 +13,7 @@ function Params = stimdefNRHO(EXP);
 
 CorrSweep = CorrStepper('noise correlation', EXP);
 % ---SAM
-Sam = SAMpanel('SAM', EXP, '', 1,0); % '': no prefix; 1,1: do include Theta, don't include ITDs query
+Sam = SAMpanel('SAM', EXP, '', 1,0); % '': no prefix; 1,0: do include Theta, don't include ITDs query
 CorrSweep = sameextent(CorrSweep,Sam, 'X'); % adjust width of Mod to match Sam
 % ---Durations
 Dur = DurPanel('-', EXP, '', 'nophase'); % exclude phase query in Dur panel
