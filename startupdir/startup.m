@@ -45,12 +45,12 @@ versiondir = EarlyUpgrade(versiondir);
 % by EarlyPath in the init/ dir.
 cd(fullfile(versiondir, 'init'));
 EarlyPath(versiondir);
-
+aa
 % kick random generators
 SetRandState;
 
 % set cur dir to harmless dir outside path
-cd(fullfile(EarlyRoot,'sandbox'));
+cd(fullfile(EarlyRoot));
 
 if nargin <1
     username(100); % Ensure a username is known: Username will prompt the user if not.
