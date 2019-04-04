@@ -58,7 +58,7 @@ GUIfill(figh,0,0);
 
 
 %===================================
-function Act = local_Action;
+function Act = local_Action
 % Check/Play/PlayRec dashboard
 Act = GUIpanel('Act', '', 'backgroundcolor', 0.75+[0 0.1 0.05]);
 MessBox = messenger('@MessBox', 'The problem is what you think the problem is         ',7, ... % the '@' in the name indicates that ...
@@ -71,7 +71,7 @@ Act = add(Act,FsamDisp, 'nextto', [32 3]);
 Act = add(Act,Check, 'below', [0 88]);
 Act = marginalize(Act,[3 5]);
 
-function D = local_Dataview;
+function D = local_Dataview
 % Dataview panel
 D = GUIpanel('Dataview', 'data view');
 DVlist = ['-' listdataviewer(dataset())]; % list of dataviewers plus '-' entry == none
