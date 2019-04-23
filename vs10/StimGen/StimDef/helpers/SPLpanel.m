@@ -7,6 +7,8 @@ function Levels=SPLpanel(T, EXP, Prefix, CmpName);
 %   (1 or 2) is determined. Title='-' results in standard title 'SPLs & 
 %   active channels'
 %
+% Prefix and CmpName are evaluated in arginDefaults
+%
 %   The paramQuery objects contained in S are
 %         SPL: level of stimuli in dB SPL
 %         DAC: active DA channel
@@ -34,22 +36,14 @@ if isequal('-',T), T = 'SPLs & active channels'; end
 if isequal('Both', EXP.AudioChannelsUsed), 
     Nchan = 2;
     PairStr = ' Pairs of numbers are interpreted as [left right].';
-else, % single Audio channel
+else % single Audio channel
     Nchan = 1;
     PairStr = ''; 
 end
 ClickStr = ' Click button to select ';
 
 % ---SPL
-switch EXP.Recordingside,
-    case 'Left', Lstr = 'Left=Ipsi'; Rstr = 'Right=Contra';
-    case 'Right', Lstr = 'Left=Contra'; Rstr = 'Right=Ipsi';
-end
-switch EXP.AudioChannelsUsed,
-    case 'Left', DACstr = {Lstr};
-    case 'Right', DACstr = {Rstr};
-    case 'Both', DACstr = {Lstr Rstr 'Both'};
-end
+DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);
 
 SPL = ParamQuery([Prefix 'SPL'], 'levels:', '120.5', 'dB SPL', ...
     'rreal', [CmpName ' SPL.' PairStr],Nchan);

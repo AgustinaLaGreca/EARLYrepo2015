@@ -1,4 +1,4 @@
-function ii=isSingleHandle(h, Type);
+function ii=isSingleHandle(h, Type)
 % isSingleHandle - test if argument is a single handle
 %   isSingleHandle(H) returns 1 if H is a single handle of
 %   an existing graphics handle, 0 otherwise.
@@ -17,7 +17,7 @@ elseif ~isreal(h), return;
 end
 ii = ishandle(h);
 
-if ii && (nargin>1),
+if ii && (nargin>1)
     ii = ~isempty(strmatch(lower(Type), get(h, 'type')));
 end
 

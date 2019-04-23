@@ -1,4 +1,4 @@
-function Levels=SPLpanel(T, EXP, Prefix, CmpName);
+function Levels=SPLpanelHAR(T, EXP, Prefix, CmpName);
 % SPLpanel - generic SPL and DAchannel panel for stimulus GUIs.
 %   S=SPLpanel(Title, EXP) returns a GUIpanel M named 'Levels' allowing the 
 %   user to specify a fixed sinusiodal amplitude modulation to be applied 
