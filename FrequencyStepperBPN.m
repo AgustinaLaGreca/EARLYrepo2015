@@ -59,8 +59,8 @@ Tol = ParamQuery([Prefix 'FreqTolMode'], 'acuity:', '', {'economic' 'exact'}, ''
 % CorrUnit = ParamQuery('VariedChannel', 'varied channel:', '', {'I' 'C'}, ...
 %     '', 'Channel of which part of the spectrum will be changed.');
 
-CutoffSide = ParamQuery('CutoffSide', 'Select LPF or HPF:', '', {'L' 'H'}, ...
-    '', 'L means the cutoff frequency will be on the higher side, and vice versa.');
+CutoffSide = ParamQuery('CutoffSide', 'Select which edge to vary:', '', {'L' 'H'}, ...
+    '', 'L varies the lower side, making a HPF, and vice versa.');
 
 Fsweep = add(Fsweep, StartFreq);
 Fsweep = add(Fsweep, StepFreq, alignedwith(StartFreq));
