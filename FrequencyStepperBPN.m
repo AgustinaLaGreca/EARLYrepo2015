@@ -55,8 +55,8 @@ AdjustFreq = ParamQuery([Prefix 'AdjustFreq'], 'adjust:', '', {'none' 'start' 's
 Tol = ParamQuery([Prefix 'FreqTolMode'], 'acuity:', '', {'economic' 'exact'}, '', [ ...
     'Exact: no rounding applied;', char(10), 'Economic: allow slight (<1 part per 1000), memory-saving rounding of frequencies;'], ...
     1, 'Fontsiz', 8);
-LowPolarity = ParamQuery('LowPolarity', 'low polarity:', '', {'+' '-'}, ...
-    '', 'Sign of correlation below flip frequency. Correlation above this frequency will be the opposite.');
+CorrUnit = ParamQuery('CorrUnit', 'To Select the Channel:', '', {'I' 'C'}, ...
+    '', ' [debugging].');
 
 
 CutoffSide = ParamQuery('CutoffSide', 'Select which edge to vary:', '', {'L' 'H'}, ...
@@ -67,8 +67,8 @@ Fsweep = add(Fsweep, StartFreq);
 Fsweep = add(Fsweep, StepFreq, alignedwith(StartFreq));
 Fsweep = add(Fsweep, EndFreq, alignedwith(StepFreq));
 Fsweep = add(Fsweep, AdjustFreq, nextto(StepFreq), [10 0]);
-Fsweep = add(Fsweep, LowPolarity, below(EndFreq), [0 2]);
-Fsweep = add(Fsweep, CutoffSide, nextto(LowPolarity), [15 0]);
+Fsweep = add(Fsweep, CutoffSide, below(EndFreq), [0 0]);
+Fsweep = add(Fsweep, CorrUnit, below(CutoffSide), [0 0]);
 if ~isequal('notol', Flag),
     Fsweep = add(Fsweep, Tol, alignedwith(AdjustFreq) , [0 -10]);
 end
