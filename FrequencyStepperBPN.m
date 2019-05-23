@@ -18,7 +18,9 @@ function Fsweep=FrequencyStepperARMIN(T, EXP, Prefix, Flag, Flag2);
 %       LowPolarity: the sign of the correlation below the flip frequency
 %          CorrUnit: the varied channel (I/C), of which part of the
 %                    spectrum is modified
-%
+%        CutoffSide: to select which edge to vary during the cycles;
+%                    L varies the lower edge, H varies the higher edge
+% 
 %   FrequencyStepperARMIN is a helper function for stimulus generators like 
 %   makestimARMIN.
 % 
