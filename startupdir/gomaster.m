@@ -3,13 +3,14 @@ function gomaster()
 % It should be executed before starting a set of experiments in order to
 % ensure that EARLY is on the most recent stable version, which is the last
 % commit of branch master
-% It commits the current state of the develop branch if neccesary and then
+% It commits the current state of the develop/current branch if neccesary and then
 % checkout
 % Located in startupdir in order to be added to the path at starting up
 
 % These var contain the bat files that perform the desired actions on git
 % They have absolute paths to repositories
-commit = 'tempCommit.bat';
+commitEARLY = 'tempCommitEARLY.bat';
+commitSTIM = 'tempCommitSTIM.bat';
 checkout = 'checkoutmaster.bat';
 pull = 'pull.bat';
 
@@ -19,7 +20,8 @@ stimRoot = fileparts(EarlyRoot);
 stimRoot = fullfile(stimRoot,'EARLY_StimDefLeuven2015');
 
 batPath = fullfile(EarlyRoot,'gitUtils');
-commFilename = fullfile(batPath,commit);
+commFilename1 = fullfile(batPath,commitEARLY);
+commFilename2 = fullfile(batPath,commitSTIM);
 checkFilename = fullfile(batPath,checkout);
 pullFilename = fullfile(batPath,pull);
 
@@ -35,7 +37,12 @@ cmdb = [cmd1b ' & ' cmd2];
 [~, inbranch2] = system(cmdb);
 
 if ~strcmp(inbranch1(1:end-1),mbranch) || ~strcmp(inbranch2(1:end-1),mbranch)
-    [~, ~] = system(commFilename);
+    if ~strcmp(inbranch1(1:end-1),mbranch)
+        [~, ~] = system(commFilename1);
+    end
+    if ~strcmp(inbranch2(1:end-1),mbranch)
+        [~, ~] = system(commFilename2);
+    end
     [~, ~] = system(checkFilename);
     [~, pullmsg] = system(pullFilename);
     [~, inbranch1] = system(cmd);
