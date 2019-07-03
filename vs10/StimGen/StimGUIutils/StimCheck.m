@@ -57,7 +57,7 @@ if ~DVPokay, return; end
 P.DataviewerParamfile = DVparam;
 % If we get here, we're ready to play and/or record. Prepare that.
 ReportFsam(figh, P.Fsam/1e3);
-ReportRMS(figh, P)
+ReportRMS(figh, P);
 GUImessage(figh,'Parameters okay');
 % store stimparam and dataviewparam in userdata
 setGUIdata(figh,'StimParam', P);

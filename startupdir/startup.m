@@ -45,7 +45,7 @@ versiondir = EarlyUpgrade(versiondir);
 % by EarlyPath in the init/ dir.
 cd(fullfile(versiondir, 'init'));
 EarlyPath(versiondir);
-aa
+
 % kick random generators
 SetRandState;
 
