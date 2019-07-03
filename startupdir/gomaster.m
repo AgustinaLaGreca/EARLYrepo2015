@@ -39,7 +39,8 @@ cmdb = [cmd1b ' & ' cmd2];
 if ~strcmp(inbranch1(1:end-1),mbranch) || ~strcmp(inbranch2(1:end-1),mbranch)
     if ~strcmp(inbranch1(1:end-1),mbranch)
         [~, ~] = system(commFilename1);
-    else
+    end
+    if ~strcmp(inbranch2(1:end-1),mbranch)
         [~, ~] = system(commFilename2);
     end
     [~, ~] = system(checkFilename);
