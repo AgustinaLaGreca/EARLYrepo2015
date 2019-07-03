@@ -233,7 +233,7 @@ function local_update(Src,Ev)
 [figh, hreclist] = local_handle(Src, 'RecList');
 oldNitem = size(get(hreclist ,'String'),1);
 Exp = getGUIdata(figh, 'Experiment');
-[LL RR TT] = stimlist(Exp);
+[LL, RR, TT] = stimlist(Exp);
 Nrec = numel(TT);
 setGUIdata(figh,'StimTypes', TT); % store stimulus types in GUI
 RecList = [repmat(' ',[Nrec 1]) struct2char(LL) struct2char(RR)]; % heading space prevent side effects ...
@@ -504,10 +504,20 @@ function local_threshold_curve(Src, Ev);
 figh = parentfigh(Src);
 if ~isa(figh,'double')
     figh = figh.Number;
-end;
+end
 [ds, ichan] = local_curds(figh);
 EvalTHR(ds);
 % threshold_curve(ds);
+
+function local_threshold_curve_corrected(Src, Ev);
+figh = parentfigh(Src);
+if ~isa(figh,'double')
+    figh = figh.Number;
+end
+[ds, ichan] = local_curds(figh);
+
+thr_corr = correct_ds(ds);
+EvalTHR_CORR(ds,thr_corr);
 
 %LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 function local_listboxmove(Src, Ev)
@@ -574,8 +584,11 @@ switch upper(StimTypes{irec}),
     case 'BINZW',
         set(h4, 'String', '4 rmsplot', 'callback', @local_rmsplot);
         
-    case {'THR','CAP'}
+    case {'THR'} % ,'CAP'} - Marta, 5/19: comment out since duplicate in line 539
         set(h1, 'String', '1 threshold curve', 'callback', @local_threshold_curve);
+        
+        % Marta 5/19: Threshold correction
+        set(h2, 'String', '2 thr correction', 'callback', @local_threshold_curve_corrected);
 end % switch/case
 %drawnow;
 
