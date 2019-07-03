@@ -12,7 +12,7 @@ if nargin<2, Dev = ''; end
 
 % check whether Tag points to a data buffer 
 DataType = sys3ParTag(Dev, Tag, 'datatype');
-if isequal('DataBuffer', DataType),
+if isequal('DataBuffer', DataType)
     error(['ParTag ''' Tag ''' points to a DataBuffer, not a parameter. ', ...
         'Use sys3read instead.' ]);
 end
