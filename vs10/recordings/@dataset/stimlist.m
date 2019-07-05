@@ -32,7 +32,7 @@ end
 
 if numel(D)>1,
     for ii=1:numel(D),
-        [L(ii), R(ii) T(ii)] = stimlist(D(ii));
+        [L(ii), R(ii), T(ii)] = stimlist(D(ii));
     end
     L = reshape(L, size(D));
     R = reshape(R, size(D));
