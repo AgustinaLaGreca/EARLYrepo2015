@@ -72,7 +72,10 @@ for n = 1:length(ThrDS)
     DC(n) = mean((20*log10(LinAmp_t{n})-Attenuation_t{n} - 20*log10(LinAmp_f{n})+Attenuation_f{n}),1);
 end
 
-ThrCorrected = ThrDS + DC;
+% if strcmpi(P.Order(1),'R')
+%     DC = fliplr(DC(:)');
+% end
+ThrCorrected = ThrDS(:)' + DC(:)';
 
 end
     

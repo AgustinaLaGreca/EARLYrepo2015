@@ -67,7 +67,7 @@ DefParam.runav      = 0;     %Number of datapoints used in smoothing the
 DefParam.plot       = 'yes'; %Create figure with threshold curve 'yes' or 'no'.
 DefParam.xscale     = 'auto';%The scale for the abcissa can be 'lin'(linear),
                              %'log'(logaritmic) or 'auto'(automatic).
-DefParam.xunit      = 'auto';%Units for the abicissa can be 'hz', 'khz' or
+DefParam.xunit      = 'auto';%Units for th e abicissa can be 'hz', 'khz' or
                              %'auto'(automatic).
 
 %-------------------------main program-----------------------------
@@ -163,6 +163,7 @@ S = CalcTHR(ds, 'isubseqs', Param.isubseqs, 'thr', Param.thr, 'runav', 0);
 [CalcData.thr.cf, CalcData.thr.minthr, CalcData.thr.bwf, CalcData.thr.bw, ...
        CalcData.thr.q10] = ExtractUsefulParam(S.curve.freq, S.curve.thr, Param);
 CalcData.thr.sr = S.curve.sr;
+
 % Useful Param for corrected threshold
 CalcData.corr.thr = thr_corr;
 [CalcData.corr.cf, CalcData.corr.minthr, CalcData.corr.bwf, CalcData.corr.bw, ...
