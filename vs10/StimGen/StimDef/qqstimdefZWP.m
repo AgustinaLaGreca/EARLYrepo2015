@@ -1,4 +1,4 @@
-function Params = stimdefZW(EXP);
+function Params = stimdefZWP(EXP);
 % stimdefZWP - definition of stimulus and GUI for ZWP stimulus paradigm
 %    P=stimdefZWP(EXP) returns the definition for the ZWP (zwuis with profile)
 %    ZWP is the same as ZW except one can specify a spectral Profile.
@@ -17,10 +17,10 @@ Pres = local_presPanel;
 Params=GUIpiece('Params'); % upper half of GUI: parameters
 Params = add(Params, ZW, 'below', [20 0]);
 Params = add(Params, PR, below(ZW));
-Params = add(Params, SPL, nextto(ZW), [160 0]);
+Params = add(Params, SPL, nextto(ZW), [20 0]);
 Params = add(Params, Pres, below(SPL) ,[30 10]);
-Params = add(Params, PlayTime(), below(Pres) ,[-105 7]);
-Params = add(Params, local_zwuis_info_display(), below(PR), [0 10]);
+Params = add(Params, PlayTime(), below(Pres) ,[-75 7]);
+
 
 %=================================
 function P = local_zwuisPanel;
@@ -35,7 +35,7 @@ BaseFreq = ParamQuery('BaseFreq', 'base:', '0.128 ', 'Hz', ...
 FreqTol = ParamQuery('FreqTol', 'maxdev:', '120', '%', ...
     'rreal/positive', ['Maximum deviation of component frequencies from regular spacing, ' char(10), ...
     'expressed in % of average component spacing.'], 1);
-% Rseed = ParamQuery('Rseed', 'seed:', '8445963002', '', ...
+% Rseed = paramquery('Rseed', 'seed:', '8445963002', '', ...
 %     'rseed', 'Random seed used for frequencies and phases. Specify NaN to refresh seed upon each realization.',1);
 Nit = ParamQuery('Nit', '#iter:', '123', '', ...
     'posint', 'Max number of iterations to realize zwuis frequencies.' ,1);
@@ -53,19 +53,19 @@ P = add(P, ZWseed, nextto(Nit), [5 0]);
 P = add(P, ZwuisMess, below(FreqTol), [70 0]);
 
 function P = local_profilePanel;
-ProfileLowFreq = ParamQuery('ProfileLowFreq', 'profile freq:', '15000.5', 'Hz', ...
-    'rreal/nonnegative', 'Approximate freq of single component whose SPL is changed. Choose 0 Hz when Profile Type = "all"', 1);
-ProfileHighFreq = ParamQuery('ProfileHighFreq', 'x:', '1', 'Hz', ...
-    'rreal/nonnegative', 'Obsolete parameter; ignored.', 1);
-ProfileType = ParamQuery('ProfileType', 'type:', '', {'single cmp' '-' 'all'}, ...
-    '', 'How to realize profile. "-" = no profiling. Single cmp = change SPL of one component. All = specify SPL jump for each component in SPL change edit.', 1);
-ProfileSPLjump = ParamQuery('ProfileSPLjump', 'SPL change:', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'dB', ...
-    'rreal', 'Change in SPL of selected components. Single value or complete set (one per component)', 60);
+ProfileLowFreq = ParamQuery('ProfileLowFreq', 'low:', '15000.5', 'Hz', ...
+    'rreal/nonnegative', 'Lowest frequency for profile sweep. Specify 0 Hz to always include lowest component', 1);
+ProfileHighFreq = ParamQuery('ProfileHighFreq', 'high:', '15000.5', 'Hz', ...
+    'rreal/positive', 'Highest frequency for profile sweep. Specify 100000 Hz to always include highest component', 1);
+ProfileSPLjump = ParamQuery('ProfileSPLjump', 'SPL change:', '-15.5', 'dB', ...
+    'rreal', 'Change in SPL of selected components.', 1);
+ProfileType = ParamQuery('ProfileType', 'type:', '', {'single cmp' 'low end' 'high end' '-'}, ...
+    '', 'How to realize profile. "-" = no profiling. Single cmp = SPL of one component is changed. Low/high: All components below/above swept freq are changed.', 1);
 P = GUIpanel('Profile', 'profile');
-P = add(P, ProfileLowFreq, 'below', [0 0]);
-P = add(P, ProfileHighFreq, nextto(ProfileLowFreq), [5 0]);
-P = add(P, ProfileType, nextto(ProfileHighFreq), [20 0]);
-P = add(P, ProfileSPLjump, below(ProfileLowFreq), [-10 0]);
+P = add(P, ProfileLowFreq, 'below', [20 0]);
+P = add(P, ProfileHighFreq, nextto(ProfileLowFreq), [20 0]);
+P = add(P, ProfileSPLjump, below(ProfileLowFreq), [-20 0]);
+P = add(P, ProfileType, nextto(ProfileSPLjump), [20 0]);
 
 function P = local_presPanel;
 TotDur = ParamQuery('TotDur', 'dur:', '150 ', 's', ...
@@ -88,11 +88,5 @@ P = add(P, RampDur,nextto(ISgap), [10 0]);
 P = add(P,Order, alignedwith(ISgap), [0 -5]);
 P = add(P,RSeed, nextto(Order), [0 0]);
 
-function P = local_zwuis_info_display()
-P = GUIpanel('ZwuisInfo', ''); % no title
-M = messenger('ZwuisInfo', ...
-    repmat(' ',[1 125]), ...
-    4, 'Fontname', 'monospaced', 'FontSize', 8, 'ForegroundColor', [0.1 0.1 0.1]);
-P = add(P, M, 'below', [0 -15]);
 
 

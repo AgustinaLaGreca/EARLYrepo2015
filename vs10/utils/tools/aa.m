@@ -19,13 +19,15 @@ h = findobj(0,'type','figure');
 
 % don't close  figures whose userdata property equals 'dontclose'
 ud=get(h, 'userdata');
+ispare = [];
 if ~iscell(ud), ud = {ud}; end
 for ii=1:length(ud),
     if isequal('dontclose', ud{ii}),
-        h(ii) = nan;
+        ispare(end+1) = ii;
     end
 end
-delete(denan(h));
+h(ispare) = [];
+delete(h);
 
 if ~isempty(Flag), % restore visibility of hidden handles
     set(0,'showhiddenhand', shh);
