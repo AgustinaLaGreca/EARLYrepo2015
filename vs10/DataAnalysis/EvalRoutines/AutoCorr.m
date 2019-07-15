@@ -92,7 +92,7 @@ DefParam.thrplot       = 'no';      %'yes' or 'no' ...
 DefParam.dotplot       = 'no';      %'yes' or 'no' ...
 DefParam.fftyunit      = 'dB';       %'dB' or 'P' ...
 DefParam.ismashed      = false;      % Whether the dataset is mashed.
-DefParam.ignorethr     = false;      % Don't look up any THR info. This option is needed for fake datasets (example: output of MergeDS)
+DefParam.ignorethr     = true;      % Don't look up any THR info. This option is needed for fake datasets (example: output of MergeDS)
 % Yi-Hsuan
 DefParam.Scarmble      = false;      %for rising floor of correlation between ACF and pusle train
 
@@ -107,8 +107,10 @@ else
         EvalSacParseArgs(DefParam, varargin{:});
 end
 
-% Retrieving data from SGSR server ...(Ignore for fake datasets)
-[Thr, Rcn] = getUserData(Info, Param);
+% THR is not used in this particular dataviewer. [below functions need to be modified]
+Rcn = struct([]);
+[CF, SR, Thr, BW, Q10, Str] = deal(NaN);
+Thr = lowerFields(CollectInStruct(CF, SR, Thr, BW, Q10, Str));
 
 % Calculate data
 for n = 1:ds.Ncond
@@ -121,52 +123,10 @@ if isequal(Param.plot,'yes')
 end
 
 end
-%% getUserData
-function [Thr, Rcn] = getUserData(Info, Param)
 
-%return NaN if we need to ignore thr info
-if Param.ignorethr
-    Rcn = struct([]);
-    [CF, SR, Thr, BW, Q10, Str] = deal(NaN);
-    Thr = lowerFields(CollectInStruct(CF, SR, Thr, BW, Q10, Str));
-    return;
-end
-%by Abel:
-%Try/catch block for retieving THRseq number from the userdata server
-%If nothing was found, go on with the default number provided by
-%getTHRSeq(). See getThr4Cell() for inspiration. In this case we can't use
-%this function directly since we need additional data from the userdata
-%server.
-
-%by YiHsuan:
-%Delete the connection to the server for retrieving SGSR information
-
-%%% Threshold curve information
-SeqNr = getTHRSeq(Info(1).ds.filename, Info(1).ds.icell);
-
-%%% Rate curve information ...
-Rcn = struct([]);
+%% getUserData was deleted
 
 
-%%% Threshold curve information
-% - If no THR found, set all to NaN.
-if isempty(SeqNr) || isnan(SeqNr)
-    [CF, SR, Thr, BW, Q10, Str] = deal(NaN);
-else
-    % - If THR found, extract params and provide output string.
-    dsTHR = read(dataset, Info(1).ds.filename,SeqNr);
-    [CF, SR, Thr, BW, Q10] = EvalTHR(dsTHR, 'plot', Param.thrplot);
-    s = sprintf('Threshold curve:');
-    s = char(s, sprintf('%s <%s>', dsTHR.expname, dsTHR.IDstring));
-    s = char(s, sprintf('CF = %s @ %s', EvalSacParam2Str(CF, 'Hz', 0), ...
-        EvalSacParam2Str(Thr, 'dB', 0)));
-    s = char(s, sprintf('SR = %s', EvalSacParam2Str(SR, 'spk/sec', 1)));
-    s = char(s, sprintf('BW = %s', EvalSacParam2Str(BW, 'Hz', 1)));
-    s = char(s, sprintf('Q10 = %s', EvalSacParam2Str(Q10, '', 1)));
-    Str = s;
-end
-Thr = lowerFields(CollectInStruct(CF, SR, Thr, BW, Q10, Str));
-end
 %% CalcData
 function CalcData = CalcDifCor(Spt, Thr, Rcn, Info, Param, StimParam)
 
