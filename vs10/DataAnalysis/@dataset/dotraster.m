@@ -27,13 +27,7 @@ end
 % open a new figure or use existing one?
 if nargin<2 || isempty(figh),
     open_new = isempty(get(0,'CurrentFigure'));
-    figh=gcf;
-    if ~isa(figh,'double')
-    figh = figh.Number;
-    end;
-    if ~isa(figh,'double')
-    figh = figh.Number;
-    end;
+    figh=double(gcf); % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 else,
     open_new = isSingleHandle(figh);
 end

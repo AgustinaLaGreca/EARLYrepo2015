@@ -24,9 +24,10 @@ Alltests = {'any' 'figure' 'uicontrol' 'axes'};
 [CondStr, errMess] = keywordMatch(CondStr, Alltests, 'condition string');
 error(errMess);
 
-
-mess = numericTest(h, 'nonnegative', [Descr ' is ']); 
-if ~isempty(mess), return; end
+%--MH July 2019; disabled numerictest; no longer a valid test in newer Matlab
+%      versions with graphics handle objects instead of numeric handles.
+% mess = numericTest(h, 'nonnegative', [Descr ' is ']); 
+% if ~isempty(mess), return; end
 
 mess = dimensionTest(h, 'singlevalue', Descr);
 if ~isempty(mess), return; end

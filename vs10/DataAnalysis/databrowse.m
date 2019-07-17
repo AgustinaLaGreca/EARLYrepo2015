@@ -113,9 +113,7 @@ setGUIdata(figh, 'datagetter', getds(name(Exp))); % quick dataset retriever
 function [figh, varargout] = local_handle(h, varargin);
 % get named handle starting from any handle in GUI
 figh = parentfigh(h); % GUI fig handle
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 H = getGUIdata(figh, 'handles');
 for ii=1:numel(varargin),
     varargout{ii} = H.(varargin{ii});
@@ -277,25 +275,19 @@ end
 
 function local_typelog(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 Exp = getGUIdata(figh, 'Experiment');
 typelog(Exp);
 
 function local_paramview(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 ds = local_curds(figh);
 paramview(ds);
 
 function local_displaylist(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [figh, hreclist] = local_handle(figh, 'RecList');
 Str = get(hreclist, 'String');
 more off;
@@ -306,81 +298,61 @@ disp(Str);
 % EVENTS
 function local_dotraster(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 dotraster(ds);
 
 function local_cyclehisto(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 cyclehisto(ds,figure);
 
 function local_rateplot(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 rateplot(ds);
 
 function local_resparea(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 resparea(ds);
 
 function local_maskcorr(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 maskcorr(ds);
 
 function local_PSTH(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 PSTH(ds);
 
 function local_FOISI(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 FOISI(ds);
 
 function local_AOISI(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 AOISI(ds);
 
 function local_coeffvar(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 coeffvar(ds);
 
 function local_revcor(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 revcor(ds);
 
@@ -395,9 +367,7 @@ end
 
 function local_anamean(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 IDstr = IDstring(ds, 'full');
 icond = local_icond(ds.Ncond);
@@ -423,18 +393,14 @@ title([IDstr '  AD-'  num2str(ichan) ' (' dataType(anachan(ds,ichan)) ')'],...
 
 function local_rmsplot(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 figure;
 RMSplot(ds, ichan);
 
 function local_supspec(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 icond = local_icond(ds.Ncond);
 if isempty(icond), return; end
@@ -442,26 +408,20 @@ supspec(ds, ichan, icond);
 
 function local_magn_phi(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 figure; Magn_Phase_Plot(ds, ichan);
 
 function local_apple(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 set(figure,'units', 'normalized', 'position', [0.333 0.433 0.479 0.469])
 apple(ds, ichan);
 
 function local_powerspec(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 icond = local_icond(ds.Ncond);
 if isempty(icond), return; end
@@ -469,9 +429,7 @@ figure; powerspec(ds, ichan, icond);
 
 function local_reflectance(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 if ~isfield('PC_COM1',ds.Data), 
     errordlg('No PC_COM1 connected for this Experiment.');
@@ -481,9 +439,7 @@ end
 
 function local_viewrec(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 icond = local_icond(ds.Ncond);
 if isempty(icond), return; end
@@ -491,9 +447,7 @@ recview(ds, ichan, icond);
 
 function local_IOfun(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 ifreq = inputdlg('iFreq: '); 
 if isempty(ifreq), return; end
@@ -502,18 +456,14 @@ figure; IOfun(ds, ichan, ifreq);
 
 function local_threshold_curve(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 EvalTHR(ds);
 % threshold_curve(ds);
 
 function local_threshold_curve_corrected(Src, Ev);
 figh = parentfigh(Src);
-if ~isa(figh,'double')
-    figh = figh.Number;
-end
+figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 [ds, ichan] = local_curds(figh);
 
 thr_corr = correct_ds(ds);
@@ -573,7 +523,7 @@ switch upper(StimTypes{irec}),
         
     case 'MASK',
         set(h1, 'String', '1 rateplot', 'callback', @local_rateplot);
-        set(h2, 'String', '2 maskcorr', 'callback', @local_maskcorr);
+        set(h2, 'String', '2 PSTH', 'callback', @local_PSTH);
         
     case 'SUP',
         set(h1, 'String', '1 supspec', 'callback', @local_supspec);
@@ -594,44 +544,26 @@ end % switch/case
 
 function local_custom_1(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_1_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_2(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_2_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_3(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_3_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_4(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_4_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_5(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_5_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_custom_6(Src, Ev);
 [figh, bt] = local_handle(Src, 'CustomAna_6_Button');
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
 feval(get(bt,'Callback'), Src, Ev);
 
 function local_keypress(Src, Ev);

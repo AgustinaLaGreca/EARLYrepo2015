@@ -13,7 +13,7 @@ h = [];
 shh = get(0,'showhiddenhand'); % store to restore
 set(0,'showhiddenhand', 'on');
 hf = findobj(0,'type', 'figure');
-hf = hf.Number;
+hf = [hf.Number]; % MH July 2019; otherwise all but first component of fh will be ignored
 set(0,'showhiddenhand', shh);
 
 for ii=1:numel(hf),

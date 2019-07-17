@@ -13,9 +13,7 @@ function placefig(figh, Tag, Tag2, flag);
 
 if nargin<3, Tag2='' ; end
 if nargin<4, flag='retrieve' ; end 
-if ~isa(figh,'double')
-    figh = figh.Number;
-end;
+% figh = double(figh); % MH July 2019; should not be needed
 switch flag,
     case 'retrieve',
         % try to find match of both Tag & Tag2
