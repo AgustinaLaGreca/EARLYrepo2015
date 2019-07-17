@@ -98,7 +98,8 @@ setGUIdata(figh, 'StimMaker', fhandle(StimMake));
 setGUIdata(figh, 'StimulusType', StimName);
 CreateQueryContextMenu(figh,ParamQuery);
 draw(figh, SG); 
-movegui(figh,'center'); % center the stim gui on the screen, added by Jan 2018
+% next line commented out to avoid annoying overlap w dashboard. pprevious GUI positition is restored. MH July 2019
+% movegui(figh,'center'); % center the stim gui on the screen, added by Jan 2018
 
 
 %             setGUIdata(varargin{1}, 'StimMaker', fhandle(StimMake));
@@ -140,11 +141,14 @@ RMSDisp1 = messenger('RMSDisp1', 'C rms = **.* mV', 1, 'FontWeight', 'bold', 'Fo
 RMSDisp2 = messenger('RMSDisp2', 'C rms = **.* mV', 1, 'FontWeight', 'bold', 'ForegroundColor', [0.25 0.15 0.1]);
 Check = ActionButton('Check', 'CHECK', 'XXXXXXXXXX', 'Check stimulus parameters and update information.', fhandle('StimCheck'));
 Check = accelerator(Check,'&Action', 'K');
+[EE, dashboard_handle] = existGUI('dashboard'); StartRec = @(Src,Ev, LR)dashboard('PlayRecord', 'Left', dashboard_handle);
+Rec = ActionButton('PlayRec', 'REC', 'XXX', 'Start recording.', StartRec, 'BackgroundColor', [1 0 0]);
 Act = add(Act,MessBox);
 Act = add(Act,FsamDisp, 'nextto', [32 3]);
 Act = add(Act,RMSDisp1, 'below', [0 3]);
 Act = add(Act,RMSDisp2, 'below', [0 3]);
 Act = add(Act,Check, 'below', [0 35]);
+Act = add(Act,Rec, 'nextto', [0 0]); % added option to launch recording from stim menu
 Act = marginalize(Act,[3 5]);
 
 % function D = local_Dataview;

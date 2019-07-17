@@ -144,7 +144,8 @@ function P = local_AddStutterInfo(P,figh,kw)
 if isempty(figh) || strcmpi(kw,'play') % Stutter should only be used with Play/Record
     return;
 end
-Query = GUIval(figh);
+[~, hdash] = existGUI('dashboard'); % MH July 2019 safer way to get dashboard handle
+Query = GUIval(hdash);
 StutterOn = Query.Stutter;
 if strcmpi(StutterOn,'off')
     return;
