@@ -19,8 +19,8 @@ function [okay, RandSeed, P] = EvalNoisePanel(figh, P, Prefix)
 %   See StimGUI, Noisepanel, makestimFS.
 
 Prefix = arginDefaults('Prefix', ''); 
-okay = 0; % pessimistic default
 
+okay = 0; % pessimistic default
 if isa(figh, 'experiment'), % non-interactive call - no GUI
     EXP = figh; 
     Interactive=false;
@@ -54,6 +54,12 @@ else, % passed all the tests..
     somethingwrong=0;
 end
 
+if Interactive, % clear AltLevel messenger
+    MM = find(messenger(), figh, [Prefix 'AltLevel']);
+    if ~isempty(MM),
+        report(MM, ' ');
+    end
+end
 % check if noise direction field exists, Normal otherwise. Marta 09/18
 %if ~isfield(P,'Reverse'), P.Reverse = 'Normal'; end
 

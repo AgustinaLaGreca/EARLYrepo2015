@@ -65,6 +65,7 @@ NoiseSeed = ParamQuery([Prefix 'ConstNoiseSeed'], 'seed:', '844596300', '', ...
 % ---SPL
 SPL = ParamQuery([Prefix 'SPL'], 'level:', '120.5 120.5', {'dB SPL' 'dB/Hz'}, ...
     'rreal', ['Intensity. Click button to switch between overall level (dB SPL) and spectrum level (dB/Hz).' PairStr],Nchan);
+AltLevel = messenger([Prefix 'AltLevel'], 'S=XXX dB/Hz', 1);
 DAC = ParamQuery('DAC', 'DAC:', '', DACstr, ...
     '', ['Active D/A channels.' ClickStr 'channel(s).']);
 MaxSPL=messenger([Prefix 'MaxSPL'], 'max [**** ****] dB SPL @ [***** *****] Hz    ',1);
@@ -75,8 +76,10 @@ Reverse = ParamQuery('Reverse', 'Noise Direction:', '', {'Normal' 'Reverse'}, ..
 NP = GUIpanel('Noise', T);
 NP = add(NP,LowFreq, 'below', [10 0]);
 NP = add(NP,HighFreq, 'aligned', [0 -7]);
-NP = add(NP,SPL, nextto(LowFreq), [20 0]);
+NP = add(NP,SPL, nextto(LowFreq), [8 0]);
 NP = add(NP,Corr, 'aligned', [0 -7]);
+NP = add(NP,AltLevel, nextto(SPL), [4 10]);
+%AltLevel
 NP = add(NP,NoiseSeed, nextto(Corr), [0 0]);
 NP = add(NP,MaxSPL,below(HighFreq),[17 0]);
 NP = add(NP,DAC,'nextto',[5 -10]);
