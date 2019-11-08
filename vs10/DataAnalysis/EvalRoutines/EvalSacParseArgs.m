@@ -117,6 +117,11 @@ StimParam.spl = CombineSPLs(spl1(iSubSeq, 1), spl1(iSubSeq, end));
 StimParam.LowFreq = ds.stimparam.LowFreq;
 StimParam.HighFreq = ds.stimparam.HighFreq;
 
+% Gowtham, July 2019: right now this is just for BPN, could be adapted for other functions
+if(isfield(ds.Stim,'CutoffFreq'))
+    StimParam.CutoffFreq=ds.Stim.CutoffFreq(iSubSeq);
+end
+
 %Format stimulus parameters ...
 s = sprintf('BurstDur = %s', EvalSacParam2Str(StimParam.burstdur, 'ms', 0));
 s = strvcat(s, sprintf('IntDur = %s', EvalSacParam2Str(StimParam.repdur, 'ms', 0)));

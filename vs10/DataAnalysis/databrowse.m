@@ -384,6 +384,16 @@ end;
 [ds, ichan] = local_curds(figh);
 revcor(ds);
 
+function local_AutoCorr(Src, Ev);  %added by Gowtham July 2019
+figh = parentfigh(Src);
+% Updated logic as suggested by Marcel in July 2019
+% if ~isa(figh,'double')
+%     figh = figh.Number;
+% end;
+figh=double(figh);
+[ds, ichan] = local_curds(figh);
+AutoCorr(ds);
+
 % ANALOG DATA
 function icond = local_icond(Ncond)
 if Ncond==1, icond=1;
@@ -544,12 +554,13 @@ switch upper(StimTypes{irec}),
         set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
         set(h6, 'String', '6 average', 'callback', @local_anamean);
     
-    case {'RCN','NITD','ARMIN','NRHO','MOVN','IRN','HP'}
+    case {'RCN','NITD','ARMIN','NRHO','MOVN','IRN','HP','BPN'}
         set(h1, 'String', '1 PSTH', 'callback', @local_PSTH);
         set(h2, 'String', '2 revcor', 'callback', @local_revcor);
         set(h3, 'String', '3 ISI histo', 'callback', @local_FOISI);
         set(h4, 'String', '4 magn/phi', 'callback', @local_magn_phi);
         set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
+        set(h6, 'String', '6 AutoCorr', 'callback', @local_AutoCorr); %added by Gowtham July 2019
         
     case {'MTF','DEP','RCM','RAM','BBFC','BBFM','BBFB','ITD','ILD','MBL',...
             'CFS','CTD','CSPL','MOVING_W','ZWICKER','QFM','NSAM','HAR',...

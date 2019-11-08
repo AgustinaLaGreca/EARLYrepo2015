@@ -1,22 +1,17 @@
-function [Template, GUI] = EvalSAC(varargin)
-%EVALSAC  calculate the SAC and the DFT of the SAC.
-%   T = EVALSAC(ds) calculates the SAC and DFT for all subsequences.
+function [Template, GUI] = AutoCorr(D, figh, P)
+%AutoCorr  calculates Shifted Auto Corrilogram
+%   T = AutoCorr(ds) 
 %   E.g.:
 %           ds = dataset('A0242', '8-2');
-%           T = EvalSACXAC(ds);
-%
-%   Optional properties and their values can be given as a comma-separated
-%   list. To view list of all possible properties and their default value,
-%   use 'factory' as only input argument.
-
+%           T = AutoCorr(ds);
+% 
 %Ramses de Norre
-
+% 
 %% ---------------- CHANGELOG ----------------
 % 
-%  Jul 2019 Gowtham         - Adapted EvalSAC for BPN by using just the
+%  Jul 2019 Gowtham         - Adapted EvalSAC (!only for BPN!), uses just the
 %                             autocorrelogram on time domain;
-%                             Currently working on making the dataviewer
-%                             online(realtime)
+%                             Doesn't work realtime for now
 % 
 %  Thu Jan 13 2011  Abel    - Increased spkrate by factor 1000
 %							- Updated userdata try/catch block
@@ -96,16 +91,56 @@ DefParam.ignorethr     = true;      % Don't look up any THR info. This option is
 % Yi-Hsuan
 DefParam.Scarmble      = false;      %for rising floor of correlation between ACF and pusle train
 
+% recursive call using default plot params
+if numel(D) > 1 
+    clf;
+    for ii=1:numel(D),
+        AutoCorr(D(ii));
+    end
+    return;
+end
+
+%===========single D from here=============
+
+% handle the special case of parameter queries. Do this immediately to 
+% avoid endless recursion with dataviewparam.
+if isvoid(D) && isequal('params', figh),
+    [Template, GUI] = local_ParamGUI;
+    return;
+end
+
+% open a new figure or use existing one?
+if nargin<2 || isempty(figh),
+    open_new = isempty(get(0,'CurrentFigure'));
+    figh=gcf; 
+else,
+    open_new = isSingleHandle(figh);
+end
+
+% parameters
+if nargin<3, P = []; end
+% if isempty(P), % use default paremeter set for this dataviewer
+%     P = dataviewparam(mfilename); 
+% end
+
+Ncond = D.Stim.Presentation.Ncond;
+Nrep = D.Stim.Presentation.Nrep;
+
 %% main program
+
 % Evaluate input arguments ...
-if (nargin == 1) && ischar(varargin{1}) && strcmpi(varargin{1}, 'factory')
+if (nargin == 1) && ischar(D) && strcmpi(D, 'factory')
     disp('Properties and their factory defaults:')
     disp(DefParam);
     return;
 else
     [ds, Spt, Info, StimParam, Param] = ...
-        EvalSacParseArgs(DefParam, varargin{:});
+        EvalSacParseArgs(DefParam, D );
 end
+
+% to display the Exp info on the last grid of the plot
+PlotInfo = [Info.ds.filename " Rec: " Info.ds.iseq  ":" Info.ds.seqid ];
+PlotInfo = join(PlotInfo);
 
 % THR is not used in this particular dataviewer. [below functions need to be modified]
 Rcn = struct([]);
@@ -113,19 +148,24 @@ Rcn = struct([]);
 Thr = lowerFields(CollectInStruct(CF, SR, Thr, BW, Q10, Str));
 
 % Calculate data
-for n = 1:ds.Ncond
+for n = 1:Ncond
     CalcData(n) = CalcDifCor(Spt(n, :), Thr, Rcn, Info, Param, StimParam(n));
     CalcData(n).ds.isubseq = n;
+    PlotDifCor(CalcData, D, Param,figh, StimParam, Ncond, PlotInfo, open_new);
 end
 
-if isequal(Param.plot,'yes')
-    GUI=PlotDifCor(CalcData, ds, Param);
-end
+% % Calculate data
+% for m = 1:Ncond
+%     for n = 2:Nrep
+%         CalcData(n) = CalcDifCor(Spt(n, :), Thr, Rcn, Info, Param, StimParam(n));
+%         CalcData(n).ds.isubseq = n;
+%         PlotDifCor(CalcData, D, Param,figh, StimParam, Ncond, PlotInfo, open_new);
+%     end
+% end
+
+% PlotDifCor(CalcData, ds, Param,figh, StimParam);
 
 end
-
-%% getUserData was deleted
-
 
 %% CalcData
 function CalcData = CalcDifCor(Spt, Thr, Rcn, Info, Param, StimParam)
@@ -206,7 +246,11 @@ CalcData.rcn           = Rcn;
 %by Abel: increase spkrate by *1000
 CalcData.ac.spkrate    = spkrate * 1000;
 CalcData.ac.nspike     = nspike;
+
+% PlotDifCor(CalcData, ds, Param,figh, npans);
+
 end
+
 %% ApplyNorm
 function Y = ApplyNorm(Y, N)
 if ~all(Y == 0)
@@ -215,6 +259,7 @@ else
     Y = ones(size(Y));
 end
 end
+
 %% DetermineCalcDF
 function DF = DetermineCalcDF(ParamCalcDF, ThrCF, DifDF, SacDF)
 
@@ -240,43 +285,61 @@ else
     DF = NaN;
 end
 end
+
 %% PlotDifCor
-function GUI=PlotDifCor(CalcData, ds, Param)
+function PlotDifCor(CalcData, ds, Param, figh, StimParam, Ncond, PlotInfo, open_new)
+
+if isSingleHandle(figh, 'figure')
+    figure(figh); clf; ah = gca;
+    if open_new, placefig(figh, mfilename, ds.Stim.GUIname); end % restore previous size 
+else
+    ah = axes('parent', figh);
+end
+
 
 % Get X and Y data and convert to cell arrays
 Xsac = {CalcData.delay};
 Ysac = [CalcData.ac];
 Ysac = {Ysac.normco};
 
-GridPlot(Xsac, Ysac, ds, 'xlabel', 'Delay (ms)', ...
-    'ylabel', sprintf('Norm. Count'), 'mfileName', mfilename, ...
-    'plotTypeHdl', @XYPlotObject, ...
-    'plotParams', {'Marker', 'none', 'LineStyle', '-'});
+npans=size(Xsac);
+npans=npans(2);
 
-% % Cutoff the fft
-% 
-% Xdft = [CalcData.ac];
-% Xdft = [Xdft.fft];
-% Xdft = {Xdft.freq};
-% Ydft = [CalcData.ac];
-% Ydft = [Ydft.fft];
-% if strcmpi(Param.fftyunit, 'dB')
-%     Ydft = {Ydft.db};
-%     YLblStr = 'Power (dB, {}^{10}log)';
-% else
-%     Ydft = {Ydft.p};
-%     YLblStr = 'Power';
-% end
-% Ydft = cellfun(@(x)x(2,:), Ydft, 'UniformOutput', false);
-% 
-% Xdft = cellfun(@(x) x(x<=Param.acfftcutoff), Xdft, 'UniformOutput',false);
-% cutoffs = cellfun(@(x) length(x), Xdft, 'UniformOutput',false);
-% Ydft = cellfun(@(y, cutoff) y(1:cutoff), Ydft, cutoffs, 'UniformOutput', false);
-% pause(1e-5);
-% GridPlot(Xdft, Ydft, ds, 'xlabel', {'Freq (Hz)'}, 'ylabel', {YLblStr}, ...
-%     'mfileName', mfilename, 'plotTypeHdl', @XYPlotObject, ...
-%     'plotParams', {'Marker', 'none', 'LineStyle', '-'});
+[axh, Lh, Bh] = plotpanes(Ncond+1,1/2,figh);
 
+% Gowtham, July 2019: right now this is just for BPN, could be adapted for other functions
+if(isfield(StimParam,'CutoffFreq'))
+    for i=1:npans
+        CutoffFreq(i)=strcat(num2str(getfield(StimParam,{i},'CutoffFreq')), " Hz");
+    end
 end
 
+% if order is by condition
+for i=1:npans
+    h = axh(i);
+    axes(h);
+    plot(h,Xsac{i},Ysac{:,i});
+    if(isfield(StimParam,'CutoffFreq'))     title(h, CutoffFreq(i)); end
+end
+axes(axh(end)); text(0.1, 0.5, PlotInfo, 'fontsize', 12, 'fontweight', 'bold','interpreter','none');
+end
 
+function [T,G] = local_ParamGUI % Taken from revcor
+% Returns the GUI for specifying the analysis parameters.
+P = GUIpanel('AutoCorr','');
+iCond = ParamQuery('iCond', 'iCond:', '0', '', 'integer',...
+    'Condition indices for which to calculate the CV. 0 means: all conditions.', 20);
+Anwin = ParamQuery('Anwin', 'analysis window:', 'burstdur', '', 'anwin',...
+    'Analysis window (in ms) [t0 t1] re the stimulus onset. The string "burstdur" means [0 t], in which t is the burst duration of the stimulus.');
+maxDelay = ParamQuery('maxDelay', 'max delay:', '20', '', 'integer',...
+    'Maximum delay (in ms) considered in computing the reverse correlation. 0 means: t, in which t is the burst duration of the stimulus.',1);
+P = add(P, iCond);
+P = add(P, Anwin, below(iCond));
+P = add(P, maxDelay, below(Anwin));
+P = marginalize(P,[4 4]);
+G = GUIpiece([mfilename '_parameters'],[],[0 0],[10 10]);
+G = add(G,P);
+G = marginalize(G,[10 10]);
+% list all parameters in a struct
+T = VoidStruct('iCond/Anwin/maxDelay');
+end
