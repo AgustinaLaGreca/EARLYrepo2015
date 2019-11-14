@@ -143,12 +143,15 @@ Check = ActionButton('Check', 'CHECK', 'XXXXXXXXXX', 'Check stimulus parameters 
 Check = accelerator(Check,'&Action', 'K');
 [EE, dashboard_handle] = existGUI('dashboard'); StartRec = @(Src,Ev, LR)dashboard('PlayRecord', 'Left', dashboard_handle);
 Rec = ActionButton('PlayRec', 'REC', 'XXX', 'Start recording.', StartRec, 'BackgroundColor', [1 0 0]);
+StartPlay = @(Src,Ev, LR)dashboard('Play', 'Left', dashboard_handle);
+PlayBut = ActionButton('Play', 'Play', 'XXX', 'Start playing.', StartPlay);
 Act = add(Act,MessBox);
 Act = add(Act,FsamDisp, 'nextto', [32 3]);
 Act = add(Act,RMSDisp1, 'below', [0 3]);
 Act = add(Act,RMSDisp2, 'below', [0 3]);
 Act = add(Act,Check, 'below', [0 35]);
 Act = add(Act,Rec, 'nextto', [0 0]); % added option to launch recording from stim menu
+Act = add(Act,PlayBut, 'nextto', [0 0]);
 Act = marginalize(Act,[3 5]);
 
 % function D = local_Dataview;
