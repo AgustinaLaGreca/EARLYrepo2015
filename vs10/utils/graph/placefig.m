@@ -31,7 +31,10 @@ switch flag,
                 curpos = getposInUnits(figh,'normalized');
                 setposInUnits(figh, 'normalized', [Pos(1:2) curpos(3:4)]);
             end
+        else, % make sure fig is visible
+            movegui(figh, 'center');
         end
+        movegui(figh, 'onscreen'); % make sure figure is visible
         % set closereq fcn
         setGUIdata(figh,'FigurePositionTags', CollectInStruct(Tag, Tag2));
         if isGUI(figh), % prepare for closing the figure using GUIclose, leaving room for any closereqfcn

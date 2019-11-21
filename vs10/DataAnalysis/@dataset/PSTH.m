@@ -28,8 +28,7 @@ end
 % Should we open a new figure or use an existing one?
 if nargin<2 || isempty(figh),
     open_new = isempty(get(0,'CurrentFigure'));
-    figh = gcf; 
-    figh = figh.Number;
+    figh = double(gcf);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
 else
     open_new = isSingleHandle(figh);
 end

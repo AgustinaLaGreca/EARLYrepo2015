@@ -11,9 +11,9 @@ function ii=isSingleHandle(h, Type)
 %   See also ISHANDLE, GET.
 
 ii = 0;
-if ~isnumeric(h), return;
-elseif ~isequal(1,numel(h)), return;
-elseif ~isreal(h), return;
+%if ~isnumeric(h), return; MH July 2019 obsolete
+if ~isequal(1,numel(h)), return;
+%elseif ~isreal(h), return; MH July 2019 obsolete
 end
 ii = ishandle(h);
 

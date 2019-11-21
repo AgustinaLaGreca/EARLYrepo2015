@@ -48,7 +48,7 @@ if highestRecFromCell == -1
 end
 
 % Load the dataset for the THR data
-dsTHR = read(dataset,Exp.ID.Name,str2num(thr_recordings{i}.ds_unique_number));
+dsTHR = read(dataset,Exp,str2num(thr_recordings{i}.ds_unique_number));
 seqNr = str2num(thr_recordings{i}.ds_unique_number);
 
 
@@ -66,12 +66,12 @@ end
 function thr_recordings = local_get_thr(Exp,cellNr)
     thr_recordings = {};
     % Open the log file
-%     log_file_name = [folder(Exp) filesep Exp.ID.Name '.log'];
-    log_file_name = [ 'C:\ExpData\Exp' filesep Exp.ID.Name filesep Exp.ID.Name '.log'];
+    log_file_name = ['C:\ExpData\Exp' filesep Exp filesep Exp '.log'];
+%    log_file_name = [ 'C:\ExpData\Exp' filesep Exp.ID.Name filesep Exp.ID.Name '.log'];
     fid = fopen (log_file_name,'rt');
 
     if fid == -1
-       error('EARLY:Error','Unable to open the log file for experiment: %s',Exp.ID.Name); 
+       error('EARLY:Error','Unable to open the log file for experiment: %s',Exp); 
     end
     
     % Read line by line and check if it has info on THR

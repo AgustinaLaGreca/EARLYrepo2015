@@ -57,7 +57,7 @@ if any(BurstDur > P.ISI),
 end
 
 % Determine sample rate and generate the calibrated waveforms
-P = local_wave(figh,P); 
+[P, NS] = local_wave(figh,P); % NS is NoiseSpec output, needed for reoprting below
 if isempty(P), return; end
 
 % Sort conditions, add baseline waveforms (!), provide info on varied parameter etc
@@ -68,6 +68,7 @@ P = sortConditions(P, 'Warp', 'Warp value', 'octave', 'lin');
 okay=EvalSPLpanel(figh,P, mxSPL, P.Fcar, 'Mnoise');
 if ~okay, return; end
 
+report_alt_level(figh, 'Mnoise', NS);
 
 P2=P;
 
@@ -89,7 +90,7 @@ GUImessage(figh, Mess, 'error', {'StartWarp', 'StepWarp', 'EndWarp'});
 Ncond = size(Warp,1);
 
 
-function P = local_wave(figh,P);
+function [P, NS] = local_wave(figh,P);
 NsamZeroBlock = 1e4; % # samples in silent block
 UpsampleFactor = 2;
 NsamWarpMargin = 1000; % # extra samples needed to avoid boundary effects when oversampling (see below)
@@ -134,11 +135,11 @@ for ichan=1:numel(AllChan),
     if isRhoChannel, rho = P.MnoiseCorr; % realize interaural correlation by mixing
     else, rho=1; % reference channel
     end
-    NS = NoiseSpec(P.Fsam, MinBufDur, P.MnoiseConstNoiseSeed, [LowFreq(ichan) HighFreq(ichan)], SPL(ichan), P.MnoiseSPLUnit, rho);
+    NS(ichan) = NoiseSpec(P.Fsam, MinBufDur, P.MnoiseConstNoiseSeed, [LowFreq(ichan) HighFreq(ichan)], SPL(ichan), P.MnoiseSPLUnit, rho);
     % apply ongoing delay & calibration while still in freq domain
-    n = NS.Buf.*calibrate(P.Experiment, P.Fsam, chanStr, -NS.Freq, 1); % last one: complex phase factor; neg freqs: totrate out-of range freqs
+    n = NS(ichan).Buf.*calibrate(P.Experiment, P.Fsam, chanStr, -NS(ichan).Freq, 1); % last one: complex phase factor; neg freqs: totrate out-of range freqs
     odelay = NoiseOnset(ichan) + binDelays.(chanStr).OngoingDelay; % ongoing delay (ms) for this DA chan L|R
-    n = n.*exp(-2*pi*i*NS.Freq*1e-3*odelay); % apply this delay
+    n = n.*exp(-2*pi*i*NS(ichan).Freq*1e-3*odelay); % apply this delay
     % go to time domain, reduce length, apply phase & take real part
     n = ifft(n);
     n = n([end-NsamWarpMargin+1:end 1:ceil(MinBufDur/dt)+NsamWarpMargin]); % throw away unused buffer tail, but inclusing flanking margins
@@ -152,7 +153,7 @@ for ichan=1:numel(AllChan),
     % tone
     ToneCalibFactor = calibrate(P.Experiment, P.Fsam, chanStr, ToneFreq(ichan), 1); % last one: complex phase factor
     TotToneOnset = ToneOnset(ichan)+toneBinDelays.(chanStr).Acoust_Comp; % onset delay w acoustic compensation included
-    Tone = localTone(dtn, ToneCalibFactor, ToneFreq(ichan), NS.specSPL+ToneSPL(ichan), ...
+    Tone = localTone(dtn, ToneCalibFactor, ToneFreq(ichan), NS(ichan).specSPL+ToneSPL(ichan), ...
         TotToneOnset, ToneDur(ichan), ToneRiseDur(ichan), ToneFallDur(ichan));
     n = padandadd(n,Tone); % trailing zeros are padded to compensate for any length differences
     % the conditions differ in their warping, realized by linear

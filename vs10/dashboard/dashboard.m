@@ -84,11 +84,15 @@ switch lower(kw),
         figh = gcbf;
         figh = figh.Number;
         local_keypress(figh, varargin{:});
-    case {'play', 'playrecord', 'stop'}, % dashboard('Play', 'Left')
+    case {'play', 'playrecord', 'stop'}, % dashboard('Play', 'Left', h_dashboard)
         LR = varargin{1};
+        if nargin<3,
+            figh=gcbf;
+            figh = figh.Number;
+        else, % 3rd argin is handle of dashboard; needed when launching the recording from the stimulus menu; MH July 2019
+            figh=varargin{2};
+        end
         if ~isequal('Left', LR), return; end; % ignore right-clicks
-        figh=gcbf;
-        figh = figh.Number;
         blank(getGUIdata(figh,'Messenger')); % empty messages
         local_DA(figh, kw);
     case {'newunit', 'newelectrode' 'insertnote','addcomment','opendatabrowse'}, % dashboard('NewUnit', 'Left') etc
@@ -231,7 +235,8 @@ P=additem(P,'&ResetEarly', @(Src,Ev)Reset_Early(Src,Ev,figh));
 DB = add(DB,P);
 DB=marginalize(DB,[40 20]);
 draw(figh, DB); 
-movegui(figh,'center') % center the gui, added by Jan 2018
+% movegui(figh,'center') % center the gui, added by Jan 2018
+movegui(figh,'east') % prevent annoying overlap with stimulus menus. MH july 2019
 
 % Store references to the Panels in the UI UserData
 Panels(1) = P_stim;

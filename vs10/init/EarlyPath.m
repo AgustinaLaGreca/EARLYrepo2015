@@ -66,7 +66,7 @@ addpath(fullfile(VD, 'DataAnalysis', 'ZWOAE'));
 addpath(fullfile(VD, 'DataAnalysis', 'SGSR'));
 addpath(fullfile(VD, 'DataAnalysis', 'CVdata'));
 addpath(fullfile(VD, 'DataAnalysis', 'CVdata', 'DP_phase'));
-addpath(fullfile(VD, 'DataAnalysis', 'JLdata'));
+addpath(fullfile(VD, 'DataAnalysis', 'ZWPdata'));
 addpath(fullfile(VD, 'DataAnalysis', 'TKdata'));
 addpath(fullfile(VD, 'DataAnalysis', 'JSdata'));
 addpath(fullfile(VD, 'DataAnalysis', 'CAP'));

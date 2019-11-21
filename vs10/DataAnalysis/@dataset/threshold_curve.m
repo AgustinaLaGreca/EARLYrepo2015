@@ -14,7 +14,7 @@ if nargin<2 || isempty(figh),
     open_new = isempty(get(0,'CurrentFigure'));
     figh=gcf; 
     if ~isa(figh,'double')
-        figh = figh.Number; % added by Jan 2018
+        figh = double(figh);  % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
     end;
 else,
     open_new = isSingleHandle(figh);
