@@ -110,30 +110,56 @@ NsamTotLiteral = round(1e-3*sum(BurstDur)*Fsam);
 % now compute the stimulus waveforms condition by condition, ear by ear.
 [Ncond, Nchan] = size(Fcar);
 [P.Fcar, P.Fmod] = deal(zeros(Ncond, Nchan));
-for ichan=1:Nchan,
-    chanStr = DAchanStr(ichan); % L|R
-    for icond=1:Ncond,
+
+TauSamples=round(Fsam*Tau(1)*1e-3);
+
+for icond=1:Ncond,
         % select the current element from the param matrices. All params ...
         % are stored in a (iNcond x Nchan) matrix. Use a single index idx 
-        % to avoid the cumbersome A(icond,ichan).
-        idx = icond + (ichan-1)*Ncond;
+        % to avoid the cumbersome A(icond,ichan). (Copied from old code - PSG)
+        idx = icond;
+        
+        % Left
         % evaluate cyclic storage to save samples
-        C = CyclicStorage(Fcar(idx), ModFreq(idx), Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral(ichan));
+        C = CyclicStorage(Fcar(idx), ModFreq(idx), Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral(1));
         % compute the waveform
-        [w, fcar, fmod] = local_Waveform(chanStr, P.Experiment, Fsam, ISI(idx), ...
-            FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
+        [Lo, fcar, fmod] = local_Waveform('L', P.Experiment, Fsam, ISI(idx), ...
+            FineDelay(idx,1), GateDelay(idx,1), ModDelay(idx,1), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
             C, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), SPL(idx),P.StimType);
-        w2Samples=[zeros(100,1); w.Samples];
-        x=[w.Samples; zeros(100,1)];
-        w.Samples{1}=x+w2Samples;
-        w = setRep(w,P.Nrep);
-        w.NsamPlay=sum(w.Nrep.*numel(w.Samples));
-        P.Waveform(icond,ichan) = w;
+        
+        %Right
+        C2 = CyclicStorage(Fcar(idx), ModFreq(idx), Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral(2));
+        % compute the waveform
+        [Ro, fcar2, fmod2] = local_Waveform('R', P.Experiment, Fsam, ISI(idx), ...
+            FineDelay(idx,2), GateDelay(idx,2), ModDelay(idx,2), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
+            C, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), SPL(idx),P.StimType);
+        
+%         w2Samples=[zeros(1000,1); w.Samples];
+%         x=[w.Samples; zeros(1000,1)];
+%         w.Samples{1}=x+w2Samples;
+%         w.NsamPlay=sum(w.Nrep.*numel(w.Samples));
+%         w = setRep(w,P.Nrep);
+%         w = AppendSilence(w, ISI(1));
+
+        RrSamples=[zeros(TauSamples,1); Lo.Samples];
+        x=[Lo.Samples; zeros(TauSamples,1)];
+        Lo.Samples{1}=x+RrSamples;
+        Lo.NsamPlay=sum(Lo.Nrep.*numel(Lo.Samples));
+        Lo = setRep(Lo,P.Nrep);
+        Lo = AppendSilence(Lo, ISI(1));
+        
+        LrSamples=[zeros(TauSamples,1); Ro.Samples];
+        x=[Ro.Samples; zeros(TauSamples,1)];
+        Ro.Samples{1}=x+LrSamples;
+        Ro.NsamPlay=sum(Ro.Nrep.*numel(Ro.Samples));
+        Ro = setRep(Ro,P.Nrep);
+        Ro = AppendSilence(Ro, ISI(1));
+        
+        P.Waveform(icond,1) = Lo;P.Waveform(icond,2) = Ro;
         % derived stim params
-        P.Fcar(icond,ichan) = fcar;
-        P.Fmod(icond,ichan) = fmod;
-        P.CyclicStorage(icond,ichan) = C;
-    end
+        P.Fcar(icond,1) = fcar;P.Fcar(icond,2) = fcar2;
+        P.Fmod(icond,1) = fmod;P.Fmod(icond,2) = fmod2;
+        P.CyclicStorage(icond,1) = C;P.CyclicStorage(icond,2) = C2;
 end
 P.Duration = SameSize(P.BurstDur, zeros(Ncond,Nchan)); 
 P = structJoin(P, CollectInStruct(FineDelay, GateDelay, ModDelay, Fsam));
@@ -217,7 +243,7 @@ W = Waveform(Fsam, DAchan, NaN, SPL, Param, ...
     {0              wtone(1:NsamHead)  wtone(NsamHead+(1:NsamCyc))   wtone(NsamHead+NsamCyc+1:end)},...
     [NonsetDelay    1                  NrepCyc                       1], 1);
 %    ^onset delay   ^gate_delay+rise   ^cyclic part                  ^remainder steady+fall  
-W = AppendSilence(W, ISI); % pas zeros to ensure correct ISI
+% W = AppendSilence(W, ISI); % pas zeros to ensure correct ISI
 
 function Mess = local_test_singlechan(P, FNS);
 % test whether specified fields of P have single chan values

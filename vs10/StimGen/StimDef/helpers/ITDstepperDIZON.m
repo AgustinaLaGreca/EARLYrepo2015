@@ -45,13 +45,13 @@ adjustITD = ParamQuery([Prefix 'AdjustITD'], 'adjust:', '', {'none' 'start' 'ste
 %     '    waveform = whole waveform delay' char(10) ...
 %     '      gating = delayed gating imposed on nondelayed waveform' char(10)  ...
 %     '     ongoing = nondelayed gating imposed on delayed waveform.' ]);
-tau = ParamQuery('Tau', 'Tau:', '0.170', 'ms', 'rreal', 'Time difference due to the distance between the speaker and the wall', 1);
+Tau = ParamQuery('Tau', 'Tau:', '0.170', 'ms', 'rreal/positive', 'Time difference due to the distance between the speaker and the wall', 1);
 
 P = add(P, startITD, 'below', [0 0]);
 P = add(P, stepITD, alignedwith(startITD));
 P = add(P, endITD, alignedwith(stepITD));
 P = add(P, adjustITD, nextto(stepITD));
-P = add(P, tau, below(endITD));
+P = add(P, Tau, below(endITD));
 % if haveTypes,
 %     P = add(P, ITDtype, below(endITD));
 end
