@@ -45,14 +45,22 @@ ClickStr = ' Click button to select ';
 % ---SPL
 DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);
 
-SPL1 = ParamQuery([Prefix 'L1'], 'L1:', '120.5', 'dB SPL', ...
-    'rreal', [CmpName ' SPL.' PairStr],Nchan);
-SPL2 = ParamQuery([Prefix 'L2'], 'L2', '120.5', 'dB SPL', ...
-    'rreal', [CmpName ' SPL.' PairStr],Nchan);
+SPL1Start = ParamQuery([Prefix 'L1Start'], 'L1 Start:', '120.5', 'dB SPL', ...
+    'rreal/positive', [CmpName ' SPL.' PairStr],Nchan);
+SPL1Step = ParamQuery([Prefix 'L1Step'], 'L1 Step:', '120.5', 'dB SPL', ...
+    'rreal/positive', [CmpName ' SPL.' PairStr],Nchan);
+SPL1End = ParamQuery([Prefix 'L1End'], 'L1 End :', '120.5', 'dB SPL', ...
+    'rreal/positive', [CmpName ' SPL.' PairStr],Nchan);
+DeltaL = ParamQuery([Prefix 'DeltaL'], 'Delta L  :', '120.5', 'dB SPL', ...
+    'rreal/positive', [CmpName ' SPL.' PairStr],Nchan);
+SPL2=messenger([Prefix 'L2'], 'L2          :  [*****] dB SPL               ',2);
 MaxSPL=messenger([Prefix 'MaxSPL'], 'max [**** ****] dB SPL @ [***** *****] Hz    ',1);
 
 Levels = GUIpanel('Levels', T);
-Levels = add(Levels,SPL1,'below');
+Levels = add(Levels,SPL1Start,'below');
+Levels = add(Levels,SPL1Step,'below');
+Levels = add(Levels,SPL1End,'below');
+Levels = add(Levels,DeltaL,'below');
 Levels = add(Levels,SPL2,'below');
 Levels = add(Levels,MaxSPL,'below');
 % Levels = add(Levels,DAC,'nextto',[15 0]);

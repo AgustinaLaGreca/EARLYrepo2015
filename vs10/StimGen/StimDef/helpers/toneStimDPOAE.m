@@ -101,38 +101,45 @@ Fsam = sampleRate(F2, P.Experiment); % accounting for recording requirements min
 % compute # samples needed to store the waveforms w/o cyclic storage tricks
 NsamTotLiteral = round(1e-3*sum(BurstDur)*Fsam);
 
-[Ncond, dum] = size(F1);
+NFreq = P.Ncond_XY(1);
+NSPL = P.Ncond_XY(2);
 % now compute the stimulus waveforms condition by condition, ear by ear.
 % for ichan=1:Nchan,
 %     chanStr = DAchanStr(ichan); % L|R
-    for icond=1:Ncond,
+
+for ispl=1:NSPL
+    
+    for icond=1:NFreq,
+        
+        idx = icond + (ispl-1)*NFreq;
         
         % evaluate cyclic storage to save samples
-        C = CyclicStorage(F1(icond), 0, Fsam, BurstDur(icond), [CarTol(icond), ModTol(icond)], NsamTotLiteral);
+        C = CyclicStorage(F1(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral);
         % compute the waveform
         
-        [w1, fcar1] = local_Waveform('L', P.Experiment, Fsam, ISI(icond), ...
-            FineDelay(icond), GateDelay(icond), ModDelay(icond), OnsetDelay(icond), RiseDur(icond), FallDur(icond), ...
-            C, WavePhase(icond), ModDepth(icond), ModStartPhase(icond), ModTheta(icond), L1(icond), P.StimType);
+        [w1, fcar1] = local_Waveform('L', P.Experiment, Fsam, ISI(idx), ...
+            FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
+            C, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L1(idx), P.StimType);
         w1 = setRep(w1,P.Nrep);
-        P.Waveform(icond,1) = w1;
+        P.Waveform(idx,1) = w1;
         % derived stim params
-        P.Fcar(icond,1) = fcar1;
-        P.CyclicStorage(icond,1) = C;
+        P.Fcar(idx,1) = fcar1;
+        P.CyclicStorage(idx,1) = C;
         
         
-        C = CyclicStorage(F2(icond), 0, Fsam, BurstDur(icond), [CarTol(icond), ModTol(icond)], NsamTotLiteral);
+        C = CyclicStorage(F2(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral);
         % compute the waveform
         
-        [w2, fcar2] = local_Waveform('R', P.Experiment, Fsam, ISI(icond), ...
-            FineDelay(icond), GateDelay(icond), ModDelay(icond), OnsetDelay(icond), RiseDur(icond), FallDur(icond), ...
-            C, WavePhase(icond), ModDepth(icond), ModStartPhase(icond), ModTheta(icond), L2(icond), P.StimType);
+        [w2, fcar2] = local_Waveform('R', P.Experiment, Fsam, ISI(idx), ...
+            FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
+            C, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L2(idx), P.StimType);
         w2 = setRep(w2,P.Nrep);
-        P.Waveform(icond,2) = w2;
+        P.Waveform(idx,2) = w2;
         % derived stim params
-        P.Fcar(icond,2) = fcar2;
-        P.CyclicStorage(icond,2) = C;
+        P.Fcar(idx,2) = fcar2;
+        P.CyclicStorage(idx,2) = C;
     end
+end
 P.Duration = SameSize(P.BurstDur, zeros(1,2)); 
 P = structJoin(P, CollectInStruct(Fsam));
 P.GenericParamsCall = {fhandle(mfilename) struct([]) 'GenericStimParams'};

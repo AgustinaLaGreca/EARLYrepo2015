@@ -27,10 +27,10 @@ end
 % ---Durations
 Dur = DurPanel('Durations', EXP, '', 'basicsonly');
 % ---Pres
-Pres = PresentationPanel_XY('F1','F2');
+Pres = PresentationPanel_XY('F2','L1');
 % Pres = PresentationPanel;
 % ---Summary
-summ = Summary(17);
+summ = Summary(25);
 
 %====================
 Params=GUIpiece('Params'); % upper half of GUI: parameters
@@ -39,7 +39,7 @@ Params = add(Params, summ);
 Params = add(Params, FPanel, nextto(summ), [10 0]);
 Params = add(Params, Levels, nextto(FPanel), [10 0]);
 Params = add(Params, Dur, below(FPanel) ,[0 10]);
-Params = add(Params, Pres, nextto(Dur) ,[10 0]);
+Params = add(Params, Pres, below(Levels) ,[0 10]);
 Params = add(Params, PlayTime, below(Pres) , [-300 10]);
 
 
