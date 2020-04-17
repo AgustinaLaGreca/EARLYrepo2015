@@ -19,18 +19,23 @@ global UserName
 if isempty(UserName)		
 	UserName = varargin{1};
 end
-					
+%Set local Disk
+Disk = which('qstart');
+%Early Configuration
+EarlyPath = [Disk(1),':\EARLYrepo2015\'];
+EarlyStim = [Disk(1),':\Early_StimDefLeuven2015\'];
+
 %SGSR Configuration
-SGSRPath = 'C:\SGSR\';
+SGSRPath = [Disk(1),':\SGSR\'];
 StartUpDir = [SGSRPath, 'startupdir\'];
 SetupInfo = [SGSRPath, 'SetupInfo\'];
 
-WorkDir = ['C:\USR\', UserName];
+WorkDir = [Disk(1),':\USR\', UserName];
 mFilesDir = [WorkDir, '\mfiles\'];
 localStartupDir = [WorkDir, '\MatlabStartup\'];
 % DataDir = [WorkDir, '\rawData\'];
-DataDir = ['C:\usr\adriaan\ExpData\'];
-RapMcoDir = ['C:\Usr\', UserName, '\mco\'];
+DataDir = [Disk(1),':\usr\adriaan\ExpData\'];
+RapMcoDir = [Disk(1),':\Usr\', UserName, '\mco\'];
 	
 loadExperimentalTools = 0;
 checkSGSRUpdates = 1;
@@ -47,7 +52,9 @@ Incompatible = { ...
 	[SGSRPath, 'vs30\BramGeneral\_Obsolete'],		...
 	[SGSRPath, 'vs30\BramGeneral\structtools\_obsolete'],	...
 	[SGSRPath, 'vs30\Phoenix\Sys3\obsolete'],		...
-    [SGSRPath, 'KQuest'] ...
+    [SGSRPath, 'KQuest'], ...
+    EarlyPath,...
+    EarlyStim,...
     };
 
 Paths = {       ...
