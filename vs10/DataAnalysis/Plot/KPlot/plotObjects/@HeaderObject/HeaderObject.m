@@ -32,7 +32,7 @@ newHeader.params.ML.LineWidth             = 1;
 % newHeader.params.ML.Position              = 'North';   %Set automatically by redraw()
 newHeader.params.ML.VerticalAlignment     = 'middle';
 % newHeader.params.ML.FontWeight            = 'normal';  %Set automatically by redraw()
-newHeader.params.ML.FontSize              = 7;
+newHeader.params.ML.FontSize              = 8;
 newHeader.params.ML.HorizontalAlignment   = 'left';      %Moved here from redraw()
 
 %resize() function -> see defaultPage() 
