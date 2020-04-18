@@ -1206,7 +1206,7 @@ else
     LnHdl = line(X, Y, 'LineStyle', '-', 'Marker', 'none'); 
     set(LnHdl(1), 'LineWidth', 2, 'Color', 'b'); set(LnHdl(2), 'LineWidth', 0.5, 'Color', 'g');
     title('SAC and XAC', 'FontSize', TitleFontSz);
-    LgHdl = legend({'SAC', 'XAC'}, 1);
+    LgHdl = legend({'SAC', 'XAC'});
     set(findobj(LgHdl, 'type', 'text'), 'FontSize', LabelFontSz);
 end
 TxtStr =  {sprintf('Max(SAC): %.2f', SXAC.max), sprintf('HHW(SAC): %.2fms', SXAC.hhw)};
@@ -1274,7 +1274,7 @@ end
 YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
 line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
 text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
-legend({'Orig', 'RunAv'}, 1);
+legend({'Orig', 'RunAv'});
 
 %----------------------------------------------------------------------------
 function PlotCrossCorFnc(ViewPort, SXCC, DCC, GBOR, Param)
@@ -1307,7 +1307,7 @@ else
     LnHdl = line(X, Y, 'LineStyle', '-', 'Marker', 'none'); 
     set(LnHdl(1), 'LineWidth', 2, 'Color', 'b'); set(LnHdl(2), 'LineWidth', 0.5, 'Color', 'g');
     title('SCC and XCC', 'FontSize', TitleFontSz);
-    LgHdl = legend({'SCC', 'XCC'}, 1);
+    LgHdl = legend({'SCC', 'XCC'});
     set(findobj(LgHdl, 'type', 'text'), 'FontSize', LabelFontSz);
 end
 TxtStr =  {sprintf('Max(SCC): %.2f @ %.2fms', SXCC.max, SXCC.lagatmax), sprintf('HHW(SCC): %.2fms', SXCC.hhw)};
@@ -1400,7 +1400,7 @@ end
 YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
 line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
 text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
-legend({'Orig', 'RunAv'}, 1);
+legend({'Orig', 'RunAv'});
 
 %----------------------------------------------------------------------------
 function PlotGenInfo(ViewPort, Info, Thr, RC, GBOR, StimParam, Param)

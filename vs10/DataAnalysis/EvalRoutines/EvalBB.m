@@ -755,10 +755,10 @@ for n = 1:NFreq,
         HIST(n).X = HIST(n).X';
     end
     Y = repmat(HIST(n).Y, 1, NPeriods);
-    RateP(n, :) = interp1(X, Y, Delay, 'cubic');
+    RateP(n, :) = interp1(X, Y, Delay, 'pchip');
     HalfNBin = Param.histnbin/2; %Property histnbin is always assigned an even number ...
     Y = [Y(HalfNBin+1:end), Y(1:HalfNBin)];
-    RateN(n, :) = interp1(X, Y, Delay, 'cubic');
+    RateN(n, :) = interp1(X, Y, Delay, 'pchip');
 end
 %If logaritmic scale is used for constant frequencies, then weigthed arithmetic average is used
 %to assemble the composite curve ... The frequencies itself are used as weight-factor ...

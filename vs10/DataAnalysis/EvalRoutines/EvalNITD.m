@@ -1109,7 +1109,7 @@ end
 title('NTD curves', 'fontsize', 9, 'fontweight', 'bold');
 xlabel('Standard ITD(\mus)', 'fontsize', 7); ylabel('Rate (spk/sec)', 'fontsize', 7);
 axis([MinX MaxX MinY MaxY]); PlotVerZero(MinY, MaxY); 
-LegHdl = legend(LnHdl, LegendStr, 1); set(LegHdl, 'fontsize', 7);
+LegHdl = legend(LnHdl, LegendStr); set(LegHdl, 'fontsize', 7);
 %Plot information on NTD-curves ...
 AxNTDINFO = axes('Position', [2*0.05+(1-0.15)*3/4, 3*0.05+2*(1-0.20)*1/3, (1-0.15)*1/4, (1-0.20)*1/3], 'Visible', 'off'); 
 InfoStr = CalcData.nitdp.str;
@@ -1158,7 +1158,7 @@ if ~isempty(CalcData.diff),
     xlabel('Standard ITD (\mus)', 'fontsize', 7); ylabel('Normalized Rate', 'fontsize', 7);
     axis([MinX, MaxX, MinY MaxY]);
     PlotVerZero(MinY, MaxY); PlotHorZero(MinX, MaxX);
-    LegHdl = legend(LnHdl, LegendStr, 1); set(LegHdl, 'fontsize', 7);
+    LegHdl = legend(LnHdl, LegendStr); set(LegHdl, 'fontsize', 7);
     %Plot information on these curves ...
     AxDIFFINFO = axes('Position', [2*0.05+(1-0.15)*3/4, 2*0.05+1*(1-0.20)*1/3, (1-0.15)*1/4, (1-0.20)*1/3], 'Visible', 'off'); 
     if strncmpi(Param.gaborfit, 'n', 1), InfoStr = CalcData.diff.str;

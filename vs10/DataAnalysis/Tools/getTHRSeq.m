@@ -66,7 +66,7 @@ end
 function thr_recordings = local_get_thr(Exp,cellNr)
     thr_recordings = {};
     % Open the log file
-    log_file_name = [datadir filesep Exp filesep Exp '.log'];
+    log_file_name = [datadir filesep Exp.name filesep Exp.name '.log'];
 %    log_file_name = [ 'C:\ExpData\Exp' filesep Exp.ID.Name filesep Exp.ID.Name '.log'];
     fid = fopen (log_file_name,'rt');
 
