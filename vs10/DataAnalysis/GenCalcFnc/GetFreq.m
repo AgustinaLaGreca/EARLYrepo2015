@@ -77,9 +77,9 @@ S.ModFreq     = NaN*ones(NSub, NChan);
 S.BeatFreq    = NaN*ones(NSub,NChan);
 S.BeatModFreq = NaN*ones(NSub,NChan);
 S.CarFreq     = ds.Stim.Fcar(1:NSub,1:NChan);
-elseif isfield(ds.Stim, 'ModFreq')
+elseif isfield(ds.Stim, 'ModFreq')||isfield(ds.Stim, 'StepFreq')
 S.CarFreq     = NaN*ones(NSub,NChan);
-S.ModFreq     = ds.Stim.Fmod(1:NSub,1:NChan);
+S.ModFreq     = ds.Stim.ModDelay(1:NSub,1:NChan);
 elseif  isfield(ds.Stim, 'Fcar') && isfield(ds.Stim, 'Fmod')
     S.CarFreq     = ds.Stim.Fcar(1:NSub,1:NChan);
 S.ModFreq     = ds.Stim.Fmod(1:NSub,1:NChan);

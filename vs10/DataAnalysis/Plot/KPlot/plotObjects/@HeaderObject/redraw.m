@@ -73,6 +73,9 @@ for n = 1:numOfColumns
 	%Draw box and let it fit to the text size 
  	myHld{n} = annotation('textbox', [pos(1)+ Xincr, Ypos, 0, Heigth] , 'String', String, 'FitBoxToText', 'on', 'FontSize', fontSize);
 
+    %delay time needed to get right position
+    pause(0.1)
+
 	%Get new size after Fitting
 	pos =  get(myHld{n}, 'Position');
 	Xincr = pos(3);

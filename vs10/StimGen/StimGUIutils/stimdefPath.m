@@ -55,6 +55,9 @@ switch lower(kw),
     otherwise,
         error('Invalid keyword.');
 end
+%set local disk
+Disk = which('startup');
+if ~strcmp(Disk(1),'C'),PP=strrep(PP,'C:\',Disk(1:3));end
 P = [stimDefDir pathsep PP];
 
 

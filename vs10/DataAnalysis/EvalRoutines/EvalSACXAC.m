@@ -872,7 +872,7 @@ else
         set(LnHdlm(2), 'LineWidth', 0.5, 'Color', 'c');
     end
     title('SAC and XAC', 'FontSize', 12);
-    legend({'SAC', 'XAC'}, 1);
+    legend({'SAC', 'XAC'});
     TxtStr = {sprintf('Max: %.2f', CalcData.ac.max), ...
         sprintf('ZeroValues(SAC/XAC): %.2f/%.2f', CalcData.ac.saczero, CalcData.ac.xaczero), ...            
         sprintf('ZeroRatio: %.2f', CalcData.ac.zeroratio), ...
@@ -976,7 +976,7 @@ MinY = YRange(1);
 MaxY = YRange(2);
 line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
 text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', 9);
-legend({'Orig', 'RunAv'}, 1);
+legend({'Orig', 'RunAv'});
 
 %Plotting discrete fourier transform of SUMCOR ...
 if isequal(Info.ds1.iseq, Info.ds2.iseq) && isequal(Info.ds1.isubseq, Info.ds2.isubseq),
@@ -1007,7 +1007,7 @@ else
     line([MinX, CalcData.sum.fft.cof], COLevel([1 1]), 'Color', 'k', 'LineStyle', '-', 'Marker', 'none');
     line(CalcData.sum.fft.bf([1 1]), YRange, 'Color', 'k', 'LineStyle', ':', 'Marker', 'none');
     text(MinX, MinY, {sprintf('BestFreq: %.2fHz', CalcData.sum.fft.bf), sprintf('CutOffFreq: %.2fHz', CalcData.sum.fft.cof)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'bottom', 'FontSize', 9);
-    legend({'Orig', 'RunAv'}, 1);
+    legend({'Orig', 'RunAv'});
 end
 
 %----------------------------------------------------------------------------
