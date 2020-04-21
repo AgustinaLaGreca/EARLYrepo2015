@@ -1,4 +1,4 @@
-function D = DataDir(D);
+function D = datadir(D)
 % datadir - get/set data directory
 %   Datadir returns the current data directory if one exists. If none
 %   exists, an error occurs.
