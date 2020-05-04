@@ -30,6 +30,7 @@ Info.ds.filename = ds.expname;
 Info.ds.icell    = ds.ID.iCell;
 Info.ds.iseq     = ds.ID.iDataset;
 Info.ds.seqid    = ds.IDstring;
+Info.ds.Exp      = ds.ID.Experiment;
 Info.ds.mashed   = '';
 if Param.ismashed
 %TODO   Info.ds.mashed = ['mashed#' num2str(ds.ID.mashed)];
