@@ -115,8 +115,8 @@ StimParam.nrep = ds.NrepRec(iSubSeq);
 spl1 = GetSPL(ds);
 StimParam.spl = CombineSPLs(spl1(iSubSeq, 1), spl1(iSubSeq, end));
 
-StimParam.LowFreq = ds.stimparam.LowFreq;
-StimParam.HighFreq = ds.stimparam.HighFreq;
+StimParam.LowFreq = ds.stimparam.FreqLow;
+StimParam.HighFreq = ds.stimparam.FreqHigh;
 
 % Gowtham, July 2019: right now this is just for BPN, could be adapted for other functions
 if(isfield(ds.Stim,'CutoffFreq'))
