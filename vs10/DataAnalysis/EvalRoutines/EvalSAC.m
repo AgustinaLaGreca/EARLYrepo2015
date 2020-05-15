@@ -182,7 +182,7 @@ end
 %Delete the connection to the server for retrieving SGSR information
 
 %%% Threshold curve information
-SeqNr = getTHRSeq(Info(1).ds.filename, Info(1).ds.icell);
+SeqNr = getTHRSeq(Info(1).ds.Exp, Info(1).ds.icell);
 
 %%% Rate curve information ...
 Rcn = struct([]);
