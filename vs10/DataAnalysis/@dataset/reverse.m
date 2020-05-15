@@ -12,7 +12,7 @@ if isempty(ds) || ~isa(ds, 'dataset') || nargin > 1
 end
 
 PRES = ds.Stim.Presentation;
-duration = PRES.PresDur;
+BurstDur = ds.Stim.BurstDur;
 
 % Use events stored online contained in ds
 % for each event, retrieve most recent stimulus onset
@@ -23,13 +23,10 @@ spt = spt - Onsets; % spike times re "their own" stim onsets
 
 % Reverse according to the duration
 for i = 1:PRES.Ncond*PRES.NRep
-    dur = duration(i+1); %+1 to account for baseline
-    
-    %spt{i, j} = spt{i, j}(spt{i, j} < dur); % remove spike times beyond stimulus offset
-    spt(ipres == i & spt < dur) = abs(spt(ipres == i & spt < dur) - dur);
+    spt(ipres == i & spt < BurstDur) = abs(spt(ipres == i & spt < BurstDur) - BurstDur);
 end
-
 spt = spt + Onsets; % spike times re grand stimulus onset
+spt(spt > BurstDur + Onsets) = [];
 ds.Data.RX6_digital_1.Data.EventTimes = spt;
 
 % Remove analog data  if present to avoid confusion (alternative would be
