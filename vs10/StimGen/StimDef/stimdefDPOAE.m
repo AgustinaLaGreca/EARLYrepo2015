@@ -18,11 +18,12 @@ FPanel = FreqPanelDPOAE('carrier frequency', EXP);
 
 % ---Levels
 Levels = SPLpanelDPOAE('-', EXP);
-P.DAC='Both';
 
-if ~isequal(EXP.Audio.DAchannelsUsed,P.DAC)
-    error('The experiment must be binaural');
-end
+% P.DAC='Both';
+% 
+% if ~isequal(EXP.Audio.DAchannelsUsed,P.DAC)
+%     error('The experiment must be binaural');
+% end
 
 % ---Durations
 Dur = DurPanel('Durations', EXP, '', 'basicsonly');

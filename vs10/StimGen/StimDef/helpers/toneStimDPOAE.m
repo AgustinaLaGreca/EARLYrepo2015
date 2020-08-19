@@ -82,10 +82,10 @@ error(local_test_singlechan(P,{'FineITD', 'GateITD', 'ModITD', 'ISI'}));
 % sizes all the time.
 [F1, F2, ModFreq, ModDepth, ModStartPhase, ModTheta, ...
     OnsetDelay, BurstDur, RiseDur, FallDur, ISI, WavePhase, ...
-    FineITD, GateITD, ModITD, L1, L2] ...
+    FineITD, GateITD, ModITD, L1, L2, DAC] ...
     = SameSize(P.F1, P.F2, P.ModFreq, P.ModDepth, P.ModStartPhase, P.ModTheta, ...
     P.OnsetDelay, P.BurstDur, P.RiseDur, P.FallDur, P.ISI, P.WavePhase, ...
-    P.FineITD, P.GateITD, P.ModITD, P.L1, P.L2);
+    P.FineITD, P.GateITD, P.ModITD, P.L1, P.L2, P.DAC);
 
 % sign convention of ITD is specified by Experiment. Convert ITD to a nonnegative per-channel delay spec 
 FineDelay = ITD2delay(FineITD(:,1), P.Experiment); % fine-structure binaural delay
@@ -111,33 +111,52 @@ for ispl=1:NSPL
     
     for icond=1:NFreq,
         
-        idx = icond + (ispl-1)*NFreq;
+        idx = icond + ((ispl-1)*NFreq);
         
         % evaluate cyclic storage to save samples
-        C = CyclicStorage(F1(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral);
+        C1 = CyclicStorage(F1(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral);
         % compute the waveform
         
         [w1, fcar1] = local_Waveform('L', P.Experiment, Fsam, ISI(idx), ...
             FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
-            C, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L1(idx), P.StimType);
+            C1, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L1(idx), P.StimType);
         w1 = setRep(w1,P.Nrep);
-        P.Waveform(idx,1) = w1;
-        % derived stim params
-        P.Fcar(idx,1) = fcar1;
-        P.CyclicStorage(idx,1) = C;
+%         P.Waveform(idx,1) = w1;
+%         % derived stim params
+%         P.Fcar(idx,1) = fcar1;
+%         P.CyclicStorage(idx,1) = C;
         
         
-        C = CyclicStorage(F2(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral);
+        C2 = CyclicStorage(F2(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral);
         % compute the waveform
         
         [w2, fcar2] = local_Waveform('R', P.Experiment, Fsam, ISI(idx), ...
             FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
-            C, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L2(idx), P.StimType);
+            C2, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L2(idx), P.StimType);
         w2 = setRep(w2,P.Nrep);
-        P.Waveform(idx,2) = w2;
-        % derived stim params
-        P.Fcar(idx,2) = fcar2;
-        P.CyclicStorage(idx,2) = C;
+        
+        switch DAC
+        case 'Left'            
+            P.Waveform(idx,1) = w1;
+            % derived stim params
+            P.Fcar(idx,1) = fcar1;
+            P.CyclicStorage(idx,1) = C1;
+            break;
+        case 'Right'            
+            P.Waveform(idx,2) = w2;
+            % derived stim params
+            P.Fcar(idx,2) = fcar2;
+            P.CyclicStorage(idx,2) = C2;
+            break;
+        otherwise          
+            P.Waveform(idx,1) = w1;
+            P.Waveform(idx,2) = w2;
+            % derived stim params
+            P.Fcar(idx,1) = fcar1;
+            P.Fcar(idx,2) = fcar2;
+            P.CyclicStorage(idx,1) = C1;
+            P.CyclicStorage(idx,2) = C2;
+        end
     end
 end
 P.Duration = SameSize(P.BurstDur, zeros(1,2)); 

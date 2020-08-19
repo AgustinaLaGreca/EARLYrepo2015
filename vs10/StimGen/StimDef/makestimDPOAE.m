@@ -31,18 +31,24 @@ P2 = []; % a premature return will result in []
 if isempty(P), return; end
 figh = P.handle.GUIfig;
 
-% Eval of Freq Stepper and finding F2 using the Ratio
-x=EvalStepper(1,P.RatioSteps,P.RatioEnd);
-P.F2=x*P.F1;
+% Eval of Freq Stepper and finding F2 
+P.F1=EvalFrequencyStepper(figh, '', P); 
+
+
+% Mix sweeps and checking if there are too many steps
+L1=EvalStepper(P.L1Start,P.L1Step,P.L1End);
+[P.F1, P.L1, P.Ncond_XY] = MixSweeps(P.F1, L1);
+
+P.F2 = P.F1*P.Ratio;
 P.F2Unit='Hz';
 Mess=['Frequency 2 (R): ' num2str(min(P.F2)) 'Hz to ' num2str(max(P.F2)) 'Hz'];
-Mess=[Mess newline '                             in steps of ' num2str(min(P.F2)*P.RatioSteps) 'Hz'];
+if (numel(P.F2)>1)
+    Mess=[Mess newline '                             in steps of ' num2str(P.F2(2)-P.F2(1)) 'Hz'];
+end
 MM = GUImessenger(figh, ['F2Msg']);
 report(MM,Mess);
 if isempty(P.F1), return; end
 
-L1=EvalStepper(P.L1Start,P.L1Step,P.L1End);
-[P.F2, P.L1, P.Ncond_XY] = MixSweeps(P.F2, L1);
 maxNcond = P.Experiment.maxNcond;
 if prod(P.Ncond_XY)>maxNcond,
     Mess = {['Too many (>' num2str(maxNcond) ') stimulus conditions.'],...
@@ -82,17 +88,17 @@ VisitOrder = EvalPresentationPanel_XY(figh, P, P.Ncond_XY);
 if isempty(VisitOrder), return; end
 
 % Sort conditions, add baseline waveforms (!), provide info on varied parameter etc
-P.DAC='Both';
 P = sortConditions(P, {'F2','L1'}, {'Freq 2','SPL 1'}, {'Hz','dB'}, {P.F2Unit,P.L1Unit});
-% P = sortConditions(P, 'F1', 'Freq 1','Hz', P.F1Unit);
+Px = sortConditions(P, {'F1','L2'}, {'Freq 1','SPL 2'}, {'Hz','dB'}, {P.F2Unit,P.L1Unit});
 
 % Levels and active channels (must be called *after* adding the baseline waveforms)
 [mxSPL P.Attenuation] = maxSPL(P.Waveform, P.Experiment);
 okay=EvalSPLpanelDPOAE(figh,P, mxSPL, P.Fcar);
 if ~okay, return; end
 % Summary
-ReportSummaryDPOAE(figh, P);
-
+% ReportSummary(figh, P);
+ReportSummaryDPOAE(figh, P, Px);
+    
 % 'TESTING MAKEDTIMFS'
 % P.Duration
 % P.Duration = []; % 
