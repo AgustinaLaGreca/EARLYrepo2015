@@ -1,4 +1,4 @@
-function P = GenericStimparams(S, ParamName, iCond, ichan);
+function P = GenericStimparams(S, ParamName, iCond, ichan)
 %  GenericStimparams - generic set of stimulus parameters
 %     GenericStimparams(S), where S is the stimulus-defining struct of a
 %     stimulus protocol (as stored in the Stim field of dataset objects),

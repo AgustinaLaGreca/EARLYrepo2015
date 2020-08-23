@@ -92,37 +92,41 @@ end
 % Now left ear is definitely channel 1 and right channel 2
 
 %--------------------------------------------------------------------------
-function [wv,recside,isflipped] = SortSidesEarly(ds, wv); 
+function [wv,recside,isflipped] = SortSidesEarly(ds, wv)
 
 % keep track of flipping
 isflipped = 0;
 
-if isempty(ds.Rec.RecordInstr.RecSettings)
+% for i = length(ds.Rec.RecordInstr)
+%     recsettings(i) = ds.Rec.RecordInstr(i).RecSettings; 
+% end
+
+if isempty(ds.Rec.RecordInstr)
     % Parse look up table and get ds which contains SessionInfo (recside and channel mapping)
-    D = log2lut(ds.ID.Experiment.ID.Name);
+    D = EARLY2LUT(ds.ID.Experiment.ID.Name);
     for n = 1:length(D)
-        temp = regexpi(D(n).StimType ,'NRHO|ARMIN');
+        temp = regexpi(D(n).IDstr ,'NRHO|ARMIN');
         if ~isempty(temp)
-            ds = dataset(ds.ID.Experiment.ID.Name,D(n).StimType);
+            ds = dataset(ds.id.FileName,D(n).IDstr);
             break
         end
     end
 end
 
-if ~isempty(ds.Rec.RecordInstr.RecSettings)
-    if isfield(ds.Rec.RecordInstr.RecSettings,'Chan')
-    if ~ (ds.Rec.RecordInstr.RecSettings.Chan == 0)
-        
-        wv(:,:) = wv(:,[2 1]);
-        
-        % keep track of flipping
-        isflipped = 1;
-    else
-        % left is channel 1 - do nothing
-    end
-    % Now left ear is definitely channel 1 and right channel 2
-    
-    recside = 'Left';
+if ~isempty(ds.Rec.RecordInstr)
+    if isfield(ds.Rec.RecordInstr,'Chan')
+        if ~(ds.Rec.RecordInstr.Chan == 0)
+
+            wv(:,:) = wv(:,[2 1]);
+
+            % keep track of flipping
+            isflipped = 1;
+        else
+            % left is channel 1 - do nothing
+        end
+        % Now left ear is definitely channel 1 and right channel 2
+
+        recside = 'Left';
     else
         % No ds with ear mapping or rec side found
         disp('No dataset with ear mapping or recording side could be found');
