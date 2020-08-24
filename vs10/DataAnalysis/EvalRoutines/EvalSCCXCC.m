@@ -33,6 +33,8 @@ function ArgOut = EvalSCCXCC(varargin)
 %% ---------------- CHANGELOG -----------------------
 %  Wed Apr 25 2012  Abel   
 %   - Added support for gabor fitfnc
+%  Fri May 29 2020 Darina
+%   - Corrected the parsing of spike times cells
 
 %-----------------------------------template---------------------------------
 %Attention! The cochlear distance, which can be derived from the tuning frequency
@@ -194,13 +196,9 @@ else
 end
 
 %Retrieve and calculate threshold curve information ...
-% Thr(1) = RetrieveThrInfo(Info.ds1p.filename, Info.ds1p.icell);
-% Thr(2) = RetrieveThrInfo(Info.ds2p.filename, Info.ds2p.icell);
-% Thr(1) = getThr4Cell(Info.ds1p.filename, Info.ds1p.icell); 
-ds1p = read(dataset, Info.ds1p.filename,Info.ds1p.iseq);
+ds1p = read(dataset, Info.ds1p.filename, Info.ds1p.iseq);
 Thr(1) = getThr4Cell(ds1p.Experiment, Info.ds1p.icell);
 ds2p = read(dataset, Info.ds2p.filename,Info.ds2p.iseq);
-% Thr(2) = getThr4Cell(Info.ds2p.filename, Info.ds2p.icell); 
 Thr(2) = getThr4Cell(ds2p.Experiment, Info.ds2p.icell); 
 %fast and ugly fix for compatibility
 for n = 1:length(Thr)
@@ -208,16 +206,14 @@ for n = 1:length(Thr)
         Thr(n).str = Thr(n).str{:};
     end
 end
-    
-
 
 %Extract rate curve information ...
-RC(1) = CalcRC(Spt(1),Spt(2), Param);
-RC(2) = CalcRC(Spt(3),Spt(4),Param);
+RC(1) = CalcRC(Spt{1:2}, Param);
+RC(2) = CalcRC(Spt{3:4}, Param);
 
 %Calculate correlograms ...
-[SXAC(1), DAC(1)] = CalcAC(Spt(1),Spt(2), Thr(1), Param);
-[SXAC(2), DAC(2)] = CalcAC(Spt(3), Spt(4), Thr(2), Param);
+[SXAC(1), DAC(1)] = CalcAC(Spt{1:2}, Thr(1), Param);
+[SXAC(2), DAC(2)] = CalcAC(Spt{3:4}, Thr(2), Param);
 if strncmpi(Param.calctype, 's', 1)
     [SXCC, DCC] = CalcCC(Spt{:}, Thr, Param);
 else
@@ -318,12 +314,12 @@ end
 function [Spt, Info, StimParam, Param] = ParseArgs(DefParam, varargin)
 
 %Checking input arguments ...
-Nds = length(find(cellfun('isclass', varargin, 'dataset') | cellfun('isclass', varargin, 'edfdataset')));
+Nds = length(find(cellfun('isclass', varargin, 'dataset')));
 if (Nds == 2), %T = EVALSCCXCC(ds1, SubSeqs1, ds2, SubSeqs2)
     if (length(varargin) < 4)
         error('Wrong number of input arguments.');
     end
-    if ~all(cellfun('isclass', varargin([1, 3]), 'dataset') | cellfun('isclass', varargin([1, 3]), 'edfdataset'))
+    if ~all(cellfun('isclass', varargin([1, 3]), 'dataset'))
         error('First and third argument should be datasets.'); 
     else
         [ds1p, ds1n, ds2p, ds2n] = deal(varargin{[1, 1, 3, 3]});
@@ -400,8 +396,7 @@ end
 %Assembling spiketrains ...
 Spt = cell(Nds, 1);
 for n = find(~isnan(iSubSeqs))
-   spt1 = eval(sprintf('spiketimes(%s)', dsNames{n}));
-   Spt{n} = spt1{iSubSeqs(n)};
+    Spt{n} = eval(sprintf('%s.spiketimes(iSubSeqs(%d), :);', dsNames{n}, n));
 end
 
 %Assembling dataset information ...
@@ -562,28 +557,6 @@ else
 end
 
 %----------------------------------------------------------------------------
-function Thr = RetrieveThrInfo(FileName, iCell)
-
-Thr = struct('cf', NaN, 'sr', NaN, 'thr', NaN, 'bw', NaN, 'q10', NaN, 'str', sprintf('No threshold\ninformation present.'));
-
-try %Retrieving data from SGSR server ...
-    UD = getuserdata(FileName, iCell); if isempty(UD), error('To catch block ...'); end
-    if ~isempty(UD.CellInfo) && ~isnan(UD.CellInfo.THRSeq),
-        dsTHR = dataset(FileName, UD.CellInfo.THRSeq);
-        [CF, SR, Thr, BW, Q10] = EvalTHR(dsTHR, 'plot', 'no');
-        s = sprintf('%s <%s>', dsTHR.FileName, dsTHR.seqID);
-        s = strvcat(s, sprintf('CF = %s @ %s', Param2Str(CF, 'Hz', 0), Param2Str(Thr, 'dB', 0)));
-        s = strvcat(s, sprintf('SR = %s', Param2Str(SR, 'spk/sec', 1)));
-        s = strvcat(s, sprintf('BW = %s', Param2Str(BW, 'Hz', 1)));
-        s = strvcat(s, sprintf('Q10 = %s', Param2Str(Q10, '', 1)));
-        Str = s;
-        Thr = lowerFields(CollectInStruct(CF, SR, Thr, BW, Q10, Str));
-    end
-catch
-    warning('%s\nAdditional information from SGSR server is not included.', lasterr);
-end
-
-%----------------------------------------------------------------------------
 function RC = CalcRC(SptP, SptN, Param)
 
 WinDur = abs(diff(Param.anwin));
@@ -601,22 +574,22 @@ WinDur = abs(diff(Param.anwin)); %Duration of analysis window in ms ...
 SptP = anwin(SptP, Param.anwin);
 SptN = anwin(SptN, Param.anwin);
 
-if ~isempty(SptN),
+if ~isempty(SptN)
     %Correlation of noise token A+ responses of a cell with the responses of that same cell to that same noise
     %token. If spiketrains are derived from the same cell this is called a Shuffled Auto-
     %Correlogram (or SAC). 'Shuffled' because of the shuffling of repetitions in order to avoid to correlation
     %of a repetition with itself. The terminolgy AutoCorrelogram is only used when comparing spiketrains 
     %collected from the same cell.
-    [Ypp, T, NC] = SPTCORR(SptP, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
+    [Ypp, ~, NC] = SPTCORR(SptP, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
     Ypp = ApplyNorm(Ypp, NC);
     %Correlation of noise token A- responses of a cell with the responses of that same cell to that same noise
     %token.
-    [Ynn, T, NC] = SPTCORR(SptN, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
+    [Ynn, ~, NC] = SPTCORR(SptN, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
     Ynn = ApplyNorm(Ynn, NC);
     %Correlation of noise token A+ responses of a cell with the responses of that same cell to a different noise
     %token, in this case A-. Because of the fact that we correlate across stimuli this type of correlogram is 
     %designated XAC, when comparing responses from the same cell.
-    [Ypn, T, NC] = SPTCORR(SptP, SptN, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
+    [Ypn, ~, NC] = SPTCORR(SptP, SptN, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
     Ypn = ApplyNorm(Ypn, NC);
     %Correlation of noise token A- responses of a cell with the responses of that same cell to a different noise
     %token, in this case A+.
