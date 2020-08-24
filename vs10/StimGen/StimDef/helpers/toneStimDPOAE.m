@@ -114,21 +114,15 @@ for ispl=1:NSPL
         idx = icond + ((ispl-1)*NFreq);
         % evaluate cyclic storage to save samples
         C1 = CyclicStorage(F1(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral(1));
-        % compute the waveform
+        % compute the waveform for Left chanel
         
         [w1, fcar1] = local_Waveform('L', P.Experiment, Fsam, ISI(idx), ...
             FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
             C1, WavePhase(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), L1(idx), P.StimType);
         w1 = setRep(w1,P.Nrep);
         
-%         P.Waveform(idx,1) = w1;
-%         % derived stim params
-%         P.Fcar(idx,1) = fcar1;
-%         P.CyclicStorage(idx,1) = C;
-        
-        
         C2 = CyclicStorage(F2(idx), 0, Fsam, BurstDur(idx), [CarTol(idx), ModTol(idx)], NsamTotLiteral(1));
-        % compute the waveform
+        % compute the waveform for Right chanel
         
         [w2, fcar2] = local_Waveform('R', P.Experiment, Fsam, ISI(idx), ...
             FineDelay(idx), GateDelay(idx), ModDelay(idx), OnsetDelay(idx), RiseDur(idx), FallDur(idx), ...
@@ -136,17 +130,27 @@ for ispl=1:NSPL
         w2 = setRep(w2,P.Nrep);
         
         
-        switch DAC(1)
-        case 'L'
-            w1.Samples{1}= w1.Samples(:,1) + w2.Samples(:,1);
+        switch DAC(1)            
+        case 'L'            
+            if(w1.Param.useCyclicStorage==1 && w2.Param.useCyclicStorage==1)
+              addedwave = (w1.Samples+ w2.Samples);
+              w1.Samples = samplesChunked(addedwave,w1.Nrep,w1.Annotations.Length);
+            else
+              w1.Samples{1}= w1.Samples(:,1) + w2.Samples(:,1);
+            end            
             w1 = AppendSilence(w1, ISI(idx));
             P.Waveform(idx,1) = w1;
             % derived stim params
             P.Fcar(idx,1) = fcar1;
             P.CyclicStorage(idx,1) = C1;
             
-        case 'R'    %not implemented yet!!!!!!!!!!!        
-            w2.Samples{1}= w1.Samples(:,1) + w2.Samples(:,1);
+        case 'R'    
+            if(w1.Param.useCyclicStorage==1 && w2.Param.useCyclicStorage==1)
+              addedwave = (w1.Samples+ w2.Samples);
+              w2.Samples = samplesChunked(addedwave,w2.Nrep,w2.Annotations.Length);
+            else
+              w2.Samples{1}= w1.Samples(:,1) + w2.Samples(:,1);
+            end            
             w2 = AppendSilence(w2, ISI(idx));
             P.Waveform(idx,1) = w2;
             % derived stim params
@@ -163,8 +167,7 @@ for ispl=1:NSPL
             P.Fcar(idx,2) = fcar2;
             P.CyclicStorage(idx,1) = C1;
             P.CyclicStorage(idx,2) = C2;
-        end
-        
+        end        
     end
 end
 P.Duration = SameSize(P.BurstDur, zeros(1,2)); 
@@ -184,19 +187,20 @@ BurstDur = C.Dur;
 SteadyDur = BurstDur-RiseDur-FallDur; % steady (non-windowd) part of tone
 [NonsetDelay, NgateDelay, Nrise, Nsteady, Nfall] = ...
     NsamplesofChain([OnsetDelay, GateDelay, RiseDur, SteadyDur, FallDur], Fsam/1e3);
+
 % For uniformity, cast literal storage in the form of a fake cyclic storage
 useCyclicStorage = C.CyclesDoHelp && (Nsteady>=C.Nsam);
-% if useCyclicStorage, % cyclic storage
-%     NsamCyc = C.Nsam;  % # samples in cyclic buffer
-%     NrepCyc = floor(Nsteady/NsamCyc); % # reps of cyclic buffer
-%     NsamTail = rem(Nsteady,NsamCyc); % Tail containing remainder of cycles
-%     Fcar = C.FcarProx; Fmod = C.FmodProx; % actual frequencies used in waveforms
-% else, % literal storage: phrase as single rep of cyclic buffer + empty tail buffer
+if useCyclicStorage, % cyclic storage
+    NsamCyc = C.Nsam;  % # samples in cyclic buffer
+    NrepCyc = floor(Nsteady/NsamCyc); % # reps of cyclic buffer
+    NsamTail = rem(Nsteady,NsamCyc); % Tail containing remainder of cycles
+    Fcar = C.FcarProx; Fmod = C.FmodProx; % actual frequencies used in waveforms
+else, % literal storage: phrase as single rep of cyclic buffer + empty tail buffer
     NsamCyc = Nsteady;  % total # samples in steady-state portion
     NrepCyc = 1; % # reps of cyclic buffer
     NsamTail = 0; % No tail buffer
     Fcar = C.Fcar; Fmod = C.Fmod; % actual frequencies used in waveforms
-% end
+end
 %=======FREQUENCIES, PHASES, AMPLITUDES and CALIBRATION=======
 isModulated = ~isequal(0,ModDepth) && ~isequal(0,Fmod);
 % SAM is implemented as 3-tone stim. Get the tone freqs.
