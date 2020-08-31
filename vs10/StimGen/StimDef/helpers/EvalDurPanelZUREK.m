@@ -1,6 +1,6 @@
-function [okay, P]=EvalDurPanel(figh, P, Ncond, Prefix, mISI)
-% EvalDurPanel - evaluate Dur parameters from stimulus GUI
-%   [Okay, P]=EvalDurPanel(figh, P, Ncond, Prefix, mISI) evaluates the Duration 
+function [okay, P]=EvalDurPanelZUREK(figh, P, Ncond, Prefix, mISI)
+% EvalDurPanelZUREK - evaluate Dur parameters from ZUREK stimulus GUI
+%   [Okay, P]=EvalDurPanelZUREK(figh, P, Ncond, Prefix, mISI) evaluates the Duration 
 %   parameters obtained from the paramqueries created by DurPanel. The 
 %   first output argument Okay is true unless durations and/or timing parameters 
 %   are out of range or mutually inconsistent. The second output is
@@ -43,10 +43,12 @@ anywrong = 1;
 % parse ITD spec, if present
 hasITD = (isfield(P,'ITD') && isfield(P,'ITDtype'));
 if hasITD
-    [P.FineITD P.GateITD P.ModITD] = ITDparse(P.ITD, P.ITDtype); 
+    [P.FineITD P.GateITD P.ModITD] = ITDparse(P.ITD, P.ITDtype);
+    [P.echoFineITD P.echoGateITD P.echoModITD] = ITDparse(P.echoITD, P.ITDtype);
 else
     P.ITDtype = 'waveform';
     [P.FineITD P.GateITD P.ModITD] = deal(P.ITD);
+    [P.echoFineITD P.echoGateITD P.echoModITD] = deal(P.echoITD);
 end
 % combine onset delay + burstdur
 Onset_Burst_dur = bsxfun(@plus, P.OnsetDelay, P.BurstDur);
@@ -70,12 +72,12 @@ elseif prod(Ncond)>EXP.maxNcond,
     Mess = {['Too many (>' num2str(EXP.maxNcond) ') stimulus conditions.'],...
         'Increase stepsize(s) or decrease range(s)'};
     GUImessage(figh, Mess, 'error');
-elseif any(P.Tau+Onset_Burst_dur>P.ISI)
+elseif any(P.Delay+Onset_Burst_dur>P.ISI)
     GUImessage(figh,'Tau+OnsetDelay+Burst duration exceeds ISI.', ...
-        'error', {[Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'Tau'] 'ISI'});
-elseif any(P.Tau+Onset_Burst_dur+abs(P.GateITD)>P.ISI)
+        'error', {[Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'Delay'] 'ISI'});
+elseif any(P.Delay+Onset_Burst_dur+abs(P.GateITD)>P.ISI)
     GUImessage(figh,'Sum of Tau, OnsetDelay, BurstDur & gated ITD exceeds ISI.', ...
-        'error', {[Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'ITD'] [Prefix 'Tau']  'ISI'});
+        'error', {[Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'ITD'] [Prefix 'Delay']  'ISI'});
 else, anywrong=0; % past all tests
 end
 if anywrong, return; end

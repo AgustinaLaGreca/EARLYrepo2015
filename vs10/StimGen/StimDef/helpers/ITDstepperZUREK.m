@@ -32,12 +32,17 @@ function P=ITDstepper(T, EXP, Prefix)%, haveTypes);
 ClickStr = ' Click button to select ';
 ITDstr = ['(positive = ' upper(strrep(EXP.ITDconvention, 'Lead', ' Lead')) ')'];
 
+%Levels = GUIpanel('Levels', T);
+DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);
+
 %==========ITD GUIpanel=====================
 P = GUIpanel('ITD', T);
-ITDpref = preferences(EXP, 'ITDconvention');
-startITD = ParamQuery('startITD', 'start:', '-10.170', 'ms', 'rreal', ['Start value of ITD ' ITDstr], 1);
-endITD = ParamQuery('endITD', 'end:', '-10.170', 'ms', 'rreal', ['End value of ITD ' ITDstr], 1);
-stepITD = ParamQuery('stepITD', 'step:', '0.170', 'ms', 'rreal/positive', 'Step value of ITD ', 1);
+% ITDpref = preferences(EXP, 'ITDconvention');
+startITD = ParamQuery('startITD', 'ITD start:', '-10.170', 'ms', 'rreal', ['Start value of ITD ' ITDstr], 1);
+endITD = ParamQuery('endITD', 'ITD end:', '-10.170', 'ms', 'rreal', ['End value of ITD ' ITDstr], 1);
+stepITD = ParamQuery('stepITD', 'ITD step:', '0.170', 'ms', 'rreal/positive', 'Step value of ITD ', 1);
+ILD = ParamQuery('ILD', 'ILD:', '-10.170', 'dB', 'rreal', ['ILD for the source' newline ...
+    '+x increases left ear level by x/2 and decreases right ear level by x/2' newline '-x decreases left ear level by x/2 and increases right ear level by x/2' ], 1);
 adjustITD = ParamQuery([Prefix 'AdjustITD'], 'adjust:', '', {'none' 'start' 'step' 'end'}, ...
     '', ['Choose which parameter to adjust when the stepsize does not exactly fit the start & end values.'], 1,'Fontsiz', 8);
 % ITDtype = ParamQuery([Prefix 'ITDtype'], 'impose on', '', {'waveform' 'fine' 'gate' 'mod' 'fine+gate' 'fine+mode' 'gate+mod'}, '', ...
@@ -45,13 +50,42 @@ adjustITD = ParamQuery([Prefix 'AdjustITD'], 'adjust:', '', {'none' 'start' 'ste
 %     '    waveform = whole waveform delay' char(10) ...
 %     '      gating = delayed gating imposed on nondelayed waveform' char(10)  ...
 %     '     ongoing = nondelayed gating imposed on delayed waveform.' ]);
-Tau = ParamQuery('Tau', 'Tau:', '0.170', 'ms', 'rreal/positive', 'Time difference due to the distance between the speaker and the wall', 1);
+
+LowFreq = ParamQuery([Prefix 'LowFreq'], ...
+    'low:', '1100.1 1100.1', 'Hz', 'rreal/nonnegative', ...
+    ['Low cutoff frequency.' ]);
+HighFreq = ParamQuery([Prefix 'HighFreq'], ...
+   'high:', '1100.1 1100.1', 'Hz', 'rreal/nonnegative', ...
+    ['High cutoff frequency.' ]);
+Corr = ParamQuery([Prefix 'Corr'], 'corr:', '-0.9997 ', {'I', 'C'}, ...
+    'rreal', ['Interaural noise correlation (number between -1 and 1)', char(10), ... 
+    'Click button to change the "varied channel" (where mixing is done).'],1);
+NoiseSeed = ParamQuery([Prefix 'ConstNoiseSeed'], 'seed:', '844596300', '', ...
+    'rseed', 'Random seed used for realization of noise waveform. Specify NaN to refresh seed upon each realization.',1);
+SPL = ParamQuery([Prefix 'SPL'], 'level:', '120.5 120.5', {'dB SPL' 'dB/Hz'}, ...
+    'rreal', ['Intensity. Click button to switch between overall level (dB SPL) and spectrum level (dB/Hz).' ]);
+AltLevel = messenger([Prefix 'AltLevel'], 'S=XXX dB/Hz', 1);
+MaxSPL=messenger([Prefix 'MaxSPL'], 'max [**** ****] dB SPL @ [***** *****] Hz    ',1);
+    
+DAC = ParamQuery('DAC', 'DAC:', '', DACstr, ...
+      '', ['Active D/A channels.' ClickStr 'channel(s).']);
 
 P = add(P, startITD, 'below', [0 0]);
 P = add(P, stepITD, alignedwith(startITD));
 P = add(P, endITD, alignedwith(stepITD));
 P = add(P, adjustITD, nextto(stepITD));
-P = add(P, Tau, below(endITD));
+P = add(P, ILD, alignedwith(endITD));
+
+% For the noise segment
+P = add(P,LowFreq, alignedwith(ILD), [0 0]);
+P = add(P,HighFreq, 'aligned', [0 -7]);
+P = add(P,SPL, alignedwith(HighFreq), [0 0]);
+P = add(P,Corr, 'aligned', [0 -7]);
+P = add(P,NoiseSeed, nextto(Corr), [0 0]);
+P = add(P,AltLevel, nextto(SPL), [4 10]);
+P = add(P, DAC, alignedwith(Corr));
+P = add(P,MaxSPL,below(DAC),[17 0]);
+
 % if haveTypes,
 %     P = add(P, ITDtype, below(endITD));
 end

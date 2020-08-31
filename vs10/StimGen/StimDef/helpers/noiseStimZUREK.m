@@ -1,6 +1,6 @@
-function P = noiseStimDIZON(P, varargin); 
-% noiseStimDIZON - compute noise stimulus
-%   P = noiseStimDIZON(P) computes the waveforms of noise stimuli.
+function P = noiseStimZUREK(P, varargin); 
+% noiseStimZUREK - compute noise stimulus
+%   P = noiseStimZUREK(P) computes the waveforms of noise stimuli.
 %   The stimulus parameters are supplied as a struct P. Its values may have
 %   multiple values, their rows coresponding to subsequent stimulus
 %   conditions, and the columns to the DA channels. The Experiment field of
@@ -97,15 +97,24 @@ if ~isfield(P,'Reverse'), P.Reverse = 'Normal'; end
 % sizes all the time.
 [LowFreq, HighFreq, NoiseSeed, ModFreq, ModDepth, ModStartPhase, ModTheta, ...
     ISI, OnsetDelay, BurstDur, RiseDur, FallDur, ...
-    FineITD, GateITD, ModITD, IPD, IFD, Corr, SPL, Tau] ...
+    FineITD, GateITD, ModITD, IPD, IFD, Corr, SPL, ...
+    echoSPL, echoSeed, echoFineITD, echoGateITD, echoModITD, Delay] ...
     = SameSize(P.LowFreq, P.HighFreq, P.NoiseSeed, P.ModFreq, P.ModDepth, P.ModStartPhase, P.ModTheta, ...
     P.ISI, P.OnsetDelay, P.BurstDur, P.RiseDur, P.FallDur, ...
-    P.FineITD, P.GateITD, P.ModITD, P.IPD, P.IFD, P.Corr, P.SPL, P.Tau);
+    P.FineITD, P.GateITD, P.ModITD, P.IPD, P.IFD, P.Corr, P.SPL, ...
+    P.echoSPL, P.echoSeed, P.echoFineITD, P.echoGateITD, P.echoModITD, P.Delay);
 % sign convention of ITD is specified by Experiment. Convert ITD to a nonnegative per-channel delay spec 
 FineDelay = ITD2delay(FineITD(:,1), P.Experiment); % fine-structure binaural delay
 GateDelay = ITD2delay(GateITD(:,1), P.Experiment); % gating binaural delay
 ModDelay = ITD2delay(ModITD(:,1), P.Experiment); % modulation binaural delay
 PhaseShift = IPD2phaseShift(IPD(:,1), P.Experiment); % per-channel phase shift from IPD 
+
+% For echo: sign convention of ITD is specified by Experiment. Convert ITD to a nonnegative per-channel delay spec 
+echoFineDelay = ITD2delay(echoFineITD(:,1), P.Experiment); % fine-structure binaural delay
+echoGateDelay = ITD2delay(echoGateITD(:,1), P.Experiment); % gating binaural delay
+echoModDelay = ITD2delay(echoModITD(:,1), P.Experiment); % modulation binaural delay
+
+
 FreqShift = IFD2freqShift(IFD(:,1), P.Experiment); % per-channel freq shift from IFD 
 % Restrict the parameters to the active channels. If only one DA channel is
 % active, DAchanStr indicates which one.
@@ -113,19 +122,26 @@ FreqShift = IFD2freqShift(IFD(:,1), P.Experiment); % per-channel freq shift from
     ModFreq, ModDepth, ModStartPhase, ModTheta, ...
     ISI, OnsetDelay, BurstDur, RiseDur, FallDur, ... 
     FineDelay, GateDelay, ModDelay, PhaseShift, FreqShift, Corr, ...
-    SPL] ...
+    SPL, echoSeed,echoFineDelay, echoGateITD, echoModITD, echoSPL] ...
     = channelSelect(P.DAC, 'LR', LowFreq, HighFreq, NoiseSeed, ...
     ModFreq, ModDepth, ModStartPhase, ModTheta, ...
     ISI, OnsetDelay, BurstDur, RiseDur, FallDur, ...
     FineDelay, GateDelay, ModDelay, PhaseShift, FreqShift, Corr, ...
-    SPL);
+    SPL, echoSeed, echoFineDelay, echoGateITD, echoModITD, echoSPL);
 % find the single sample rate to realize all the waveforms while  ....
 Fsam = sampleRate(HighFreq+ModFreq, P.Experiment); % ... accounting for recording requirements minADCrate
 % compute the stimulus waveforms condition by condition, ear by ear.
 [Ncond, Nchan] = size(LowFreq);
 
-TauSamples=round(Fsam*Tau(1)*1e-3);
+ILD = P.ILD;
+DAC = P.DAC;
+echoILD = P.echoILD;
 
+SPL=local_ILD(SPL,ILD,DAC);
+echoSPL=local_ILD(echoSPL,echoILD,DAC);
+
+        
+DelayedSamples=round(Fsam*Delay(1)*1e-3);
 
 for icond=1:Ncond,
     
@@ -141,13 +157,19 @@ for icond=1:Ncond,
             ModFreq(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), ...
             ISI(idx), OnsetDelay(idx), BurstDur(idx), RiseDur(idx), FallDur(idx), ...
             FineDelay(idx), GateDelay(idx), ModDelay(idx), PhaseShift(idx), FreqShift(idx), Corr(idx), P.CorrChan, ...
-            SPL(idx), P.SPLtype, P.Reverse);   
+            SPL(idx), P.SPLtype, P.Reverse);
+        P.EchoWaves(icond,ichan) = local_Waveform(chanStr, P.Experiment, Fsam, ...
+            LowFreq(idx), HighFreq(idx), echoSeed(idx), ...
+            ModFreq(idx), ModDepth(idx), ModStartPhase(idx), ModTheta(idx), ...
+            ISI(idx), OnsetDelay(idx), BurstDur(idx), RiseDur(idx), FallDur(idx), ...
+            echoFineDelay(idx), echoGateDelay(idx), echoModDelay(idx), PhaseShift(idx), FreqShift(idx), Corr(idx), P.CorrChan, ...
+            echoSPL(idx), P.SPLtype, P.Reverse);
     end
     
     Lo=P.Waveform(icond,1);     %   Lo = Left original
     Ro=P.Waveform(icond,2);     %   Ro = Right original
-    LrSamples=[zeros(TauSamples,1); Lo.Samples];    %   Lr = Left reflected    
-    RrSamples=[zeros(TauSamples,1); Ro.Samples];    %   Rr = Right reflected
+    LrSamples=[zeros(DelayedSamples,1); P.EchoWaves(icond,2).Samples];    %   Lr = Left reflected    
+    RrSamples=[zeros(DelayedSamples,1); P.EchoWaves(icond,1).Samples];    %   Rr = Right reflected
     
     
     x=Lo.Samples;           
@@ -300,7 +322,11 @@ P = structJoin(ID, '-Timing', T, '-Frequencies', F, '-Phases_Depth', Y, '-Levels
 P.CreatedBy = mfilename; % sign
 
 
-
+function SPL=local_ILD(SPL,ILD,DAC)
+if (DAC(1)=='B'&&ILD~=0)
+        SPL(:,1)=SPL(:,1)+(ILD/2);
+        SPL(:,2)=SPL(:,2)-(ILD/2);      
+end
 
 
 
