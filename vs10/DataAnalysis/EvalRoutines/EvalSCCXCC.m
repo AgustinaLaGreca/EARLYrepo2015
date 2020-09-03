@@ -66,10 +66,10 @@ Template.createdby           = mfilename; %Name of MATLAB function that generate
 %... stimulus parameters ...
 %Stimulus parameters are saved as numerical matrices where different columns correspond to
 %different datasets and different rows designate different channels ... 
-Template.stim.burstdur       = repmat(NaN, 1, 4); %Stimulus duration in ms
-Template.stim.repdur         = repmat(NaN, 1, 4); %Repetition duration in ms
-Template.stim.nrep           = repmat(NaN, 1, 4); %Number of repetitions
-Template.stim.spl            = repmat(NaN, 2, 4); %Sound pressure level in dB
+Template.stim.burstdur       = NaN(1, 4); %Stimulus duration in ms
+Template.stim.repdur         = NaN(1, 4); %Repetition duration in ms
+Template.stim.nrep           = NaN(1, 4); %Number of repetitions
+Template.stim.spl            = NaN(2, 4); %Sound pressure level in dB
 Template.stim.avgspl1        = NaN;               %Averaging of SPL in the power spectrum for one
 Template.stim.avgspl2        = NaN;               %input ...
 Template.stim.avgspl         = NaN;               %Averaging of SPL in the power spectrum for both
@@ -315,7 +315,7 @@ function [Spt, Info, StimParam, Param] = ParseArgs(DefParam, varargin)
 
 %Checking input arguments ...
 Nds = length(find(cellfun('isclass', varargin, 'dataset')));
-if (Nds == 2), %T = EVALSCCXCC(ds1, SubSeqs1, ds2, SubSeqs2)
+if (Nds == 2) %T = EVALSCCXCC(ds1, SubSeqs1, ds2, SubSeqs2)
     if (length(varargin) < 4)
         error('Wrong number of input arguments.');
     end
@@ -375,11 +375,11 @@ CheckParam(Param);
 
 %Checking subsequences numbers and values of independent variable ...
 dsNames = {'ds1p', 'ds1n', 'ds2p', 'ds2n'}; Nds = 4;
-if strcmpi(Param.subseqinput, 'subseq'), 
+if strcmpi(Param.subseqinput, 'subseq')
     iSubSeqs = InputVec; IndepVals = NaN*zeros(1, Nds);
-    for n = find(~isnan(iSubSeqs)), 
+    for n = find(~isnan(iSubSeqs)) 
        try IndepVals(n) = eval(sprintf('%s.indepval(iSubSeqs(%d));', dsNames{n}, n)); 
-       catch error('One of the supplied subsequence numbers is invalid'); end
+       catch, error('One of the supplied subsequence numbers is invalid'); end
     end
 else
     IndepVals = InputVec; iSubSeqs = NaN*zeros(1, Nds);
@@ -409,14 +409,18 @@ Info.ds1p.indepval  = IndepVals(1);
 Info.ds1p.indepunit = ds1p.Stim.Presentation.X.ParUnit;
 
 if ~isvoid(ds1n)
-    Info.ds1n.iseq = ds1n.ID.iDataset;
+    Info.ds1n.iseq      = ds1n.ID.iDataset;
+    Info.ds1n.seqid     = lower([num2str(ds1n.ID.iCell) '-' num2str(ds1n.ID.iRecOfCell) '-' ds1n.StimType]);
+    Info.ds1n.isubseq   = iSubSeqs(2);
+    Info.ds1n.indepval  = IndepVals(2);
+    Info.ds1n.indepunit = ds1n.Stim.Presentation.X.ParUnit;
 else
-    Info.ds1n.iseq = NaN;
+    Info.ds1n.iseq      = NaN;
+    Info.ds1n.seqid     = NaN;
+    Info.ds1n.isubseq   = NaN;
+    Info.ds1n.indepval  = NaN;
+    Info.ds1n.indepunit = NaN;
 end
-Info.ds1n.seqid     = lower([num2str(ds1n.ID.iCell) '-' num2str(ds1n.ID.iRecOfCell) '-' ds1n.StimType]);
-Info.ds1n.isubseq   = iSubSeqs(2);
-Info.ds1n.indepval  = IndepVals(2);
-Info.ds1n.indepunit = ds1n.Stim.Presentation.X.ParUnit;
 
 Info.ds2p.filename  = lower(ds2p.ID.Experiment.ID.Name);
 Info.ds2p.icell     = ds2p.ID.iCell;
@@ -427,14 +431,18 @@ Info.ds2p.indepval  = IndepVals(3);
 Info.ds2p.indepunit = ds2p.Stim.Presentation.X.ParUnit;
 
 if ~isvoid(ds2n)
-    Info.ds2n.iseq = ds2n.ID.iDataset;
+    Info.ds2n.iseq      = ds2n.ID.iDataset;
+    Info.ds2n.seqid     = lower([num2str(ds2n.ID.iCell) '-' num2str(ds2n.ID.iRecOfCell) '-' ds2n.StimType]);
+    Info.ds2n.isubseq   = iSubSeqs(4);
+    Info.ds2n.indepval  = IndepVals(4);
+    Info.ds2n.indepunit = ds2n.Stim.Presentation.X.ParUnit;
 else
-    Info.ds2n.iseq = NaN;
+    Info.ds2n.iseq      = NaN;
+    Info.ds2n.seqid     = NaN;
+    Info.ds2n.isubseq   = NaN;
+    Info.ds2n.indepval  = NaN;
+    Info.ds2n.indepunit = NaN;
 end
-Info.ds2n.seqid     = lower([num2str(ds2n.ID.iCell) '-' num2str(ds2n.ID.iRecOfCell) '-' ds2n.StimType]);
-Info.ds2n.isubseq   = iSubSeqs(4);
-Info.ds2n.indepval  = IndepVals(4);
-Info.ds2n.indepunit = ds2n.Stim.Presentation.X.ParUnit;
 
 if isnan(Info.ds1n.isubseq)
     Info.idstr1 = sprintf('%s %s#%d@%.0f%s', upper(Info.ds1p.filename), ...
@@ -468,14 +476,14 @@ elseif ischar(Param.calcdf)
     CalcDFStr = lower(Param.calcdf);
 else
     CalcDFStr = Param2Str(Param.calcdf, 'Hz', 0);
-end
+end 
 s = sprintf('AnWin = %s', Param2Str(Param.anwin, 'ms', 0));
-s = strvcat(s, sprintf('BinWidth = %s', Param2Str(Param.corbinwidth, 'ms', 2)));
-s = strvcat(s, sprintf('MaxLag = %s', Param2Str(Param.cormaxlag, 'ms', 0)));
-s = strvcat(s, sprintf('Calc. DF = %s', CalcDFStr));
-s = strvcat(s, sprintf('RunAv(Env) = %.2f(%s)', Param.envrunav, Param.envrunavunit));
-s = strvcat(s, sprintf('RunAv(Dft on COR) = %s', Param2Str(Param.corfftrunav, 'Hz', 0)));
-s = strvcat(s, sprintf('RunAv(Dft on DIF) = %s', Param2Str(Param.diffftrunav, 'Hz', 0)));
+s = char(s, sprintf('BinWidth = %s', Param2Str(Param.corbinwidth, 'ms', 2)));
+s = char(s, sprintf('MaxLag = %s', Param2Str(Param.cormaxlag, 'ms', 0)));
+s = char(s, sprintf('Calc. DF = %s', CalcDFStr));
+s = char(s, sprintf('RunAv(Env) = %.2f(%s)', Param.envrunav, Param.envrunavunit));
+s = char(s, sprintf('RunAv(Dft on COR) = %s', Param2Str(Param.corfftrunav, 'Hz', 0)));
+s = char(s, sprintf('RunAv(Dft on DIF) = %s', Param2Str(Param.diffftrunav, 'Hz', 0)));
 Param.str = s;
 
 %----------------------------------------------------------------------------
@@ -1028,7 +1036,7 @@ else
     FFTscc.Magn.dB = FFTscc.Magn.dB/2;
     
     %Determine which dominant frequency to be used in the calculation ...
-    DomFreq = DetermineCalcDF(Param.calcdf, mean(deNaN(cat(2, Thr.cf))), NaN, FFTscc.DF);
+    DomFreq = DetermineCalcDF(Param.calcdf, mean(denan(cat(2, Thr.cf))), NaN, FFTscc.DF);
     %Dominant period in ms ...
     if (DomFreq ~= 0)
         DomPer = 1000/DomFreq;
