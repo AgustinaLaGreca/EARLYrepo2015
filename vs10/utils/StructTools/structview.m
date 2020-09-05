@@ -42,7 +42,7 @@ elseif (nargin == 1) & ischar(varargin{1}) & strcmpi(varargin{1}, 'factory'),
     return;
 elseif (nargin == 0) | ~isstruct(varargin{1}), error('Wrong input arguments.'); end
 S = varargin{1};
-Param = CheckPropList(DefParam, varargin{2:end});
+Param = checkproplist(DefParam, varargin{2:end});
 Param = CheckParam(Param);
 
 %Reorganizing the structure array ...
