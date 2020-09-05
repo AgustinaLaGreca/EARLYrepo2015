@@ -1,4 +1,4 @@
-function [H,G]=dotraster(D, figh, P);
+function [H,G]=dotraster(D, figh, P)
 % dataset/dotraster - dot raster display of a dataset
 %    dotraster(D) displays a dot raster of the spike times in dataset D.
 %
@@ -19,22 +19,22 @@ function [H,G]=dotraster(D, figh, P);
 
 % handle the special case of parameter queries. Do this immediately to 
 % avoid endless recursion with dataviewparam.
-if isvoid(D) && isequal('params', figh),
+if isvoid(D) && isequal('params', figh)
     [H,G] = local_ParamGUI;
     return;
 end
 
 % open a new figure or use existing one?
-if nargin<2 || isempty(figh),
+if nargin<2 || isempty(figh)
     open_new = isempty(get(0,'CurrentFigure'));
     figh=double(gcf); % MH July 2019 conversion to double should not be needed now that isSingleHandle has been fixed
-else,
+else
     open_new = isSingleHandle(figh);
 end
 
 % parameters
 if nargin<3, P = []; end
-if isempty(P), % use default paremeter set for this dataviewer
+if isempty(P) % use default paremeter set for this dataviewer
     P = dataviewparam(mfilename); 
 end
 
@@ -42,20 +42,20 @@ end
 H = local_dotraster(D, figh, open_new, P);
 
 % enable parameter editing when viewing offline
-if isSingleHandle(figh, 'figure'), enableparamedit(D, P, figh); end;
+if isSingleHandle(figh, 'figure'), enableparamedit(D, P, figh); end
 
 
 
 %============================================================
 %============================================================
-function data_struct = local_dotraster(D, figh, open_new, P);
+function data_struct = local_dotraster(D, figh, open_new, P)
 % the real work for the dotraster
 
 % Check varied stimulus Params
 Pres = D.Stim.Presentation;
 P = struct(P); P = P.Param;
 Xval = Pres.X.PlotVal;
-if has2varparams(D); % 1 or 2 independent parameters
+if has2varparams(D) % 1 or 2 independent parameters
     Yval = Pres.Y.PlotVal;
     isortPlot = local_sort(P, Xval, Yval);
 else
@@ -81,7 +81,7 @@ dy = 0.95/Pres.Nrep; % vertical offsets between reps
 dotheight = 0.9*dy; % height of "dot" = vertical line
 ylim([0.9, Pres.Ncond+1]);
 maxDur = max(Pres.PresDur(2:end-1));
-if isempty(maxDur), maxDur = max(Pres.PresDur); end;
+if isempty(maxDur), maxDur = max(Pres.PresDur); end
 xlim([0 maxDur]);
 set(ah, 'fontsize', 10);
 set(ah, 'ytick', 0.4+(1:Pres.Npres));
@@ -109,7 +109,7 @@ for i=1:numel(isortPlot(:))
     BurstDur = max(burstdur(D,icond));
     Nspike = 0; NspikeStim = 0;
     spike_count_per_cond(i) = 0;
-    for irep=1:Pres.Nrep,
+    for irep=1:Pres.Nrep
         spt = TC{icond,irep}; % spike times of condition icond, repetition  irep
         % plot each spike as vertical line
         x = VectorZip(spt,spt,nan+spt); 
@@ -141,7 +141,7 @@ end
 data_struct.spikeCountPerCond = spike_count_per_cond;
 
 % Plot the spike rate curve
-y=[1:length(spike_count_per_cond)]+dotheight/2;
+y = min(get(ah,'ylim')) + (0.5:1:length(spike_count_per_cond));
 x_lim = get(ah,'xlim');
 x_lim =x_lim(2);
 line(spike_count_per_cond/sum(spike_count_per_cond)*x_lim,y,'color','k','linewidth',2);
@@ -177,7 +177,7 @@ try
         end
     else % 2 independent parameters
         sortPlotOrig = varargin(1:2); sortPlotOrig = [sortPlotOrig{:}];
-        if ischar(P.ParamOrder), P.ParamOrder = str2num(P.ParamOrder); end
+        if ischar(P.ParamOrder), P.ParamOrder = str2double(P.ParamOrder); end
         [ParamOrder, SortOrder] = SameSize(P.ParamOrder, P.SortOrder);
         X = varargin{ParamOrder(1)}; X = X(:); 
         [~, ia, ~] = unique(X); ia = sort(ia); X = X(ia);  % now X is always "Fastest varied"
