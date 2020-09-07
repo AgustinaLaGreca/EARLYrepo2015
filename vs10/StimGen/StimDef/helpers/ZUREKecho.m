@@ -35,10 +35,11 @@ ITDstr = ['(positive = ' upper(strrep(EXP.ITDconvention, 'Lead', ' Lead')) ')'];
 %==========ITD GUIpanel=====================
 P = GUIpanel('echo', T);
 % ITDpref = preferences(EXP, 'ITDconvention');
-echoITD = ParamQuery('echoITD', 'ITD of echo:', '-10.170', 'ms', 'rreal', ['-1 (or) 1 means opposite of (or) same as the source respectively' ...
-                        newline '0 means no ITD' newline 'Other numbers mean increased/decreased by a factor of that number with respect to the source'], 1);
-echoILD = ParamQuery('echoILD', 'ILD:', '-10.170', 'dB', 'rreal', ['ILD for the echo' newline ...
-    '+x increases left ear level by x/2 and decreases right ear level by x/2' newline '-x decreases left ear level by x/2 and increases right ear level by x/2' ], 1);                 
+echoITD = ParamQuery('echoITDfactor', 'ITD factor:', '-10.170', '', 'rreal', ['-1 (or) 1 means opposite of (or) same as the source respectively' ...
+                        newline '0 means no ITD' newline 'Other numbers mean increased/decreased by a factor of that number with respect to the source'...
+                        newline 'Should be within [-2 2]'], 1);
+echoILD = ParamQuery('echoILDfactor', 'ILD factor:', '-10.170', '', 'rreal', ['ILD for the echo' newline ...
+    'Same convention as ITD' newline 'Should be within [-2 2]' ], 1);                 
 echoSPL = ParamQuery('echoSPL', 'SPL:', '0.170', 'dB', 'rreal/positive', 'SPL of the echo', 1);
 echoSeed = ParamQuery([Prefix 'echoSeed'], 'Noise seed:', '844596300', '', ...
     'rseed', 'Random seed used for realization of echo waveform.',1);
@@ -46,7 +47,7 @@ echoSeed = ParamQuery([Prefix 'echoSeed'], 'Noise seed:', '844596300', '', ...
 
 Delay = ParamQuery('Delay', 'Lead-Lag Delay :', '0.170', 'ms', 'rreal', 'Lead - Lag delay', 1);
 
-P = add(P, echoITD, 'below', [30 0]);
+P = add(P, echoITD, 'below', [50 0]);
 P = add(P, echoILD, alignedwith(echoITD));
 P = add(P, echoSPL, alignedwith(echoILD));
 P = add(P, echoSeed, alignedwith(echoSPL));

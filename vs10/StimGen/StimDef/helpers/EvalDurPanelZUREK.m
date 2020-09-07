@@ -44,14 +44,13 @@ anywrong = 1;
 hasITD = (isfield(P,'ITD') && isfield(P,'ITDtype'));
 if hasITD
     [P.FineITD P.GateITD P.ModITD] = ITDparse(P.ITD, P.ITDtype);
-    [P.echoFineITD P.echoGateITD P.echoModITD] = ITDparse(P.echoITD, P.ITDtype);
 else
     P.ITDtype = 'waveform';
     [P.FineITD P.GateITD P.ModITD] = deal(P.ITD);
-    [P.echoFineITD P.echoGateITD P.echoModITD] = deal(P.echoITD);
 end
 % combine onset delay + burstdur
 Onset_Burst_dur = bsxfun(@plus, P.OnsetDelay, P.BurstDur);
+
 
 if any(Onset_Burst_dur>P.ISI),
     GUImessage(figh,'OnsetDelay+Burst duration exceeds ISI.', ...
@@ -72,12 +71,23 @@ elseif prod(Ncond)>EXP.maxNcond,
     Mess = {['Too many (>' num2str(EXP.maxNcond) ') stimulus conditions.'],...
         'Increase stepsize(s) or decrease range(s)'};
     GUImessage(figh, Mess, 'error');
+
 elseif any(P.Delay+Onset_Burst_dur>P.ISI)
-    GUImessage(figh,'Tau+OnsetDelay+Burst duration exceeds ISI.', ...
+    GUImessage(figh,'L-L Delay + OnsetDelay + Burst duration exceeds ISI.', ...
         'error', {[Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'Delay'] 'ISI'});
 elseif any(P.Delay+Onset_Burst_dur+abs(P.GateITD)>P.ISI)
-    GUImessage(figh,'Sum of Tau, OnsetDelay, BurstDur & gated ITD exceeds ISI.', ...
+    GUImessage(figh,'Sum of L-L Delay, OnsetDelay, BurstDur & gated ITD exceeds ISI.', ...
         'error', {[Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'ITD'] [Prefix 'Delay']  'ISI'});
+
+elseif (P.echoILDfactor<-2)||(P.echoILDfactor>2)
+ GUImessage(figh,'echo ILD factor is out of [-2 2]', ...
+        'error', {[Prefix 'echoILDfactor'] });
+elseif (P.echoITDfactor<-2)||(P.echoITDfactor>2)
+ GUImessage(figh,'echo ITD factor is out of [-2 2]', ...
+        'error', {[Prefix 'echoITDfactor'] });
+elseif any((abs(P.echoITDfactor)*abs(P.GateITD))+P.Delay+Onset_Burst_dur>P.ISI)
+    GUImessage(figh,['Echo ITD factor exceeds ISI.' newline 'Adjust Echo ITD factor, ISI, L-L Delay, OnsetDelay or Burst Duration'], ...
+        'error', {[Prefix 'echoITDfactor'] [Prefix 'OnsetDelay'] [Prefix 'BurstDur'] [Prefix 'ITD'] [Prefix 'Delay'] 'ISI' });
 else, anywrong=0; % past all tests
 end
 if anywrong, return; end

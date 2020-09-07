@@ -32,6 +32,8 @@ function P=ITDstepper(T, EXP, Prefix)%, haveTypes);
 ClickStr = ' Click button to select ';
 ITDstr = ['(positive = ' upper(strrep(EXP.ITDconvention, 'Lead', ' Lead')) ')'];
 
+ILDstr = ['ILD>0 means Contra SPL > Ipsi SPL,' newline 'Implemented by spliting across ears'];
+
 %Levels = GUIpanel('Levels', T);
 DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);
 
@@ -41,8 +43,7 @@ P = GUIpanel('ITD', T);
 startITD = ParamQuery('startITD', 'ITD start:', '-10.170', 'ms', 'rreal', ['Start value of ITD ' ITDstr], 1);
 endITD = ParamQuery('endITD', 'ITD end:', '-10.170', 'ms', 'rreal', ['End value of ITD ' ITDstr], 1);
 stepITD = ParamQuery('stepITD', 'ITD step:', '0.170', 'ms', 'rreal/positive', 'Step value of ITD ', 1);
-ILD = ParamQuery('ILD', 'ILD:', '-10.170', 'dB', 'rreal', ['ILD for the source' newline ...
-    '+x increases left ear level by x/2 and decreases right ear level by x/2' newline '-x decreases left ear level by x/2 and increases right ear level by x/2' ], 1);
+ILD = ParamQuery('ILD', 'ILD:', '-10.170', 'dB', 'rreal', [ ILDstr ], 1);
 adjustITD = ParamQuery([Prefix 'AdjustITD'], 'adjust:', '', {'none' 'start' 'step' 'end'}, ...
     '', ['Choose which parameter to adjust when the stepsize does not exactly fit the start & end values.'], 1,'Fontsiz', 8);
 % ITDtype = ParamQuery([Prefix 'ITDtype'], 'impose on', '', {'waveform' 'fine' 'gate' 'mod' 'fine+gate' 'fine+mode' 'gate+mod'}, '', ...
