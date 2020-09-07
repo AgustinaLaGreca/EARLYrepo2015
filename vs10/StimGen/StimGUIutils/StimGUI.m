@@ -68,7 +68,7 @@ SG = add(SG, Pfile);
 SG = add(SG, Pedit);
 SG = add(SG, Pview);
 SG = add(SG, Params);
-SG = add(SG, local_Action, 'below', [20 10]);
+SG = add(SG, local_Action(StimName), 'below', [20 10]);
 SG = add(SG, local_Dataview(StimName), 'nextto', [10 0]);
 SG=marginalize(SG,[0 20]);
 
@@ -131,7 +131,7 @@ GUIfill(figh,0,0);
 % open figure and draw GUI in it
 
 %===================================
-function Act = local_Action
+function Act = local_Action(StimName)
 % Check/Play/PlayRec dashboard
 Act = GUIpanel('Act', '', 'backgroundcolor', 0.75+[0 0.1 0.05]);
 MessBox = messenger('@MessBox', 'The problem is what you think the problem is         ',7, ... % the '@' in the name indicates that ...
@@ -141,17 +141,26 @@ RMSDisp1 = messenger('RMSDisp1', 'C rms = **.* mV', 1, 'FontWeight', 'bold', 'Fo
 RMSDisp2 = messenger('RMSDisp2', 'C rms = **.* mV', 1, 'FontWeight', 'bold', 'ForegroundColor', [0.25 0.15 0.1]);
 Check = ActionButton('Check', 'CHECK', 'XXXXXXXXXX', 'Check stimulus parameters and update information.', fhandle('StimCheck'));
 Check = accelerator(Check,'&Action', 'K');
-[EE, dashboard_handle] = existGUI('dashboard'); StartRec = @(Src,Ev, LR)dashboard('PlayRecord', 'Left', dashboard_handle);
-Rec = ActionButton('PlayRec', 'REC', 'XXX', 'Start recording.', StartRec, 'BackgroundColor', [1 0 0]);
-StartPlay = @(Src,Ev, LR)dashboard('Play', 'Left', dashboard_handle);
-PlayBut = ActionButton('Play', 'Play', 'XXX', 'Start playing.', StartPlay);
+
+% Gowtham 7/9/20: If THR is used, REC and Play buttons will not be added to the GUI
+if ~strcmp(StimName,'THR')
+    [EE, dashboard_handle] = existGUI('dashboard'); StartRec = @(Src,Ev, LR)dashboard('PlayRecord', 'Left', dashboard_handle);
+    Rec = ActionButton('PlayRec', 'REC', 'XXX', 'Start recording.', StartRec, 'BackgroundColor', [1 0 0]);
+    StartPlay = @(Src,Ev, LR)dashboard('Play', 'Left', dashboard_handle);
+    PlayBut = ActionButton('Play', 'Play', 'XXX', 'Start playing.', StartPlay);
+end
+
 Act = add(Act,MessBox);
 Act = add(Act,FsamDisp, 'nextto', [32 3]);
 Act = add(Act,RMSDisp1, 'below', [0 3]);
 Act = add(Act,RMSDisp2, 'below', [0 3]);
 Act = add(Act,Check, 'below', [0 35]);
-Act = add(Act,Rec, 'nextto', [0 0]); % added option to launch recording from stim menu
-Act = add(Act,PlayBut, 'nextto', [0 0]);
+
+% Gowtham 7/9/20: If THR is used, REC and Play buttons will not be added to the GUI
+if ~strcmp(StimName,'THR')
+    Act = add(Act,Rec, 'nextto', [0 0]); % added option to launch recording from stim menu
+    Act = add(Act,PlayBut, 'nextto', [0 0]);
+end
 Act = marginalize(Act,[3 5]);
 
 % function D = local_Dataview;
