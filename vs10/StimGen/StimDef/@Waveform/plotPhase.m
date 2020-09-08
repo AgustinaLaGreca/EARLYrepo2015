@@ -33,15 +33,15 @@ if ~isempty(varargin)
             phase_values = X(1:N/2+1);
             freq = df;
         end
-        xdplot(df,X(1:N/2+1),'color', 'r');
+        xdplot(df,X(1:N/2+1),'color', 'bd');
         LegStr{end+1} = 'Diff (R - L)';    
     end
 else       
     for ichan=1:Nchan,
         x = samples(W(ichan));
         switch W(ichan).DAchan,
-            case 'L', clr = CLR(1,:);
-            case 'R', clr = CLR(2,:);
+            case 'L', clr = [.8,0.1,0.1];
+            case 'R', clr = CLR(5,:);
             otherwise, clr = CLR(1+rem(ichan-1,NCL),:);
         end
         % single sided amplitude spectrum

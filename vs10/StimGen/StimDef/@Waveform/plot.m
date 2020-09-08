@@ -26,7 +26,7 @@ if ~isempty(varargin)
         x_left = samples(W(ichan_l));
         x_right = samples(W(ichan_r));
 
-        xdplot(dt,real(x_right-x_left), 'color', 'r');
+        xdplot(dt,real(x_right-x_left), 'color', 'b');
         %xdplot(dt,imag(x), 'color', clr, 'linestyle', ':');
         LegStr{end+1} = 'Difference (R - L)';  
     end
@@ -34,8 +34,8 @@ else
     for ichan=1:Nchan,
         x = samples(W(ichan));
         switch W(ichan).DAchan,
-            case 'L', clr = CLR(1,:);
-            case 'R', clr = CLR(2,:);
+            case 'L', clr = [.8,0.1,0.1];
+            case 'R', clr = CLR(5,:);
             otherwise, clr = CLR(1+rem(ichan-1,NCL),:);
         end
         xdplot(dt,real(x), 'color', clr, varargin{:});
