@@ -55,6 +55,9 @@ if ~okay, return; end
 okay=EvalDurPanel(figh, P, Ncond);
 if ~okay, return; end
 
+% Checking if Varied ear is recorded in monaural conditions
+VariedChanVsDAC(figh,P.DAC,P.CorrChan);
+
 % Use generic noise generator to generate waveforms
 P.IPD = 0;
 P = noiseStim(P); 
