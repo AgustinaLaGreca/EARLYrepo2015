@@ -32,7 +32,7 @@ function P=ITDstepper(T, EXP, Prefix)%, haveTypes);
 ClickStr = ' Click button to select ';
 ITDstr = ['(positive = ' upper(strrep(EXP.ITDconvention, 'Lead', ' Lead')) ')'];
 
-ILDstr = ['ILD>0 means Contra SPL > Ipsi SPL,' newline 'Implemented by spliting across ears'];
+ILDstr = ['ILD>0 means Contra SPL > Ipsi SPL,' newline 'Implemented by splitting across ears'];
 
 %Levels = GUIpanel('Levels', T);
 DACstr = getDACstr(EXP.AudioChannelsUsed, EXP.Recordingside);

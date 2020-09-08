@@ -510,7 +510,7 @@ switch upper(StimTypes{irec}),
         set(h5, 'String', '5 rateplot', 'callback', @local_rateplot);
         set(h6, 'String', '6 average', 'callback', @local_anamean);
     
-    case {'RCN','NITD','ARMIN','NRHO','MOVN','IRN','HP','BPN'}
+    case {'RCN','NITD','ARMIN','NRHO','MOVN','IRN','HP','BPN','ZUREK','NILD'}
         set(h1, 'String', '1 PSTH', 'callback', @local_PSTH);
         set(h2, 'String', '2 revcor', 'callback', @local_revcor);
         set(h3, 'String', '3 ISI histo', 'callback', @local_FOISI);
