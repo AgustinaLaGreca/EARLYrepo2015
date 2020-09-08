@@ -100,7 +100,13 @@ Template.dac1.maxsecpks      = [NaN, NaN];%Height of secondary peaks (DriesNorm)
 Template.dac1.lagsecpks      = [NaN, NaN];%Lag at secondary peaks (ms)
 Template.dac1.fft.df         = NaN;       %Dominant frequency in diffcorrelogram (Hz)
 Template.dac1.fft.bw         = NaN;       %Bandwidth (Hz)
-Template.dac1.env.hhw        = NaN;       %Half height with on envelope of diffcorrelogram (ms)
+Template.dac1.env.hhw        = NaN;       %Half height with on envelope of sumcorrelogram (ms)
+Template.mac1.max            = NaN;       %Maximum of sumautocorrelogram (DriesNorm)
+Template.mac1.maxsecpks      = [NaN, NaN];%Height of secondary peaks (DriesNorm)
+Template.mac1.lagsecpks      = [NaN, NaN];%Lag at secondary peaks (ms)
+Template.mac1.fft.df         = NaN;       %Dominant frequency in sumcorrelogram (Hz)
+Template.mac1.fft.bw         = NaN;       %Bandwidth (Hz)
+Template.mac1.env.hhw        = NaN;       %Half height with on envelope of sumcorrelogram (ms)
 Template.sac2.max            = NaN;       
 Template.sac2.hhw            = NaN;       
 Template.sac2.fft.df         = NaN;      
@@ -110,7 +116,13 @@ Template.dac2.maxsecpks      = [NaN, NaN];
 Template.dac2.lagsecpks      = [NaN, NaN];
 Template.dac2.fft.df         = NaN;       
 Template.dac2.fft.bw         = NaN;       
-Template.dac2.env.hhw        = NaN;       
+Template.dac2.env.hhw        = NaN;  
+Template.mac2.max            = NaN;       
+Template.mac2.maxsecpks      = [NaN, NaN];
+Template.mac2.lagsecpks      = [NaN, NaN];
+Template.mac2.fft.df         = NaN;       
+Template.mac2.fft.bw         = NaN;       
+Template.mac2.env.hhw        = NaN; 
 %... crosscorrelogram ...
 Template.scc.max             = NaN;       %Maximum of shuffled crosscorrelogram (DriesNorm)
 Template.scc.rate            = NaN;       %Maximum of shuffled crosscorrelogram (Rate)
@@ -130,6 +142,15 @@ Template.dcc.fft.bw          = NaN;       %Bandwidth (Hz)
 Template.dcc.env.max         = NaN;       %Maximum of enveloppe of diffcorrelogram (DriesNorm)
 Template.dcc.env.lagatmax    = NaN;       %Lag at maximum of enveloppe (ms)
 Template.dcc.env.hhw         = NaN;       %Half height with on envelope of diffcorrelogram (ms)
+Template.mcc.rate            = NaN;       %Maximum of sumcorrelogram (Rate)
+Template.mcc.lagatmax        = NaN;       %Lag at maximum (in ms)
+Template.mcc.maxsecpks       = [NaN, NaN];%Height of secondary peaks (DriesNorm)
+Template.mcc.lagsecpks       = [NaN, NaN];%Lag at secondary peaks (ms)
+Template.mcc.fft.df          = NaN;       %Dominant frequecny in sumcorrelogram (Hz)
+Template.mcc.fft.bw          = NaN;       %Bandwidth (Hz)
+Template.mcc.env.max         = NaN;       %Maximum of enveloppe of sumcorrelogram (DriesNorm)
+Template.mcc.env.lagatmax    = NaN;       %Lag at maximum of enveloppe (ms)
+Template.mcc.env.hhw         = NaN;       %Half height with on envelope of sumcorrelogram (ms)
 %by: Abel, gabor fit (see EvalNITD)
 Template.gabor.bestitd        = NaN;
 Template.gabor.bestitdc       = NaN;
@@ -153,6 +174,7 @@ DefParam.envrunavunit  = '#';        %'#' or 'ms' ...
 DefParam.envrunav      = 1;          %in ms or number of periods ...
 DefParam.corfftrunav   = 100;        %in Hz ...
 DefParam.diffftrunav   = 100;        %in Hz ...
+DefParam.sumfftrunav   = 100;        %in Hz ...
 DefParam.calcdf        = NaN;        %in Hz, NaN (automatic), 'cf' or 'df' ...
 %Calculation of average SACs is only useful when supplying the responses from the same
 %fiber or cell to two different noise tokens (e.g. A+, A-, B+, B-). The average SAC and
@@ -170,7 +192,7 @@ DefParam.corxstep      = 1;          %in ms ...
 DefParam.fftxrange     = [0 500];    %in Hz ...
 DefParam.fftxstep      = 50;         %in Hz ...
 DefParam.fftyunit      = 'dB';       %'dB' or 'P' ...
-DefParam.fftyrange     = [-20 0]; 
+DefParam.fftyrange     = [-50 10]; 
 %by Abel: gabor fit 
 DefParam.gaborfit    = 'no';
 DefParam.samplerate  = 0.5;           %in number of elements per microsecond ...
@@ -212,12 +234,12 @@ RC(1) = CalcRC(Spt{1:2}, Param);
 RC(2) = CalcRC(Spt{3:4}, Param);
 
 %Calculate correlograms ...
-[SXAC(1), DAC(1)] = CalcAC(Spt{1:2}, Thr(1), Param);
-[SXAC(2), DAC(2)] = CalcAC(Spt{3:4}, Thr(2), Param);
+[SXAC(1), DAC(1), MAC(1)] = CalcAC(Spt{1:2}, Thr(1), Param);
+[SXAC(2), DAC(2), MAC(2)] = CalcAC(Spt{3:4}, Thr(2), Param);
 if strncmpi(Param.calctype, 's', 1)
-    [SXCC, DCC] = CalcCC(Spt{:}, Thr, Param);
+    [SXCC, DCC, MCC] = CalcCC(Spt{:}, Thr, Param);
 else
-    [SXCC, DCC] = CalcAvgAC(Spt{:}, Thr, Param);
+    [SXCC, DCC, MCC] = CalcAvgAC(Spt{:}, Thr, Param);
 end
 
 %Fit gabor function on CROSS correlation (see EvalNITD)
@@ -244,13 +266,13 @@ if Param.gaborfit
 		else
 			Freq = SXCC.fft.df;
 		end
-	elseif strcmpi(Param.calcdf, 'cf'),
+	elseif strcmpi(Param.calcdf, 'cf')
 		if ~isempty(Thr) && ~isnan(Thr(:).cf)
 			Freq = (Thr(1).cf + Thr(2).cf)/2;
 		else
 			Freq = NaN;
 		end
-	elseif strcmpi(Param.calcdf, 'df'),
+	elseif strcmpi(Param.calcdf, 'df')
 		if ~isempty(DCC.diff) && ~isnan(DCC.fft.df)
 			Freq = DCC.fft.df;
 		else
@@ -264,7 +286,7 @@ if Param.gaborfit
     gaborFailed = false;
 	gaborErrStr = [];
     %bug in isnan metlab2009a
-    if ~isempty(find(isnan(DCC.normco))) || isempty(DCC.normco)
+    if ~isempty(find(isnan(DCC.normco), 1)) || isempty(DCC.normco)
         gaborErrStr = 'diffcorr not available';
         gaborFailed = true;
     else
@@ -293,21 +315,35 @@ end
 
 %Display data ...
 if strcmpi(Param.plot, 'yes')
-    PlotData(SXAC, DAC, SXCC, DCC, GBOR, Thr, RC, Info, StimParam, Param);
+    PlotData(SXAC, DAC, MAC, SXCC, DCC, MCC, GBOR, Thr, RC, Info, StimParam, Param);
 end
 
 %Return output if requested ...
-if (nargout > 0), 
+if (nargout > 0)
     CalcData = Info; CalcData.stim = StimParam;
     [CalcData.rc1,  CalcData.rc2]  = deal(RC(1), RC(2));
     [CalcData.thr1, CalcData.thr2] = deal(Thr(1), Thr(2));
     [CalcData.sac1, CalcData.sac2] = deal(SXAC(1), SXAC(2));
     [CalcData.dac1, CalcData.dac2] = deal(DAC(1), DAC(2));
-    [CalcData.scc,  CalcData.dcc]  = deal(SXCC, DCC);
+    [CalcData.mac1, CalcData.mac2] = deal(MAC(1), MAC(2));
+    [CalcData.scc,  CalcData.dcc, CalcData.mcc]  = deal(SXCC, DCC, MCC);
 	if Param.gaborfit && ~gaborFailed
 		CalcData.gabor = GBOR;
 	end
-    ArgOut = structtemplate(CalcData, Template); 
+    ArgOut = structtemplate(CalcData, Template);
+    % Add stuff that wouldn't work with the template ...
+    ArgOut.dac1.x = DAC(1).lag;
+    ArgOut.dac1.y = DAC(1).normco;
+    ArgOut.dac2.x = DAC(2).lag;
+    ArgOut.dac2.y = DAC(2).normco;
+    ArgOut.dcc.x = DCC.lag;
+    ArgOut.dcc.y = DCC.normco;
+    ArgOut.mac1.x = MAC(1).lag;
+    ArgOut.mac1.y = MAC(1).normco;
+    ArgOut.mac2.x = MAC(2).lag;
+    ArgOut.mac2.y = MAC(2).normco;
+    ArgOut.mcc.x = MCC.lag;
+    ArgOut.mcc.y = MCC.normco;
 end
 
 %----------------------------------------------------------------------------
@@ -500,11 +536,12 @@ if ~any(strcmpi(Param.envrunavunit, {'#', 'ms'})), error('Property envrunavunit 
 if ~isnumeric(Param.envrunav) || (length(Param.envrunav) ~= 1) || (Param.envrunav < 0), error('Invalid value for property envrunav.'); end
 if ~isnumeric(Param.corfftrunav) || (length(Param.corfftrunav) ~= 1) || (Param.corfftrunav < 0), error('Invalid value for property corfftrunav.'); end
 if ~isnumeric(Param.diffftrunav) || (length(Param.diffftrunav) ~= 1) || (Param.diffftrunav < 0), error('Invalid value for property diffftrunav.'); end
+if ~isnumeric(Param.sumfftrunav) || (length(Param.sumfftrunav) ~= 1) || (Param.sumfftrunav < 0), error('Invalid value for property diffftrunav.'); end
 if ~(isnumeric(Param.calcdf) && ((Param.calcdf > 0) || isnan(Param.calcdf))) && ...
-        ~(ischar(Param.calcdf) && any(strcmpi(Param.calcdf, {'cf', 'df'}))), 
+        ~(ischar(Param.calcdf) && any(strcmpi(Param.calcdf, {'cf', 'df'})))
     error('Property calcdf must be positive integer, NaN, ''cf'' or ''df''.'); 
 end
-if ~any(strncmpi(Param.calctype, {'scc', 'avgsac'}, 1)), 
+if ~any(strncmpi(Param.calctype, {'scc', 'avgsac'}, 1)) 
     error('Property calctype must be ''scc'' or ''avgsac''.'); 
 end
 
@@ -522,11 +559,11 @@ function StimParam = GetStimParam(ds1p, ds1n, ds2p, ds2n, iSubSeqs)
 
 dsNames = {'ds1p', 'ds1n', 'ds2p', 'ds2n'}; Nds = 4;
 
-[StimParam.burstdur, StimParam.repdur, StimParam.nrep] = deal(repmat(NaN, 1, Nds));
-StimParam.spl = repmat(NaN, 2, Nds);
-for n = 1:Nds,
+[StimParam.burstdur, StimParam.repdur, StimParam.nrep] = deal(NaN(1, Nds));
+StimParam.spl = NaN(2, Nds);
+for n = 1:Nds
     ds = eval(dsNames{n});
-    if ~isnan(iSubSeqs(n)) , 
+    if ~isnan(iSubSeqs(n))
         %If stimulus or repetition duration are not the same for different channels then
         %the minimum value is used ...
         StimParam.burstdur(n) = round(min(ds.Stim.BurstDur));
@@ -541,9 +578,9 @@ StimParam.avgspl  = CombineSPLs(denan(StimParam.spl(:))');
 
 %Format stimulus parameters ...
 s = sprintf('BurstDur = %s ms', mat2str(StimParam.burstdur));
-s = strvcat(s, sprintf('IntDur = %s ms', mat2str(StimParam.repdur)));
-s = strvcat(s, sprintf('#Reps = %s', mat2str(StimParam.nrep)));
-s = strvcat(s, sprintf('SPL = %s dB', mat2str(CombineSPLs(StimParam.spl')')));
+s = char(s, sprintf('IntDur = %s ms', mat2str(StimParam.repdur)));
+s = char(s, sprintf('#Reps = %s', mat2str(StimParam.nrep)));
+s = char(s, sprintf('SPL = %s dB', mat2str(CombineSPLs(StimParam.spl')')));
 StimParam.str = s;
 
 %----------------------------------------------------------------------------
@@ -576,7 +613,7 @@ RC.mean = mean([Rp, Rn]);
 RC.str = sprintf('AvgR = %s', Param2Str(RC.mean, 'spk/sec', 0));
 
 %----------------------------------------------------------------------------
-function [SXAC, DAC] = CalcAC(SptP, SptN, Thr, Param)
+function [SXAC, DAC, MAC] = CalcAC(SptP, SptN, Thr, Param)
 
 WinDur = abs(diff(Param.anwin)); %Duration of analysis window in ms ...
 SptP = anwin(SptP, Param.anwin);
@@ -609,15 +646,20 @@ if ~isempty(SptN)
     Ysac = mean([Ypp; Ynn]); 
     Yxac = mean([Ypn; Ynp]);
     Ydifcor = Ysac - Yxac;
+    Ysumcor = Ysac + Yxac;
     
-    %Performing spectrum analysis on the DIFCOR. Because a difcor has no DC component in comparison with
+    %Performing spectrum analysis on the DIFCOR and SUMCOR. Because a difcor has no DC component in comparison with
     %other correlograms, this almost always results in a representative dominant frequency ...
     FFTdif = spectana(T, Ydifcor, 'RunAvUnit', 'Hz', 'RunAvRange', Param.diffftrunav);
+    FFTsum = spectana(T, Ysumcor, 'RunAvUnit', 'Hz', 'RunAvRange', Param.sumfftrunav);
     %The magnitude spectrum of a correlogram function is actually a power spectrum, therefore all
     %magnitude units need to be changed ...
     FFTdif.Magn.P  = FFTdif.Magn.A;
     FFTdif.Magn.A  = sqrt(FFTdif.Magn.A);
     FFTdif.Magn.dB = FFTdif.Magn.dB/2;
+    FFTsum.Magn.P  = FFTsum.Magn.A;
+    FFTsum.Magn.A  = sqrt(FFTsum.Magn.A);
+    FFTsum.Magn.dB = FFTsum.Magn.dB/2;
     
     %Performing spectrum analysis on the SAC. Because an autocorrelogram has a DC component this is
     %removed first ...
@@ -641,18 +683,22 @@ if ~isempty(SptN)
     HalfMaxSac = ((max(Ysac)-1)/2)+1;
     SacHHWx = cintersect(T, Ysac, HalfMaxSac); SacHHW = abs(diff(SacHHWx));
     
-    %Calculating envelope and Half Height Width of DIFCOR ...
+    %Calculating envelope and Half Height Width of DIFCOR and SUMCOR ...
     if strcmpi(Param.envrunavunit, 'ms')
         EnvRunAvN = round(Param.envrunav/Param.corbinwidth);
     else
         EnvRunAvN = round((Param.envrunav*DomPer)/Param.corbinwidth);
     end
-    Yenv = runav(abs(hilbert(Ydifcor)), EnvRunAvN); 
-    HalfMaxEnv = max(Yenv)/2;
-    DifHHWx = cintersect(T, Yenv, HalfMaxEnv); DifHHW = abs(diff(DifHHWx));
+    YenvDif = runav(abs(hilbert(Ydifcor)), EnvRunAvN); 
+    HalfMaxEnvDif = max(YenvDif)/2;
+    DifHHWx = cintersect(T, YenvDif, HalfMaxEnvDif); DifHHW = abs(diff(DifHHWx));
+    YenvSum = runav(abs(hilbert(Ysumcor)), EnvRunAvN); 
+    HalfMaxEnvSum = max(YenvSum)/2;
+    SumHHWx = cintersect(T, YenvSum, HalfMaxEnvSum); SumHHW = abs(diff(SumHHWx));
     
     %Extracting information on secundary peaks in the DIFCOR and its enveloppe ...
-    [dummy, dummy, DifXsecPeaks, DifYsecPeaks] = getPeaks(T, Ydifcor, 0, DomPer);
+    [~, ~, DifXsecPeaks, DifYsecPeaks] = getPeaks(T, Ydifcor, 0, DomPer);
+    [~, ~, SumXsecPeaks, SumYsecPeaks] = getPeaks(T, Ysumcor, 0, DomPer);
     
     %Reorganizing calculated data ...
     SXAC.lag      = T;
@@ -668,7 +714,7 @@ if ~isempty(SptN)
     SXAC.fft.bw   = FFTsac.BW;
     
     DAC.lag         = T;
-    DAC.normco      = [Ydifcor; Yenv; -Yenv];
+    DAC.normco      = [Ydifcor; YenvDif; -YenvDif];
     DAC.max         = max(Ydifcor);
     DAC.maxsecpks   = DifYsecPeaks;
     DAC.lagsecpks   = DifXsecPeaks;
@@ -679,8 +725,22 @@ if ~isempty(SptN)
     DAC.fft.bw      = FFTdif.BW;
     DAC.env.hhw     = DifHHW;
     DAC.env.hhwx    = DifHHWx;
-    DAC.env.halfmax = HalfMaxEnv;
-else,
+    DAC.env.halfmax = HalfMaxEnvDif;
+    
+    MAC.lag         = T;
+    MAC.normco      = [Ysumcor; YenvSum; -YenvSum];
+    MAC.max         = max(Ysumcor);
+    MAC.maxsecpks   = SumYsecPeaks;
+    MAC.lagsecpks   = SumXsecPeaks;
+    MAC.fft.freq    = FFTsum.Freq;
+    MAC.fft.p       = FFTsum.Magn.P;   
+    MAC.fft.db      = FFTsum.Magn.dB;
+    MAC.fft.df      = FFTsum.DF;
+    MAC.fft.bw      = FFTsum.BW;
+    MAC.env.hhw     = SumHHW;
+    MAC.env.hhwx    = SumHHWx;
+    MAC.env.halfmax = HalfMaxEnvSum;
+else
     %Correlation of noise token A+ responses of a cell with the responses of that same cell to that same noise
     %token ...
     [Ysac, T, NC] = SPTCORR(SptP, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
@@ -737,7 +797,7 @@ else,
 end
 
 %----------------------------------------------------------------------------
-function [SXCC, DCC] = CalcAvgAC(Spt1P, Spt1N, Spt2P, Spt2N, Thr, Param)
+function [SXCC, DCC, MCC] = CalcAvgAC(Spt1P, Spt1N, Spt2P, Spt2N, Thr, Param)
 
 WinDur = abs(diff(Param.anwin)); %Duration of analysis window in ms ...
 Spt1P = ANWIN(Spt1P, Param.anwin);
@@ -745,26 +805,26 @@ Spt1N = ANWIN(Spt1N, Param.anwin);
 Spt2P = ANWIN(Spt2P, Param.anwin);
 Spt2N = ANWIN(Spt2N, Param.anwin);
 
-if ~isempty(Spt1N) && ~isempty(Spt2N),
-    [Ypp1NCo, T, NC] = SPTCORR(Spt1P, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
+if ~isempty(Spt1N) && ~isempty(Spt2N)
+    [Ypp1NCo, ~, NC] = SPTCORR(Spt1P, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
     Ypp1 = ApplyNorm(Ypp1NCo, NC); Ypp1Rate = ApplyNorm(Ypp1NCo, NC, 'rate');
 
-    [Ynn1NCo, T, NC] = SPTCORR(Spt1N, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
+    [Ynn1NCo, ~, NC] = SPTCORR(Spt1N, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
     Ynn1 = ApplyNorm(Ynn1NCo, NC); Ynn1Rate = ApplyNorm(Ynn1NCo, NC, 'rate');
     
-    [Ypp2NCo, T, NC] = SPTCORR(Spt2P, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
+    [Ypp2NCo, ~, NC] = SPTCORR(Spt2P, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
     Ypp2 = ApplyNorm(Ypp2NCo, NC); Ypp2Rate = ApplyNorm(Ypp2NCo, NC, 'rate');
 
-    [Ynn2NCo, T, NC] = SPTCORR(Spt2N, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
+    [Ynn2NCo, ~, NC] = SPTCORR(Spt2N, 'nodiag', Param.cormaxlag, Param.corbinwidth, WinDur); %SAC ...
     Ynn2 = ApplyNorm(Ynn2NCo, NC); Ynn2Rate = ApplyNorm(Ynn2NCo, NC, 'rate');
     
-    [Ypn1NCo, T, NC] = SPTCORR(Spt1P, Spt1N, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
+    [Ypn1NCo, ~, NC] = SPTCORR(Spt1P, Spt1N, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
     Ypn1 = ApplyNorm(Ypn1NCo, NC); Ypn1Rate = ApplyNorm(Ypn1NCo, NC, 'rate');
 
-    [Ynp1NCo, T, NC] = SPTCORR(Spt1N, Spt1P, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
+    [Ynp1NCo, ~, NC] = SPTCORR(Spt1N, Spt1P, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
     Ynp1 = ApplyNorm(Ynp1NCo, NC); Ynp1Rate = ApplyNorm(Ynp1NCo, NC, 'rate');
 
-    [Ypn2NCo, T, NC] = SPTCORR(Spt2P, Spt2N, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
+    [Ypn2NCo, ~, NC] = SPTCORR(Spt2P, Spt2N, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
     Ypn2 = ApplyNorm(Ypn2NCo, NC); Ypn2Rate = ApplyNorm(Ypn2NCo, NC, 'rate');
 
     [Ynp2NCo, T, NC] = SPTCORR(Spt2N, Spt2P, Param.cormaxlag, Param.corbinwidth, WinDur); %XAC ...
@@ -773,15 +833,20 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     Ysac = mean([Ypp1; Ynn1; Ypp2; Ynn2]); YsacRate = mean([Ypp1Rate; Ynn1Rate; Ypp2Rate; Ynn2Rate]);
     Yxac = mean([Ypn1; Ynp1; Ypn2; Ynp2]); YxacRate = mean([Ypn1Rate; Ynp1Rate; Ypn2Rate; Ynp2Rate]);
     Ydifcor = Ysac - Yxac; YdifcorRate = YsacRate - YxacRate;
+    Ysumcor = Ysac + Yxac; YsumcorRate = YsacRate + YxacRate;
     
-    %Performing spectrum analysis on the DIFCOR. Because a difcor has no DC component in comparison with
+    %Performing spectrum analysis on the DIFCOR and SUMCOR. Because a difcor has no DC component in comparison with
     %other correlograms, this almost always results in a representative dominant frequency ...
     FFTdif = spectana(T, Ydifcor, 'RunAvUnit', 'Hz', 'RunAvRange', Param.diffftrunav);
+    FFTsum = spectana(T, Ysumcor, 'RunAvUnit', 'Hz', 'RunAvRange', Param.sumfftrunav);
     %The magnitude spectrum of a correlogram function is actually a power spectrum, therefore all
     %magnitude units need to be changed ...
     FFTdif.Magn.P  = FFTdif.Magn.A;
     FFTdif.Magn.A  = sqrt(FFTdif.Magn.A);
     FFTdif.Magn.dB = FFTdif.Magn.dB/2;
+    FFTsum.Magn.P  = FFTsum.Magn.A;
+    FFTsum.Magn.A  = sqrt(FFTsum.Magn.A);
+    FFTsum.Magn.dB = FFTsum.Magn.dB/2;
     
     %Performing spectrum analysis on the SAC. Because a crosscorrelogram has a DC component this is
     %removed first ...
@@ -806,20 +871,24 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     SacHHWx = cintersect(T, Ysac, HalfMaxSac); SacHHW = abs(diff(SacHHWx));
     
     %Extracting information on secundary peaks in the SCC ...
-    [dummy, dummy, SacXsecPeaks, SacYsecPeaks] = getPeaks(T, Ysac, 0, DomPer);
+    [~, ~, SacXsecPeaks, SacYsecPeaks] = getPeaks(T, Ysac, 0, DomPer);
     
-    %Calculating envelope and Half Height Width of DIFCOR ...
+    %Calculating envelope and Half Height Width of DIFCOR and SUMCOR ...
     if strcmpi(Param.envrunavunit, 'ms')
         EnvRunAvN = round(Param.envrunav/Param.corbinwidth);
     else
         EnvRunAvN = round((Param.envrunav*DomPer)/Param.corbinwidth);
     end
-    Yenv = runav(abs(hilbert(Ydifcor)), EnvRunAvN); 
-    HalfMaxEnv = max(Yenv)/2;
-    DifHHWx = cintersect(T, Yenv, HalfMaxEnv); DifHHW = abs(diff(DifHHWx));
+    YenvDif = runav(abs(hilbert(Ydifcor)), EnvRunAvN); 
+    HalfMaxEnvDif = max(YenvDif)/2;
+    DifHHWx = cintersect(T, YenvDif, HalfMaxEnvDif); DifHHW = abs(diff(DifHHWx));
+    YenvSum = runav(abs(hilbert(Ysumcor)), EnvRunAvN); 
+    HalfMaxEnvSum = max(YenvSum)/2;
+    SumHHWx = cintersect(T, YenvSum, HalfMaxEnvSum); SumHHW = abs(diff(SumHHWx));
     
-    %Extracting information on secundary peaks in the DIFCOR ...
-    [dummy, dummy, DifXsecPeaks, DifYsecPeaks] = getPeaks(T, Ydifcor, 0, DomPer);
+    %Extracting information on secundary peaks in the DIFCOR and SUMCOR ...
+    [~, ~, DifXsecPeaks, DifYsecPeaks] = getPeaks(T, Ydifcor, 0, DomPer);
+    [~, ~, SumXsecPeaks, SumYsecPeaks] = getPeaks(T, Ysumcor, 0, DomPer);
     
     %Reorganizing calculated data ...
     SXCC.lag        = T;
@@ -839,7 +908,7 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     SXCC.fft.bw     = FFTsac.BW;
     
     DCC.lag          = T;
-    DCC.normco       = [Ydifcor; Yenv; -Yenv];
+    DCC.normco       = [Ydifcor; YenvDif; -YenvDif];
     [DCC.max, idx]   = max(Ydifcor);
     DCC.rate         = max(YdifcorRate);
     DCC.lagatmax     = T(idx);
@@ -850,11 +919,29 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     DCC.fft.db       = FFTdif.Magn.dB;
     DCC.fft.df       = FFTdif.DF;
     DCC.fft.bw       = FFTdif.BW;
-    [DCC.env.max, idx]= max(Yenv);
+    [DCC.env.max, idx]= max(YenvDif);
     DCC.env.lagatmax = T(idx);
     DCC.env.hhw      = DifHHW;
     DCC.env.hhwx     = DifHHWx;
-    DCC.env.halfmax  = HalfMaxEnv;
+    DCC.env.halfmax  = HalfMaxEnvDif;
+    
+    MCC.lag          = T;
+    MCC.normco       = [Ysumcor; YenvSum; -YenvSum];
+    [MCC.max, idx]   = max(Ysumcor);
+    MCC.rate         = max(YsumcorRate);
+    MCC.lagatmax     = T(idx);
+    MCC.maxsecpks    = SumYsecPeaks;
+    MCC.lagsecpks    = SumXsecPeaks;
+    MCC.fft.freq     = FFTsum.Freq;
+    MCC.fft.p        = FFTsum.Magn.P;   
+    MCC.fft.db       = FFTsum.Magn.dB;
+    MCC.fft.df       = FFTsum.DF;
+    MCC.fft.bw       = FFTsum.BW;
+    [MCC.env.max, idx]= max(YenvSum);
+    MCC.env.lagatmax = T(idx);
+    MCC.env.hhw      = SumHHW;
+    MCC.env.hhwx     = SumHHWx;
+    MCC.env.halfmax  = HalfMaxEnvSum;
 else
     warning(['Calculation of average SAC ony possible if responses of' ...
         'second fiber are supplied,\n or more appropriate for this' ...
@@ -896,7 +983,7 @@ else
 end
 
 %----------------------------------------------------------------------------
-function [SXCC, DCC] = CalcCC(Spt1P, Spt1N, Spt2P, Spt2N, Thr, Param)
+function [SXCC, DCC, MCC] = CalcCC(Spt1P, Spt1N, Spt2P, Spt2N, Thr, Param)
 
 WinDur = abs(diff(Param.anwin)); %Duration of analysis window in ms ...
 Spt1P = anwin(Spt1P, Param.anwin);
@@ -904,24 +991,24 @@ Spt1N = anwin(Spt1N, Param.anwin);
 Spt2P = anwin(Spt2P, Param.anwin);
 Spt2N = anwin(Spt2N, Param.anwin);
 
-if ~isempty(Spt1N) && ~isempty(Spt2N),
+if ~isempty(Spt1N) && ~isempty(Spt2N)
     %Correlation of noise token A+ responses of a cell with the responses of another cell to that same noise
     %token. If spiketrains are derived from different cells this is called a Shuffled Cross-
     %Correlogram (or SCC). 'Shuffled' because of the shuffling of repetitions in order to avoid to correlation
     %of a repetition with itself. The terminolgy CrossCorrelogram is only used when comparing spiketrains 
     %collected from different cells.
-    [YppNCo, T, NC] = SPTCORR(Spt1P, Spt2P, Param.cormaxlag, Param.corbinwidth, WinDur); %SCC ...
+    [YppNCo, ~, NC] = SPTCORR(Spt1P, Spt2P, Param.cormaxlag, Param.corbinwidth, WinDur); %SCC ...
     Ypp = ApplyNorm(YppNCo, NC);
     YppRate = ApplyNorm(YppNCo, NC, 'rate');
     %Correlation of noise token A- responses of a cell with the responses of a different cell to that same noise
     %token.
-    [YnnNCo, T, NC] = SPTCORR(Spt1N, Spt2N, Param.cormaxlag, Param.corbinwidth, WinDur); %SCC ...
+    [YnnNCo, ~, NC] = SPTCORR(Spt1N, Spt2N, Param.cormaxlag, Param.corbinwidth, WinDur); %SCC ...
     Ynn = ApplyNorm(YnnNCo, NC);
     YnnRate = ApplyNorm(YnnNCo, NC, 'rate');
     %Correlation of noise token A+ responses of a cell with the responses of a different cell to a different noise
     %token, in this case A-. Because of the fact that we correlate across stimuli this type of correlogram is 
     %designated XCC.
-    [YpnNCo, T, NC] = SPTCORR(Spt1P, Spt2N, Param.cormaxlag, Param.corbinwidth, WinDur); %XCC ...
+    [YpnNCo, ~, NC] = SPTCORR(Spt1P, Spt2N, Param.cormaxlag, Param.corbinwidth, WinDur); %XCC ...
     Ypn = ApplyNorm(YpnNCo, NC);
     YpnRate = ApplyNorm(YpnNCo, NC, 'rate');
     %Correlation of noise token A- responses of a cell with the responses of a different cell to a different noise
@@ -938,15 +1025,21 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     YxccRate = mean([YpnRate; YnpRate]);
     Ydifcor = Yscc - Yxcc;
     YdifcorRate = YsccRate - YxccRate;
+    Ysumcor = Yscc + Yxcc;
+    YsumcorRate = YsccRate + YxccRate;
     
-    %Performing spectrum analysis on the DIFCOR. Because a difcor has no DC component in comparison with
+    %Performing spectrum analysis on the DIFCOR and SUMCOR. Because a difcor has no DC component in comparison with
     %other correlograms, this almost always results in a representative dominant frequency ...
     FFTdif = spectana(T, Ydifcor, 'RunAvUnit', 'Hz', 'RunAvRange', Param.diffftrunav);
+    FFTsum = spectana(T, Ysumcor, 'RunAvUnit', 'Hz', 'RunAvRange', Param.sumfftrunav);
     %The magnitude spectrum of a correlogram function is actually a power spectrum, therefore all
     %magnitude units need to be changed ...
     FFTdif.Magn.P  = FFTdif.Magn.A;
     FFTdif.Magn.A  = sqrt(FFTdif.Magn.A);
     FFTdif.Magn.dB = FFTdif.Magn.dB/2;
+    FFTsum.Magn.P  = FFTsum.Magn.A;
+    FFTsum.Magn.A  = sqrt(FFTsum.Magn.A);
+    FFTsum.Magn.dB = FFTsum.Magn.dB/2;
     
     %Performing spectrum analysis on the SCC. Because a crosscorrelogram has a DC component this is
     %removed first ...
@@ -971,20 +1064,24 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     SccHHWx = cintersect(T, Yscc, HalfMaxScc); SccHHW = abs(diff(SccHHWx));
     
     %Extracting information on secundary peaks in the SCC ...
-    [dummy, dummy, SccXsecPeaks, SccYsecPeaks] = getPeaks(T, Yscc, 0, DomPer);
+    [~, ~, SccXsecPeaks, SccYsecPeaks] = getPeaks(T, Yscc, 0, DomPer);
     
-    %Calculating envelope and Half Height Width of DIFCOR ...
+    %Calculating envelope and Half Height Width of DIFCOR and SUMCOR ...
     if strcmpi(Param.envrunavunit, 'ms')
         EnvRunAvN = round(Param.envrunav/Param.corbinwidth);
     else
         EnvRunAvN = round((Param.envrunav*DomPer)/Param.corbinwidth);
     end
-    Yenv = runav(abs(hilbert(Ydifcor)), EnvRunAvN); 
-    HalfMaxEnv = max(Yenv)/2;
-    DifHHWx = cintersect(T, Yenv, HalfMaxEnv); DifHHW = abs(diff(DifHHWx));
+    YenvDif = runav(abs(hilbert(Ydifcor)), EnvRunAvN); 
+    HalfMaxEnvDif = max(YenvDif)/2;
+    DifHHWx = cintersect(T, YenvDif, HalfMaxEnvDif); DifHHW = abs(diff(DifHHWx));
+    YenvSum = runav(abs(hilbert(Ysumcor)), EnvRunAvN); 
+    HalfMaxEnvSum = max(YenvSum)/2;
+    SumHHWx = cintersect(T, YenvSum, HalfMaxEnvSum); SumHHW = abs(diff(SumHHWx));
     
-    %Extracting information on secundary peaks in the DIFCOR ...
-    [dummy, dummy, DifXsecPeaks, DifYsecPeaks] = getPeaks(T, Ydifcor, 0, DomPer);
+    %Extracting information on secundary peaks in the DIFCOR and SUMCOR ...
+    [~, ~, DifXsecPeaks, DifYsecPeaks] = getPeaks(T, Ydifcor, 0, DomPer);
+    [~, ~, SumXsecPeaks, SumYsecPeaks] = getPeaks(T, Ysumcor, 0, DomPer);
     
     %Reorganizing calculated data ...
     SXCC.lag        = T;
@@ -1004,7 +1101,7 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     SXCC.fft.bw     = FFTscc.BW;
     
     DCC.lag          = T;
-    DCC.normco       = [Ydifcor; Yenv; -Yenv];
+    DCC.normco       = [Ydifcor; YenvDif; -YenvDif];
     [DCC.max, idx]   = max(Ydifcor);
     DCC.rate         = max(YdifcorRate);
     DCC.lagatmax     = T(idx);
@@ -1015,11 +1112,29 @@ if ~isempty(Spt1N) && ~isempty(Spt2N),
     DCC.fft.db       = FFTdif.Magn.dB;
     DCC.fft.df       = FFTdif.DF;
     DCC.fft.bw       = FFTdif.BW;
-    [DCC.env.max, idx]= max(Yenv);
+    [DCC.env.max, idx]= max(YenvDif);
     DCC.env.lagatmax = T(idx);
     DCC.env.hhw      = DifHHW;
     DCC.env.hhwx     = DifHHWx;
-    DCC.env.halfmax  = HalfMaxEnv;
+    DCC.env.halfmax  = HalfMaxEnvDif;
+    
+    MCC.lag          = T;
+    MCC.normco       = [Ysumcor; YenvSum; -YenvSum];
+    [MCC.max, idx]   = max(Ysumcor);
+    MCC.rate         = max(YsumcorRate);
+    MCC.lagatmax     = T(idx);
+    MCC.maxsecpks    = SumYsecPeaks;
+    MCC.lagsecpks    = SumXsecPeaks;
+    MCC.fft.freq     = FFTsum.Freq;
+    MCC.fft.p        = FFTsum.Magn.P;   
+    MCC.fft.db       = FFTsum.Magn.dB;
+    MCC.fft.df       = FFTsum.DF;
+    MCC.fft.bw       = FFTsum.BW;
+    [MCC.env.max, idx]= max(YenvSum);
+    MCC.env.lagatmax = T(idx);
+    MCC.env.hhw      = SumHHW;
+    MCC.env.hhwx     = SumHHWx;
+    MCC.env.halfmax  = HalfMaxEnvSum;
 else
     %Correlation of noise token A+ responses of a cell with the responses of another cell to that same noise
     %token.
@@ -1049,7 +1164,7 @@ else
     SccHHWx = cintersect(T, Yscc, HalfMaxScc); SccHHW = abs(diff(SccHHWx));
     
     %Extracting information on secundary peaks in the SCC ...
-    [dummy, dummy, SccXsecPeaks, SccYsecPeaks] = getPeaks(T, Yscc, 0, DomPer);
+    [~, ~, SccXsecPeaks, SccYsecPeaks] = getPeaks(T, Yscc, 0, DomPer);
 
     %Reorganizing calculated data ...
     SXCC.lag        = T;
@@ -1092,14 +1207,14 @@ function Y = ApplyNorm(Y, N, NormStr)
 
 if (nargin == 2), NormStr = 'dries'; end
 
-switch lower(NormStr),
-case 'dries',
+switch lower(NormStr)
+case 'dries'
     if ~all(Y == 0)
         Y = Y/N.DriesNorm;
     else
         Y = ones(size(Y));
     end
-case 'rate',
+case 'rate'
     Y = 1e3*Y/N.NF;
 end
 
@@ -1129,7 +1244,7 @@ else
 end
 
 %----------------------------------------------------------------------------
-function PlotData(SXAC, DAC, SXCC, DCC, GBOR, Thr, RC, Info, StimParam, Param)
+function PlotData(SXAC, DAC, MAC, SXCC, DCC, MCC, GBOR, Thr, RC, Info, StimParam, Param)
 
 %Creating figure ...
 FigHdl = figure('Name', sprintf('%s: %s', upper(mfilename), Info.capstr), ...
@@ -1149,15 +1264,15 @@ text(0.5, 0.5, Str, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'Horiz
     'FontWeight', 'bold', 'FontSize', 12);
 
 %Plotting correlation functions ...
-PlotAutoCorFnc([0.0, 0.50, 0.5, 0.45], SXAC(1), DAC(1), Param);
-PlotAutoCorFnc([0.5, 0.50, 0.5, 0.45], SXAC(2), DAC(2), Param);
-PlotCrossCorFnc([0.0, 0.0, 0.5, 0.45], SXCC, DCC, GBOR, Param);
+PlotAutoCorFnc([0.00, 0.0, 0.4, 0.8], SXAC(1), DAC(1), MAC(1), Param);
+PlotAutoCorFnc([0.33, 0.0, 0.4, 0.8], SXAC(2), DAC(2), MAC(1), Param);
+PlotCrossCorFnc([0.66, 0.0, 0.4, 0.8], SXCC, DCC, MCC, GBOR, Param);
 
 %Display general information ...
-PlotGenInfo([0.5, 0.0, 0.5, 0.45], Info, Thr, RC, GBOR, StimParam, Param);
+PlotGenInfo([0.0, 0.73, 0.4, 0.3], Info, Thr, RC, GBOR, StimParam, Param);
 
 %----------------------------------------------------------------------------
-function PlotAutoCorFnc(ViewPort, SXAC, DAC, Param)
+function PlotAutoCorFnc(ViewPort, SXAC, DAC, MAC, Param)
 
 %General plot parameters ...
 TitleFontSz  = 9;    %in points ...
@@ -1178,9 +1293,9 @@ NormStr = sprintf('Norm. Count\n(N_{rep}*(N_{rep}-1)*r^2*\\Delta\\tau*D)');
 %Plotting SAC and if possible XAC ...
 X = SXAC.lag; Y = SXAC.normco;
 [MinX, MaxX, XTicks] = GetAxisLim('X', X, Param.corxrange, Param.corxstep);
-Pos = [Origin(1), Origin(2)+2*AxSpacing+(0.25+0.375)*Height, Width, Height*0.375];
+Pos = [Origin(1), Origin(2)+3*AxSpacing+0.75*Height, Width, Height*0.25];
 AxCOR = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
-if (size(Y, 1) == 1),
+if (size(Y, 1) == 1)
     LnHdl = line(X, Y, 'LineStyle', '-', 'Marker', 'none', 'LineWidth', 2, 'Color', 'b');
     title('SAC', 'FontSize', TitleFontSz);
 else
@@ -1200,7 +1315,7 @@ PlotVerZero(MinY, MaxY);
 text(MinX, MaxY, TxtStr, 'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
 
 %Plotting DIFCOR ...
-Pos = [Origin(1), Origin(2)+AxSpacing+0.25*Height, Width, Height*0.375];
+Pos = [Origin(1), Origin(2)+2*AxSpacing+0.5*Height, Width, Height*0.25];
 if isempty(DAC.lag)
     AxDIF = CreateEmptyAxis(Pos, LabelFontSz);
 else
@@ -1220,45 +1335,115 @@ else
     text(MinX, MaxY, {sprintf('Max(DIF): %.2f', DAC.max), sprintf('HHW(ENV): %.2fms', DAC.env.hhw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
 end
 
-%Plotting discrete fourier transform of DIFCOR or SAC...
+%Plotting SUMCOR ...
+Pos = [Origin(1), Origin(2)+AxSpacing+0.25*Height, Width, Height*0.25];
+if isempty(MAC.lag)
+    AxDIF = CreateEmptyAxis(Pos, LabelFontSz);
+else
+    X = MAC.lag; Y = MAC.normco; 
+    AxDIF = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
+    LnHdl = line(X, Y); 
+    set(LnHdl(1), 'LineStyle', '-', 'Color', [1 0 0], 'LineWidth', 2);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', [0 0 0], 'LineWidth', 0.5);
+    set(LnHdl(3), 'LineStyle', '-', 'Color', [0 0 0], 'LineWidth', 0.5);
+    title('SUMCOR', 'FontSize', TitleFontSz);
+    xlabel('Delay(ms)', 'FontSize', LabelFontSz); ylabel(NormStr, 'Units', 'normalized', 'Position', [-0.11, 0.5, 0], 'FontSize', LabelFontSz);
+    set(AxDIF, 'XLim', [MinX MaxX], 'XTick', XTicks);  
+    YRange = get(AxDIF, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
+    PlotVerZero(MinY, MaxY); PlotHorZero(MinX, MaxX);
+    LnHdl = plotcintersect(MAC.env.hhwx, MAC.env.halfmax([1 1]), MinY);
+    set(LnHdl(1), 'LineStyle', '-', 'Color', [0 0 0], 'LineWidth', 0.5);
+    text(MinX, MaxY, {sprintf('Max(SUM): %.2f', MAC.max), sprintf('HHW(ENV): %.2fms', MAC.env.hhw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
+end
+
+%Plotting discrete fourier transform of DIFCOR and SUMCOR or SAC...
 Pos = [Origin(1), Origin(2), Width, 0.25*Height];
 if isempty(DAC.lag)
     FFT = SXAC.fft; TitleStr = 'DFT on SAC';
+    X = FFT.freq;
+    if strcmpi(Param.fftyunit, 'dB')
+        Y = FFT.db;
+        YLblStr = 'Power (dB, 10 log)'; 
+    else
+        Y = FFT.p;
+        YLblStr = 'Power';
+    end
+    if ~isnan(FFT.df)
+        Ord = floor(log10(FFT.df*2))-1;
+        MinX = 0;
+        MaxX = round(FFT.df*2*10^-Ord)*10^Ord;
+        XTicks = 'auto';
+    else
+        [MinX, MaxX, XTicks] = GetAxisLim('X', X, Param.fftxrange, Param.fftxstep);
+    end
+    [MinY, MaxY] = GetAxisLim('Y', Y, Param.fftyrange);
+    AxDFT = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
+    LnHdl = line(X, Y);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', 'b', 'LineWidth', 0.5);
+    set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
+    title(TitleStr, 'FontSize', TitleFontSz);
+    xlabel('Freq(Hz)', 'FontSize', LabelFontSz); ylabel(YLblStr, 'FontSize', LabelFontSz);
+    if ~ischar(XTicks)
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY], 'XTick', XTicks); 
+    else
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY]);
+    end
+    YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
+    line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
+    text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
+    legend({'Orig', 'RunAv'});
 else
-    FFT = DAC.fft; TitleStr = 'DFT on DIFCOR';
+    FFT1 = DAC.fft; FFT2 = MAC.fft;
+    TitleStr = 'DFT on DIFCOR and SUMCOR';
+    
+    X1 = FFT1.freq; X2 = FFT2.freq;
+    if strcmpi(Param.fftyunit, 'dB')
+        Y1 = FFT1.db; Y2 = FFT2.db;
+        YLblStr = 'Power (dB, 10 log)'; 
+    else
+        Y1 = FFT1.p; Y2 = FFT2.p;
+        YLblStr = 'Power';
+    end
+    if ~isnan(FFT1.df)
+        Ord = floor(log10(FFT1.df*2))-1;
+        MinX = 0;
+        MaxX = round(FFT1.df*2*10^-Ord)*10^Ord;
+        XTicks = 'auto';
+    else
+        [MinX1, MaxX1, ~] = GetAxisLim('X', X1, Param.fftxrange, Param.fftxstep);
+        [MinX2, MaxX2, XTicks] = GetAxisLim('X', X2, Param.fftxrange, Param.fftxstep);
+        MinX = min([MinX1, MinX2]); MaxX = max([MaxX1, MaxX2]);
+    end
+    [MinY1, MaxY1] = GetAxisLim('Y', Y1, Param.fftyrange);
+    [MinY2, MaxY2] = GetAxisLim('Y', Y2, Param.fftyrange);
+    MinY = min([MinY1, MinY2]); MaxY = max([MaxY1, MaxY2]);
+    
+    AxDFT = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
+    LnHdl = line(X1, Y1);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', 'b', 'LineWidth', 0.5);
+    set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
+    LnHdl = line(X2, Y2);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', 'r', 'LineWidth', 0.5);
+    set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
+    
+    title(TitleStr, 'FontSize', TitleFontSz);
+    xlabel('Freq(Hz)', 'FontSize', LabelFontSz); ylabel(YLblStr, 'FontSize', LabelFontSz);
+    if ~ischar(XTicks)
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY], 'XTick', XTicks); 
+    else
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY]);
+    end
+    YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
+    line(FFT1.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
+    line(FFT2.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
+    text(MinX, MaxY, {sprintf('DomFreq Dif: %.2fHz, DomFreq Sum: %.2fHz', FFT1.df, FFT2.df), ... 
+        sprintf('BandWidth Dif: %.2fHz, BandWidth Sum: %.2fHz', FFT1.bw, FFT2.bw)}, ...
+        'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
+    legend({'Orig Dif', 'RunAv Dif', 'Orig Sum', 'RunAv Sum'});
 end
-X = FFT.freq;
-if strcmpi(Param.fftyunit, 'dB')
-    Y = FFT.db; YLblStr = 'Power (dB, 10 log)'; 
-else
-    Y = FFT.p; YLblStr = 'Power';
-end
-if ~isnan(FFT.df)
-    Ord = floor(log10(FFT.df*2))-1;
-    MinX = 0; MaxX = round(FFT.df*2*10^-Ord)*10^Ord;
-    XTicks = 'auto';
-else
-    [MinX, MaxX, XTicks] = GetAxisLim('X', X, Param.fftxrange, Param.fftxstep);
-end
-[MinY, MaxY] = GetAxisLim('Y', Y, Param.fftyrange);
-AxDFT = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
-LnHdl = line(X, Y);
-set(LnHdl(2), 'LineStyle', '-', 'Color', 'b', 'LineWidth', 0.5);
-set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
-title(TitleStr, 'FontSize', TitleFontSz);
-xlabel('Freq(Hz)', 'FontSize', LabelFontSz); ylabel(YLblStr, 'FontSize', LabelFontSz);
-if ~ischar(XTicks)
-    set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY], 'XTick', XTicks); 
-else
-    set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY]);
-end
-YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
-line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
-text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
-legend({'Orig', 'RunAv'});
 
 %----------------------------------------------------------------------------
-function PlotCrossCorFnc(ViewPort, SXCC, DCC, GBOR, Param)
+function PlotCrossCorFnc(ViewPort, SXCC, DCC, MCC, GBOR, Param)
 
 %General plot parameters ...
 TitleFontSz  = 9;    %in points ...
@@ -1279,9 +1464,9 @@ NormStr = sprintf('Norm. Count\n(N_{rep}*(N_{rep}-1)*r^2*\\Delta\\tau*D)');
 %Plotting SCC and if possible XCC ...
 X = SXCC.lag; Y = SXCC.normco;
 [MinX, MaxX, XTicks] = GetAxisLim('X', X, Param.corxrange, Param.corxstep);
-Pos = [Origin(1), Origin(2)+2*AxSpacing+(0.25+0.375)*Height, Width, Height*0.375];
+Pos = [Origin(1), Origin(2)+3*AxSpacing+0.75*Height, Width, Height*0.25];
 AxCOR = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
-if (size(Y, 1) == 1),
+if (size(Y, 1) == 1)
     LnHdl = line(X, Y, 'LineStyle', '-', 'Marker', 'none', 'LineWidth', 2, 'Color', 'b');
     title('SCC', 'FontSize', TitleFontSz);
 else
@@ -1306,7 +1491,7 @@ PlotVerZero(MinY, MaxY);
 text(MinX, MaxY, TxtStr, 'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
 
 %Plotting DIFCOR ...
-Pos = [Origin(1), Origin(2)+AxSpacing+0.25*Height, Width, Height*0.375];
+Pos = [Origin(1), Origin(2)+2*AxSpacing+0.5*Height, Width, Height*0.25];
 if isempty(DCC.lag)
     AxDIF = CreateEmptyAxis(Pos, LabelFontSz);
 else
@@ -1343,51 +1528,136 @@ else
             'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
 end
 
-%Plotting discrete fourier transform of DIFCOR or SAC...
+%Plotting SUMCOR ...
+Pos = [Origin(1), Origin(2)+AxSpacing+0.25*Height, Width, Height*0.25];
+if isempty(MCC.lag)
+    AxDIF = CreateEmptyAxis(Pos, LabelFontSz);
+else
+    X = MCC.lag; Y = MCC.normco; 
+    AxDIF = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
+    LnHdl = line(X, Y); 
+	if Param.gaborfit && ~isempty(GBOR) && isempty(GBOR.err)
+		LnHdl(end+1) = line(GBOR.x, GBOR.y, 'LineStyle', '--');
+		LnHdl(end+1) = line(GBOR.x, GBOR.env, 'LineStyle', '--');
+		LnHdl(end+1) = line(GBOR.x, -GBOR.env, 'LineStyle', '--');
+	end
+    set(LnHdl(1), 'LineStyle', '-', 'Color', [1 0 0], 'LineWidth', 2);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', [0 0 0], 'LineWidth', 0.5);
+    set(LnHdl(3), 'LineStyle', '-', 'Color', [0 0 0], 'LineWidth', 0.5);
+    title('SUMCOR', 'FontSize', TitleFontSz);
+    xlabel('Delay(ms)', 'FontSize', LabelFontSz); 
+	ylabel(NormStr, 'Units', 'normalized', 'Position', [-0.11, 0.5, 0], 'FontSize', LabelFontSz);
+    set(AxDIF, 'XLim', [MinX MaxX], 'XTick', XTicks);  
+    YRange = get(AxDIF, 'YLim');
+    MinY = YRange(1); MaxY = YRange(2);
+    PlotVerZero(MinY, MaxY);
+    PlotHorZero(MinX, MaxX);
+    LnHdl = plotcintersect(MCC.env.hhwx, MCC.env.halfmax([1 1]), MinY);
+    set(LnHdl(1), 'LineStyle', '-', 'Color', [0 0 0], 'LineWidth', 0.5);
+    line(MCC.lagatmax, MCC.max, 'Color', [0 0 0], 'LineStyle', 'none', 'marker', '.');
+    line(MCC.lagatmax([1 1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':');
+    line(MCC.lagsecpks([1 1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':');
+    line(MCC.lagsecpks([2 2]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':');
+    line(MCC.lagsecpks, MCC.maxsecpks, 'Color', [0 0 0], 'LineStyle', 'none', 'marker', '.');
+    text(MinX, MaxY, {sprintf('Max(SUM): %.2f @ %.2fms', DCC.max, DCC.lagatmax), ...
+            sprintf('SecPks(SUM): @ %.2fms & %.2fms', DCC.lagsecpks), ...
+            sprintf('Max(ENV):  %.2f @ %.2fms', DCC.env.max, DCC.env.lagatmax), ...
+            sprintf('HHW(ENV): %.2fms', DCC.env.hhw)},'HorizontalAlignment', ...
+            'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
+end
+
+%Plotting discrete fourier transform of DIFCOR and SUMCOR or SAC...
 Pos = [Origin(1), Origin(2), Width, 0.25*Height];
 if isempty(DCC.lag)
     FFT = SXCC.fft; TitleStr = 'DFT on SCC';
+    X = FFT.freq;
+    if strcmpi(Param.fftyunit, 'dB')
+        Y = FFT.db;
+        YLblStr = 'Power (dB, 10 log)'; 
+    else
+        Y = FFT.p;
+        YLblStr = 'Power';
+    end
+    if ~isnan(FFT.df)
+        Ord = floor(log10(FFT.df*2))-1;
+        MinX = 0;
+        MaxX = round(FFT.df*2*10^-Ord)*10^Ord;
+        XTicks = 'auto';
+    else
+        [MinX, MaxX, XTicks] = GetAxisLim('X', X, Param.fftxrange, Param.fftxstep);
+    end
+    [MinY, MaxY] = GetAxisLim('Y', Y, Param.fftyrange);
+    AxDFT = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
+    LnHdl = line(X, Y);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', 'b', 'LineWidth', 0.5);
+    set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
+    title(TitleStr, 'FontSize', TitleFontSz);
+    xlabel('Freq(Hz)', 'FontSize', LabelFontSz); ylabel(YLblStr, 'FontSize', LabelFontSz);
+    if ~ischar(XTicks)
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY], 'XTick', XTicks); 
+    else
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY]);
+    end
+    YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
+    line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
+    text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
+    legend({'Orig', 'RunAv'});
 else
-    FFT = DCC.fft; TitleStr = 'DFT on DIFCOR';
+    FFT1 = DCC.fft; FFT2 = MCC.fft;
+    TitleStr = 'DFT on DIFCOR and SUMCOR';
+    
+    X1 = FFT1.freq; X2 = FFT2.freq;
+    if strcmpi(Param.fftyunit, 'dB')
+        Y1 = FFT1.db; Y2 = FFT2.db;
+        YLblStr = 'Power (dB, 10 log)'; 
+    else
+        Y1 = FFT1.p; Y2 = FFT2.p;
+        YLblStr = 'Power';
+    end
+    if ~isnan(FFT1.df)
+        Ord = floor(log10(FFT1.df*2))-1;
+        MinX = 0;
+        MaxX = round(FFT1.df*2*10^-Ord)*10^Ord;
+        XTicks = 'auto';
+    else
+        [MinX1, MaxX1, ~] = GetAxisLim('X', X1, Param.fftxrange, Param.fftxstep);
+        [MinX2, MaxX2, XTicks] = GetAxisLim('X', X2, Param.fftxrange, Param.fftxstep);
+        MinX = min([MinX1, MinX2]); MaxX = max([MaxX1, MaxX2]);
+    end
+    [MinY1, MaxY1] = GetAxisLim('Y', Y1, Param.fftyrange);
+    [MinY2, MaxY2] = GetAxisLim('Y', Y2, Param.fftyrange);
+    MinY = min([MinY1, MinY2]); MaxY = max([MaxY1, MaxY2]);
+    
+    AxDFT = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
+    LnHdl = line(X1, Y1);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', 'b', 'LineWidth', 0.5);
+    set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
+    LnHdl = line(X2, Y2);
+    set(LnHdl(2), 'LineStyle', '-', 'Color', 'r', 'LineWidth', 0.5);
+    set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
+    
+    title(TitleStr, 'FontSize', TitleFontSz);
+    xlabel('Freq(Hz)', 'FontSize', LabelFontSz); ylabel(YLblStr, 'FontSize', LabelFontSz);
+    if ~ischar(XTicks)
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY], 'XTick', XTicks); 
+    else
+        set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY]);
+    end
+    YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
+    line(FFT1.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
+    line(FFT2.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
+    text(MinX, MaxY, {sprintf('DomFreq Dif: %.2fHz, DomFreq Sum: %.2fHz', FFT1.df, FFT2.df), ... 
+        sprintf('BandWidth Dif: %.2fHz, BandWidth Sum: %.2fHz', FFT1.bw, FFT2.bw)}, ...
+        'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
+    legend({'Orig Dif', 'RunAv Dif', 'Orig Sum', 'RunAv Sum'});
 end
-X = FFT.freq;
-if strcmpi(Param.fftyunit, 'dB')
-    Y = FFT.db;
-    YLblStr = 'Power (dB, 10 log)'; 
-else
-    Y = FFT.p;
-    YLblStr = 'Power';
-end
-if ~isnan(FFT.df)
-    Ord = floor(log10(FFT.df*2))-1;
-    MinX = 0;
-    MaxX = round(FFT.df*2*10^-Ord)*10^Ord;
-    XTicks = 'auto';
-else
-    [MinX, MaxX, XTicks] = GetAxisLim('X', X, Param.fftxrange, Param.fftxstep);
-end
-[MinY, MaxY] = GetAxisLim('Y', Y, Param.fftyrange);
-AxDFT = axes('Position', Pos, 'Box', 'off', 'TickDir', 'out', 'FontSize', TckMrkFontSz);
-LnHdl = line(X, Y);
-set(LnHdl(2), 'LineStyle', '-', 'Color', 'b', 'LineWidth', 0.5);
-set(LnHdl(1), 'LineStyle', ':', 'Color', 'k', 'LineWidth', 0.5);
-title(TitleStr, 'FontSize', TitleFontSz);
-xlabel('Freq(Hz)', 'FontSize', LabelFontSz); ylabel(YLblStr, 'FontSize', LabelFontSz);
-if ~ischar(XTicks)
-    set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY], 'XTick', XTicks); 
-else
-    set(AxDFT, 'XLim', [MinX MaxX], 'YLim', [MinY MaxY]);
-end
-YRange = get(AxDFT, 'YLim'); MinY = YRange(1); MaxY = YRange(2);
-line(FFT.df([1,1]), [MinY, MaxY], 'Color', [0 0 0], 'LineStyle', ':'); %Vertical line at dominant frequency ...
-text(MinX, MaxY, {sprintf('DomFreq: %.2fHz', FFT.df), sprintf('BandWidth: %.2fHz', FFT.bw)},'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'FontSize', LabelFontSz);
-legend({'Orig', 'RunAv'});
+
 
 %----------------------------------------------------------------------------
 function PlotGenInfo(ViewPort, Info, Thr, RC, GBOR, StimParam, Param)
 
 AxINF = axes('Position', ViewPort, 'Visible', 'off');
-text(0.50, 0.95, Info.hdrstr, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'center', ...
+text(0.35, 0.85, Info.hdrstr, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'center', ...
     'FontWeight', 'demi', 'FontSize', 9);
 
 text(0.05, 0.75, char(Thr(1).str, '', RC(1).str), 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
@@ -1395,14 +1665,14 @@ text(0.05, 0.75, char(Thr(1).str, '', RC(1).str), 'Units', 'normalized', 'Vertic
 text(0.35, 0.75, char(Thr(2).str, '', RC(2).str), 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
     'FontWeight', 'normal', 'FontSize', 8);
 
-text(0.05, 0.40, {'Stimulus parameters:', 'A^+_1, A^-_1, A^+_2, A^-_2'},'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
+text(0.05, 0.60, {'Stimulus parameters:', 'A^+_1, A^-_1, A^+_2, A^-_2'},'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
     'FontWeight', 'demi', 'FontSize', 9);
-text(0.05, 0.25, StimParam.str, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
+text(0.05, 0.45, StimParam.str, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
     'FontWeight', 'normal', 'FontSize', 8);
 
-text(0.35, 0.50, 'Calculation parameters:','Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
+text(0.35, 0.60, 'Calculation parameters:','Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
     'FontWeight', 'demi', 'FontSize', 9);
-text(0.35, 0.30, Param.str, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
+text(0.35, 0.40, Param.str, 'Units', 'normalized', 'VerticalAlignment', 'middle', 'HorizontalAlignment', 'left', ...
     'FontWeight', 'normal', 'FontSize', 8);
 
 if Param.gaborfit
@@ -1415,17 +1685,17 @@ end
 %----------------------------------------------------------------------------
 function [MinVal, MaxVal, Ticks] = GetAxisLim(AxisType, Values, Range, Step)
 
-if strcmpi(AxisType, 'x'), %Abcissa ...
+if strcmpi(AxisType, 'x') %Abcissa ...
     Margin = 0.00;
     
-    if isinf(Range(1)), MinVal = min(Values(:))*(1-Margin); else MinVal = Range(1); end
-    if isinf(Range(2)), MaxVal = max(Values(:))*(1+Margin); else MaxVal = Range(2); end
+    if isinf(Range(1)), MinVal = min(Values(:))*(1-Margin); else, MinVal = Range(1); end
+    if isinf(Range(2)), MaxVal = max(Values(:))*(1+Margin); else, MaxVal = Range(2); end
     Ticks = MinVal:Step:MaxVal;
 else %Ordinate ...    
     Margin = 0.05;
     
-    if isinf(Range(1)), MinVal = min([0; Values(:)])*(1-Margin); else MinVal = Range(1); end
-    if isinf(Range(2)), MaxVal = max(Values(:))*(1+Margin); else MaxVal = Range(2); end
+    if isinf(Range(1)), MinVal = min([0; Values(:)])*(1-Margin); else, MinVal = Range(1); end
+    if isinf(Range(2)), MaxVal = max(Values(:))*(1+Margin); else, MaxVal = Range(2); end
 end
 
 %----------------------------------------------------------------------------
@@ -1478,7 +1748,7 @@ gaborParm.ph = ((DCC.lagatmax)*(DCC.fft.df/1000))*2*pi *-1;
 [BestITD, Max, SecPeaks] = getpeaks(X, Y, 0, Period);
 BestITDc = BestITD/Period;
 Peaks = [SecPeaks, BestITD];
-[dummy, idx] = min(abs(Peaks));
+[~, idx] = min(abs(Peaks));
 ZeroPeak = Peaks(idx);
 
 [EnvPeak, EnvMax] = getmaxloc(X, Env); %EnvPeak = EnvPeak/1000;
@@ -1497,7 +1767,7 @@ GABOR = RecLowerFields(CollectInStruct(X, Y, Env, Constants, Max, BestITD, BestI
 function S = RecLowerFields(S)
 FNames  = fieldnames(S);
 NFields = length(FNames);
-for n = 1:NFields,
+for n = 1:NFields
 	Val = getfield(S, FNames{n});
 	S = rmfield(S, FNames{n});
 	if isstruct(Val), S = setfield(S, lower(FNames{n}), RecLowerFields(Val));  %Recursive ...
